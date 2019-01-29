@@ -1,0 +1,125 @@
+﻿pre {
+    white-space: pre-wrap; /* css-3 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+    margin-right: 80px;
+    font-size: 15px;
+}
+
+#answerUl {
+    list-style: none;
+    display: block;
+    margin-left: 40px;
+    margin-top: 10px;
+    margin-bottom: 0px;
+    width: auto;
+    float: left;
+}
+
+    #answerUl li {
+        margin-top: 15px;
+    }
+
+#topicTypeLabel {
+    color: aliceblue;
+    font-size: 14px;
+    text-align: center;
+    line-height: 45px;
+    margin-left: 5px;
+}
+
+#answerUl label {
+    font-size: 16px;
+    width: 888px;
+    border-radius: 3px 3px 3px 3px;
+    font-family: 微软雅黑;
+    font-weight: normal
+}
+
+
+/*radio样式*/
+.radio-custom input[type=radio] {
+    position: absolute;
+    margin-left: 0px;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.radio-custom input[type=radio] {
+    width: 20px;
+    height: 20px;
+    opacity: 0;
+    z-index: 1;
+}
+
+.radio-custom label {
+    min-height: 22px;
+    line-height: 22px;
+    margin-bottom: 0;
+    font-weight: 300;
+    cursor: pointer;
+}
+
+.radio-custom label {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    padding-left: 30px;
+}
+
+    .radio-custom label::before {
+        content: "";
+        display: inline-block;
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        left: 0;
+        margin-left: 0px;
+        border: 1px solid #e4eaec;
+        border-radius: 50%;
+        background-color: #fff;
+        -webkit-transition: border .3s ease-in-out 0s,color .3s ease-in-out 0s;
+        -o-transition: border .3s ease-in-out 0s,color .3s ease-in-out 0s;
+        transition: border .3s ease-in-out 0s,color .3s ease-in-out 0s;
+    }
+
+.radio-custom input[type=radio]:checked + label::before {
+    border-color: #e4eaec;
+    border-width: 10px;
+}
+
+.radio-primary input[type=radio]:checked + label::before {
+    border-color: #62a8ea;
+}
+
+.radio-custom label::after {
+    display: inline-block;
+    position: absolute;
+    content: " ";
+    width: 6px;
+    height: 6px;
+    left: 7px;
+    top: 7px;
+    margin-left: 0px;
+    border: 2px solid #76838f;
+    border-radius: 50%;
+    background-color: transparent;
+    -webkit-transform: scale(0,0);
+    -ms-transform: scale(0,0);
+    -o-transform: scale(0,0);
+    transform: scale(0,0);
+    transition-transform: .1s cubic-bezier(.8,-.33,.2,1.33);
+}
+
+.radio-custom input[type=radio]:checked + label::after {
+    -webkit-transform: scale(1,1);
+    -ms-transform: scale(1,1);
+    -o-transform: scale(1,1);
+    transform: scale(1,1);
+}
+
+.radio-primary input[type=radio]:checked + label::after {
+    border-color: #fff;
+}

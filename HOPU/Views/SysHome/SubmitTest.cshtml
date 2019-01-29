@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "发布统测";
+}
+@using Microsoft.AspNet.Identity;
+<script src="~/Scripts/SubmitTest.js"></script>
+<div class="page-title row text-center">
+    <h2>@ViewBag.Title</h2>
+</div>
+<div>
+    <ul class="breadcrumb" style="width:300px">
+        <li><a href="~/SysHome/Home">首页</a></li>
+        <li class="active">测试中心</li>
+        <li><a href="~/Syshome/UnifiedTestType">统测列表</a></li>
+        <li class="active">@ViewBag.Title</li>
+    </ul>
+</div>
+@using (Html.BeginForm("addTest", "SysHome", null, FormMethod.Post))
+{
+    int i = 1;
+    <div class="checkbox" style="border: 1px solid #e6e6e6;height:150px;padding:25px;">
+        @foreach (var item in ViewBag.topictype)
+        {
+            if (i % 10 == 0)
+            {
+                <br />
+            }
+            <div>
+                <label class="checkbox-inline" name="submitlable" for="Checkbox_@i" style="float:left;width:120px;">
+                    <input type="checkbox" title="@item.CourseName" id="Checkbox_@i" name="submitCheckbox" value="@item.CourseId">@item.CourseName
+                </label>
+            </div>
+            i++;
+        }
+    </div>
+    @*<input id="courseName" type="hidden" value="" />*@
+    <div>
+        <label style="margin-right:10px;">题数：<input type="number" name="topicCount" title="题数" class="form-control" value="50" placeholder="请输入题目数量" /></label>
+        <label style="margin-right:10px;">时长：<input type="number" name="timeLenth" title="时长" class="form-control" value="60" placeholder="请输入考试时长" /></label>
+        <input type="submit" class="btn btn-success" id="addTest" title="提交" />
+    </div>
+}
+@*<h1 class="title" style="font-size: 20px;font-family: 微软雅黑;line-height: 28px;margin-top: 11px;margin-left: 70px;">*@

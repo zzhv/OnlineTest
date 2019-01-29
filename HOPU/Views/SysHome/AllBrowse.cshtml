@@ -1,0 +1,85 @@
+﻿@{
+    ViewBag.Title = "顺序浏览";
+}
+@using System.Web.Optimization
+@using X.PagedList
+@using X.PagedList.Mvc
+@using X.PagedList.Mvc.Common
+@using HOPU.Models
+@model AllBrowseModel
+<link href="~/Content/vs.css" rel="stylesheet" />
+<link href="~/Content/Pre.css" rel="stylesheet" />
+<script src="~/Scripts/AllBrowseFirstLoad.js"></script>
+<script src="~/Scripts/highlight.pack.js"></script>
+<div class="page-title row text-center">
+    <h2>@ViewBag.Title</h2>
+</div>
+<div>
+    <ul class="breadcrumb" style="width:250px">
+        <li><a href="~/SysHome/Home">首页</a></li>
+        <li class="active">浏览中心</li>
+        <li class="active">顺序浏览</li>
+    </ul>
+</div>
+<div class="examone" id="main_M" style="margin: 0;padding: 0;font-size: 20px;font-family:微软雅黑;">
+    <div class="lx_type" style="display: block;position:absolute;height:45px;width:66px;margin-top:5px;background-image:url(../Content/image/icons_1.png);background-repeat:no-repeat;z-index:1">
+        <label id="topicType" style="color:aliceblue;font-size:14px;text-align:center;line-height:45px;margin-left:5px;">单选题</label>
+    </div>
+    <div style="border: 1px solid #e6e6e6;margin-left: 3px;">
+        <div id="frm_main" style="display: block;margin:0;padding:0">
+            <h1 class="title" style="font-size: 20px;font-family: 微软雅黑;line-height: 28px;margin-top: 11px;margin-left: 70px;">
+                <span id="topicId"></span>/<span id="topicCount">@AllBrowseModel.GetTopicCount()</span> &nbsp;
+                <pre><code id="tittle"></code></pre>
+            </h1>
+            <input type="hidden" name="thisTopicId" id="thisTopicId" value="1">
+            <input type="hidden" name="isAutoNextTopic" id="isAutoNextTopic">
+            <div class="lx_item" style="margin-top: 10px;min-height: 214px">
+                <ul id="answerUl">
+                    <li>
+                        <input type='radio' value='A' name='answerIteam' id='answer1'>
+                        <label for="answer1" id="labelanswer1" name="labelanswer" style="font-size:15px;width:800px;height:22px;">
+                        </label>
+                    </li>
+                    <li>
+                        <input type='radio' value='B' name='answerIteam' id='answer2'>
+                        <label for="answer2" id="labelanswer2" name="labelanswer" style="font-size:15px;width:800px;height:22px;">
+                        </label>
+                    </li>
+                    <li>
+                        <input type='radio' value='C' name='answerIteam' id='answer3'>
+                        <label for="answer3" id="labelanswer3" name="labelanswer" style="font-size:15px;width:800px;height:22px;">
+                        </label>
+                    </li>
+                    <li>
+                        <input type='radio' value='D' name='answerIteam' id='answer4'>
+                        <label for="answer4" id="labelanswer4" name="labelanswer" style="font-size:15px;width:800px;height:22px;">
+                        </label>
+                    </li>
+                </ul>
+            </div>
+            <span id="answerIsRight" style="margin-left:75px;margin-bottom:10px;display:none;font-size:13px;text-align:center;border-radius:3px;line-height:42px;height:42px;width:200px;"></span>
+            <div id="answerBox" style="margin-left:75px;margin-bottom:10px;display:none">答案：<label id="answer" class="text-danger"></label></div>
+            <div class="btns" style="margin-bottom:20px;">
+                <div class="visible-xs-inline-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">
+                    <button type="button" id="lastpage" class="btn btn-success" style="margin-left:50px;" name="lastOrnextBtn" value="-1">上一题</button>
+                </div>
+                <div class="visible-xs-inline-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">
+                    <button type="button" id="nextpage" class="btn btn-success" name="lastOrnextBtn" value="1">下一题</button>
+                </div>
+                <div class="visible-xs-inline-block visible-sm-inline-block visible-md-inline-block visible-lg-inline-block">
+                    <button type="button" id="showOrHidennAnswer" class="btn btn-danger" name="showOrHidennAnswer" value="1">显示答案</button>
+                </div>
+            </div>
+            <div class="info" style="border-top: #e6e6e6 1px solid;height: 72px;line-height: 72px;font-size: 16px;padding-left: 70px;">
+                @*<label class="btn btn-primary active" id="AutoNextTmpLabel">
+                    <input id="AutoNextTmp" name="AutoNextTmp" type="checkbox" autocomplete="off" checked>答对2秒后跳转到下一题
+                </label>*@            
+    <span><input type="checkbox" name="AutoNextTmp" id="AutoNextTmp"><label for="AutoNextTmp" id="AutoNextTmpLabel">答对2秒后跳转到下一题</label></span>
+                <span>答对：<font id="TrueNum" class="btn btn-success ">0</font> 题</span>
+                <span>答错：<font id="FalseNum" class="btn btn-danger">0</font> 题</span>
+                <span>正确率：<font id="TruePre" class="btn btn-info">0%</font></span>
+                &nbsp;跳转到指定题目: <div class="col-xs-2" style="position:relative;margin-left:59%;margin-top:-52px;"><input class="form-control" type="text" id="tiaozhuan" value="1" style="width:60px" /></div>
+            </div>
+        </div>
+    </div>
+</div>

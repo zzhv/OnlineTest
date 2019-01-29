@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="testDB" Class="HopuDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=testDB;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework" SettingsObjectName="HOPU.Properties.Settings" SettingsPropertyName="testDBConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Course" Member="Course">
+    <Type Name="Course">
+      <Column Name="CourseID" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="CourseName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="TID" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Topic" Member="Topic">
+    <Type Name="Topic">
+      <Column Name="TopicID" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AnswerA" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AnswerB" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AnswerC" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AnswerD" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Answer" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CourseID" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AspNetUsers" Member="AspNetUsers">
+    <Type Name="AspNetUsers">
+      <Column Name="Id" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="RealUserName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="Email" Type="System.String" DbType="NVarChar(256)" CanBeNull="true" />
+      <Column Name="EmailConfirmed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="PasswordHash" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="SecurityStamp" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PhoneNumber" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="PhoneNumberConfirmed" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="TwoFactorEnabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="LockoutEndDateUtc" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LockoutEnabled" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="AccessFailedCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(256) NOT NULL" CanBeNull="false" />
+      <Association Name="AspNetUsers_UserClaims" Member="UserClaims" Storage="_AspNetUserClaims" ThisKey="Id" OtherKey="UserId" Type="UserClaims" />
+    </Type>
+  </Table>
+  <Table Name="dbo.AspNetUserClaims" Member="UserClaims">
+    <Type Name="UserClaims">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UserId" Type="System.String" DbType="NVarChar(128) NOT NULL" CanBeNull="false" />
+      <Column Name="ClaimType" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="ClaimValue" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Association Name="AspNetUsers_UserClaims" Member="AspNetUsers" ThisKey="UserId" OtherKey="Id" Type="AspNetUsers" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TypeInfo" Member="TypeInfo">
+    <Type Name="TypeInfo">
+      <Column Name="TID" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="TypeName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UniteTestInfo" Member="UniteTestInfo">
+    <Type Name="UniteTestInfo">
+      <Column Name="id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UtId" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="TopicID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="AnswerA" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="AnswerB" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="AnswerC" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="AnswerD" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Answer" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="CourseID" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="UniteTest_UniteTestInfo" Member="UniteTest" ThisKey="UtId" OtherKey="UtId" Type="UniteTest" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UniteTest" Member="UniteTest">
+    <Type Name="UniteTest">
+      <Column Name="UtId" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="StartTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="TimeLenth" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TopicCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CourseId" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="CourseName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Association Name="UniteTest_UniteTestInfo" Member="UniteTestInfo" ThisKey="UtId" OtherKey="UtId" Type="UniteTestInfo" />
+    </Type>
+  </Table>
+</Database>
