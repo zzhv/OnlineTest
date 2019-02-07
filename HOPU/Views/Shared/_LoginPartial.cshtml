@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNet.Identity;
 @using HOPU.Models
-@*@model GetRealUserName*@
+@model GetRealUserName
 @if (Request.IsAuthenticated)
 {
     using (Html.BeginForm("LogOff", "SysAdmin", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
@@ -9,9 +9,14 @@
         <ul class="nav navbar-nav navbar-right">
             <li>
                 @Html.ActionLink("你好，" + GetRealUserName.GetRealName(User.Identity.GetUserId()) + " !", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+
                 @*@Html.ActionLink("你好，" + User.Identity.GetUserName() + " !", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })*@
                 @*   GetRealUserName.GetRealName() User.Identity.GetUserName()*@
             </li>
+            @if (GetUserType.GetUserTypeInfo(User.Identity.GetUserId()))//如果是admin
+            {
+                <li>@Html.ActionLink("控制面板", "About", "Syshome")</li>
+            }
             <li><a href="javascript:document.getElementById('logoutForm').submit()">注销</a></li>
         </ul>
     }
@@ -23,6 +28,3 @@ else
         <li>@Html.ActionLink("登录", "AdminLogin", "SysAdmin", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
     </ul>
 }
-@*
-    <input type="text" name="userAccount" class="form-control" placeholder="账 号" required="">
-    <input type="password" name="userPwd" class="form-control" placeholder="密 码" required="">*@

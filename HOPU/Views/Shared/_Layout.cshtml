@@ -47,11 +47,8 @@
                                 <li>@Html.ActionLink("分类浏览", "ClassifieTypedBrowse", "Syshome")</li>
                             </ul>
                         </li>
-                        <li>@Html.ActionLink("关于", "About", "Syshome")</li>
-                        @*@if (User.Identity.AuthenticationType.Equals("1"))
-                            {
-                                <li>@Html.ActionLink("后台管理", "About", "Syshome")</li>
-                            }*@
+                        <li>@Html.ActionLink("关于我们", "About", "Syshome")</li>
+                       
                     </ul>
                 }
                 @Html.Partial("_LoginPartial")
@@ -60,8 +57,13 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <footer style="margin-top:50px;">
-            <p>&copy; RadioSilences 版权所有 @DateTime.Now.Year - 厚溥题库  黔ICP备16006898号-1</p>
+        <footer style="margin-top:60px; color:gray">
+            <p class="text-center">
+                Copyright &copy; @DateTime.Now.Year XXX.All Rights Reserved.
+            </p>
+            <p class="text-center">
+                <span>黔ICP备16006898号-1</span>
+            </p>
         </footer>
     </div>
     @RenderSection("scripts", required: false)

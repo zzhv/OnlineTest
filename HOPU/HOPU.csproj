@@ -198,17 +198,11 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\SessionController.cs" />
     <Compile Include="Controllers\SysAdminController.cs" />
     <Compile Include="Controllers\SysHomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201812171225446_ReadUserName.cs" />
-    <Compile Include="Migrations\201812171225446_ReadUserName.Designer.cs">
-      <DependentUpon>201812171225446_ReadUserName.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ClassifiedBrowseModel.cs" />
     <Compile Include="Models\AllBrowseModel.cs" />
@@ -241,6 +235,7 @@
     <Content Include="Content\image\icons_1.png" />
     <Content Include="Content\Pre.css" />
     <Content Include="Content\prettify.css" />
+    <Content Include="Content\timeline.css" />
     <Content Include="Content\UnifiedTest.css" />
     <Content Include="Content\vs.css" />
     <Content Include="favicon.ico" />
@@ -361,11 +356,6 @@
   <ItemGroup>
     <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201812171225446_ReadUserName.resx">
-      <DependentUpon>201812171225446_ReadUserName.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Scripts\index.d.ts" />
