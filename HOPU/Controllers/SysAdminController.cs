@@ -94,7 +94,6 @@ namespace HOPU.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    Session["UseName"] = model.UserName;
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
@@ -103,7 +102,7 @@ namespace HOPU.Controllers
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "登录失败，请检查用户名或密码！");
-                    return View(model);
+                    return View();
             }
         }
 
