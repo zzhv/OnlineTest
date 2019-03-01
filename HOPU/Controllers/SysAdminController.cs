@@ -94,7 +94,6 @@ namespace HOPU.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    Session["UseName"] = model.UserName;
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
