@@ -348,7 +348,7 @@ namespace HOPU.Controllers
         #region 关于 About
         public ActionResult About()
         {
-
+            //test github
             return View("About");
         }
         #endregion
