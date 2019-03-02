@@ -163,7 +163,7 @@ namespace HOPU.Controllers
         #region 添加统测 AddTest
         //添加统测
         [HttpPost]
-        [ValidateAntiForgeryToken]//防伪标记
+        [ValidateAntiForgeryToken]
         public ActionResult AddTest(string[] submitCheckbox, int topicCount, int timeLenth)
         {
             HopuDBDataContext db = new HopuDBDataContext();
@@ -352,6 +352,13 @@ namespace HOPU.Controllers
             return View("About");
         }
         #endregion
+
+        public JsonResult Test(string[] Answer)
+        {
+
+            return Json(Answer.ToList());
+        }
+
     }
     #region Linq To Sql 动态条件 PredicateBuilder 
 

@@ -22,11 +22,11 @@
                 </button>
                 @if (Request.IsAuthenticated)
                 {
-                    @Html.ActionLink("厚溥题库", "Home", "SysHome", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("题库", "Home", "SysHome", new { area = "" }, new { @class = "navbar-brand" })
                 }
                 else
                 {
-                    @Html.ActionLink("厚溥题库", "AdminLogin", "SysAdmin", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("题库", "AdminLogin", "SysAdmin", new { area = "" }, new { @class = "navbar-brand" })
                 }
             </div>
             <div class="navbar-collapse collapse">
@@ -62,7 +62,7 @@
                 Copyright &copy; @DateTime.Now.Year XXX.All Rights Reserved.
             </p>
             <p class="text-center">
-                <span>黔ICP备16006898号-1</span>
+                <span>@*黔ICP备16006898号-1*@</span>
             </p>
         </footer>
     </div>
