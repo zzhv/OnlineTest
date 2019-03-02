@@ -66,9 +66,13 @@ function show_time() {
 //})
 
 function liBorder(id) {
-    //$("S_" + id).css("border", "1px solid red");
-    //$("S_" + id).addClass("borderr")
-    document.getElementById("S_" + id).style.border = "1px solid #0088cc";
+    var flag = $("input[name='answerIteam-" + id + "']:checked").val();
+    //alert(flag);
+    if (true != null) {
+        document.getElementById("S_" + id).style.border = "1px solid #0088cc";
+    } else {
+        document.getElementById("S_" + id).style.border = "1px solid #000";
+    }
 }
 
 //label hover
@@ -88,3 +92,62 @@ $(function () {
         $(this).css("cursor", "pointer");
     });
 });
+
+
+$(function () {
+    $("#btnTijiao").on('click', function () {
+        var AnswerArray = [];
+        var lstInt = "";
+        var index = 0;
+        for (i = 0; i < document.all.length; i++) {
+            if (document.all(i).type == 'radio' && document.all(i).checked == true) {
+                AnswerArray[index] = document.all(i).value
+                index++;
+            } else if (document.all(i).type == 'checkbox' && document.all(i).checked == true) {
+                lstInt = document.all(i).value + lstInt;
+                var b = lstInt.split("");       //分割字符串a为数组b
+                b.sort();              //数组b升序排序（系统自带的方法）
+                AnswerArray[index] = b.join("");        //把数组b每个元素连接成字符串c
+                index++;
+                lstInt = "";
+            }
+        }
+        for (var i = 0; i < AnswerArray.length; i++) {
+            console.log(AnswerArray[i]);
+        }
+        $.ajax({
+            type: "post",
+            url: "Test",
+            data: { Answer: AnswerArray },
+            datatype: "json",
+            //success: function (data) {
+            //    alert(12312312);
+            //}
+        })
+        ////radio
+        //var TopicCount = $("#topicCount").val() * 1;
+        ////alert(TopicCount);
+        //for (var i = 1; i <= TopicCount; i++) {
+        //    var flag = $("input[name='answerIteam-" + i + "']:checked").val();
+        //    AnswerArray[i - 1] = flag;
+        //    if (flag == null) {
+        //        alert("您还有未填项，无法提交!");
+        //        return false;
+        //    }
+
+        //    var lstInt = "";
+        //    var items = document.getElementsByName("answerIteam-" + i);
+        //    for (var i = 0; i < items.length; i++) {
+        //        if (items[i].checked) {
+        //            lstInt = items[i].value + lstInt;
+        //        }
+        //    }
+        //    alert(lstInt);
+        //    alert(AnswerArray[2]);
+        //    if (lstInt.length <= 0) {
+        //        alert("您还有未填项，无法提交!");
+        //        return false;
+        //    }
+        //}
+    })
+})
