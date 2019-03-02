@@ -28,21 +28,27 @@
                         }
                     }
                 </ul>
-                <div class="navbar navbar-fixed-bottom" id="tijiaoshijuan">
-                    @{
-                        foreach (var item in ViewBag.timeInfo)
-                        {
-                            DateTime EndTime = (Convert.ToDateTime(item.StartTime));
-                            <input type="hidden" id="startTime" value="@DateTime.Now">
-                            <input type="hidden" id="endTime" value="@EndTime.AddMinutes(item.TimeLenth)">
-                        }
+            </div>
+
+            <div class="navbar navbar-fixed-bottom" id="tijiaoshijuan">
+                @{
+                    foreach (var item in ViewBag.timeInfo)
+                    {
+                        DateTime EndTime = (Convert.ToDateTime(item.StartTime));
+                        <input type="hidden" id="startTime" value="@DateTime.Now">
+                        <input type="hidden" id="endTime" value="@EndTime.AddMinutes(item.TimeLenth)">
+                        <input type="hidden" id="topicCount" value="@item.TopicCount" />
                     }
-                    <div class="well">
-                        <span id="timer" class="text-danger" style="font-size:30px;"></span>
+                }
+                <div class="well">
+                    <span id="timer" class="text-danger" style="font-size:30px;"></span>
+                </div>
+                <div class="btn-group">
+                    <div class="col-sm-6">
+                        <button type="submit" id="btnTijiao" class="btn btn-success">提交</button>
                     </div>
-                    <div class="btn-group">
-                        <button type="button" id="btnTijiao" class="btn btn-success">提交试卷</button>
-                        <button type="button" id="cancel" class="btn btn-warning">放弃考试</button>
+                    <div class="col-sm-6">
+                        <button type="button" id="cancel" class="btn btn-danger">放弃</button>
                     </div>
                 </div>
             </div>
@@ -128,7 +134,7 @@
                                             </label>
                                         </li>
                                         <li>
-                                            <input onclick="liBorser(@j)" type='checkbox' value='D' name='answerIteam-@j' id='answer4-@j'>
+                                            <input onclick="liBorder(@j)" type='checkbox' value='D' name='answerIteam-@j' id='answer4-@j'>
                                             <label for="answer4-@j" id="labelanswerD-@j" name="labelanswer">
                                                 D：@item.AnswerD
                                             </label>
