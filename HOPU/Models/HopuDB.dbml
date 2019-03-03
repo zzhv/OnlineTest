@@ -76,6 +76,17 @@
       <Column Name="CourseId" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="CourseName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Association Name="UniteTest_UniteTestInfo" Member="UniteTestInfo" ThisKey="UtId" OtherKey="UtId" Type="UniteTestInfo" />
+      <Association Name="UniteTest_UniteTestScore" Member="UniteTestScore" ThisKey="UtId" OtherKey="UtId" Type="UniteTestScore" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UniteTestScore" Member="UniteTestScore">
+    <Type Name="UniteTestScore">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UtId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="EndTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Score" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="UniteTest_UniteTestScore" Member="UniteTest" ThisKey="UtId" OtherKey="UtId" Type="UniteTest" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

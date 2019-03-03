@@ -42,6 +42,9 @@ namespace HOPU.Models
     partial void InsertUniteTest(UniteTest instance);
     partial void UpdateUniteTest(UniteTest instance);
     partial void DeleteUniteTest(UniteTest instance);
+    partial void InsertUniteTestScore(UniteTestScore instance);
+    partial void UpdateUniteTestScore(UniteTestScore instance);
+    partial void DeleteUniteTestScore(UniteTestScore instance);
     #endregion
 		
 		public HopuDBDataContext() : 
@@ -127,6 +130,14 @@ namespace HOPU.Models
 			get
 			{
 				return this.GetTable<UniteTest>();
+			}
+		}
+		
+		public System.Data.Linq.Table<UniteTestScore> UniteTestScore
+		{
+			get
+			{
+				return this.GetTable<UniteTestScore>();
 			}
 		}
 	}
@@ -1284,6 +1295,8 @@ namespace HOPU.Models
 		
 		private EntitySet<UniteTestInfo> _UniteTestInfo;
 		
+		private EntitySet<UniteTestScore> _UniteTestScore;
+		
     #region 可扩展性方法定义
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -1305,6 +1318,7 @@ namespace HOPU.Models
 		public UniteTest()
 		{
 			this._UniteTestInfo = new EntitySet<UniteTestInfo>(new Action<UniteTestInfo>(this.attach_UniteTestInfo), new Action<UniteTestInfo>(this.detach_UniteTestInfo));
+			this._UniteTestScore = new EntitySet<UniteTestScore>(new Action<UniteTestScore>(this.attach_UniteTestScore), new Action<UniteTestScore>(this.detach_UniteTestScore));
 			OnCreated();
 		}
 		
@@ -1441,6 +1455,19 @@ namespace HOPU.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UniteTest_UniteTestScore", Storage="_UniteTestScore", ThisKey="UtId", OtherKey="UtId")]
+		public EntitySet<UniteTestScore> UniteTestScore
+		{
+			get
+			{
+				return this._UniteTestScore;
+			}
+			set
+			{
+				this._UniteTestScore.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -1471,6 +1498,217 @@ namespace HOPU.Models
 		{
 			this.SendPropertyChanging();
 			entity.UniteTest = null;
+		}
+		
+		private void attach_UniteTestScore(UniteTestScore entity)
+		{
+			this.SendPropertyChanging();
+			entity.UniteTest = this;
+		}
+		
+		private void detach_UniteTestScore(UniteTestScore entity)
+		{
+			this.SendPropertyChanging();
+			entity.UniteTest = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UniteTestScore")]
+	public partial class UniteTestScore : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private int _UtId;
+		
+		private string _UserName;
+		
+		private System.DateTime _EndTime;
+		
+		private int _Score;
+		
+		private EntityRef<UniteTest> _UniteTest;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnUtIdChanging(int value);
+    partial void OnUtIdChanged();
+    partial void OnUserNameChanging(string value);
+    partial void OnUserNameChanged();
+    partial void OnEndTimeChanging(System.DateTime value);
+    partial void OnEndTimeChanged();
+    partial void OnScoreChanging(int value);
+    partial void OnScoreChanged();
+    #endregion
+		
+		public UniteTestScore()
+		{
+			this._UniteTest = default(EntityRef<UniteTest>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UtId", DbType="Int NOT NULL")]
+		public int UtId
+		{
+			get
+			{
+				return this._UtId;
+			}
+			set
+			{
+				if ((this._UtId != value))
+				{
+					if (this._UniteTest.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnUtIdChanging(value);
+					this.SendPropertyChanging();
+					this._UtId = value;
+					this.SendPropertyChanged("UtId");
+					this.OnUtIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string UserName
+		{
+			get
+			{
+				return this._UserName;
+			}
+			set
+			{
+				if ((this._UserName != value))
+				{
+					this.OnUserNameChanging(value);
+					this.SendPropertyChanging();
+					this._UserName = value;
+					this.SendPropertyChanged("UserName");
+					this.OnUserNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndTime", DbType="DateTime NOT NULL")]
+		public System.DateTime EndTime
+		{
+			get
+			{
+				return this._EndTime;
+			}
+			set
+			{
+				if ((this._EndTime != value))
+				{
+					this.OnEndTimeChanging(value);
+					this.SendPropertyChanging();
+					this._EndTime = value;
+					this.SendPropertyChanged("EndTime");
+					this.OnEndTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Score", DbType="Int NOT NULL")]
+		public int Score
+		{
+			get
+			{
+				return this._Score;
+			}
+			set
+			{
+				if ((this._Score != value))
+				{
+					this.OnScoreChanging(value);
+					this.SendPropertyChanging();
+					this._Score = value;
+					this.SendPropertyChanged("Score");
+					this.OnScoreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UniteTest_UniteTestScore", Storage="_UniteTest", ThisKey="UtId", OtherKey="UtId", IsForeignKey=true)]
+		public UniteTest UniteTest
+		{
+			get
+			{
+				return this._UniteTest.Entity;
+			}
+			set
+			{
+				UniteTest previousValue = this._UniteTest.Entity;
+				if (((previousValue != value) 
+							|| (this._UniteTest.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._UniteTest.Entity = null;
+						previousValue.UniteTestScore.Remove(this);
+					}
+					this._UniteTest.Entity = value;
+					if ((value != null))
+					{
+						value.UniteTestScore.Add(this);
+						this._UtId = value.UtId;
+					}
+					else
+					{
+						this._UtId = default(int);
+					}
+					this.SendPropertyChanged("UniteTest");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

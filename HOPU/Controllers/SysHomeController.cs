@@ -66,7 +66,7 @@ namespace HOPU.Controllers
             return View();
         }
 
-        protected static IQueryable<ClassifieTypedBrowseModel> GetTopicType(int topicid)
+        private static IQueryable<ClassifieTypedBrowseModel> GetTopicType(int topicid)
         {
             //select distinct * from[dbo].[TypeInfo] a,[dbo].[Course] b where a.TID = b.TID
             HopuDBDataContext db = new HopuDBDataContext();
@@ -101,6 +101,10 @@ namespace HOPU.Controllers
         #region 统测列表 UnifiedTestType
         public ActionResult UnifiedTestType(int? page)
         {
+            //if (page == null)
+            //{
+            //    ViewBag.Js = "<script>alert(123456)</script>";
+            //}
             var products = GetTestInfo().ToList();
             var pageNumber = page ?? 1;
             var onePage = products.ToPagedList(pageNumber, 10);
@@ -276,7 +280,7 @@ namespace HOPU.Controllers
         }
         #endregion
 
-        #region 统一测试 UnifiedTest
+        #region 统测 UnifiedTest
         //public ActionResult UnifiedTest()
         //{
         //    return View();
@@ -286,7 +290,6 @@ namespace HOPU.Controllers
         public ActionResult UnifiedTest(int? UtId)
         {
             bool joinUniteTest = false;
-            //session 用于存储信息限制只允许同时参与一场统测
             if (UtId == null)
             {
                 return HttpNotFound();
@@ -296,6 +299,7 @@ namespace HOPU.Controllers
             List<UniteTest> timeInfo = result.ToList();//时间等信息
             ViewBag.timeInfo = timeInfo;
             ViewBag.Title = UtId;
+            //能否进入考试
             foreach (var item in result)
             {
                 //如果结束时间大于当前时间，可以进入考试
@@ -304,6 +308,21 @@ namespace HOPU.Controllers
                     joinUniteTest = true;
                     break;
                 }
+                else
+                {
+
+                    return RedirectToAction("UnifiedTestType");
+                }
+
+            }
+            var UniteTestScoreInfo = db.UniteTestScore.Where(a => a.UtId == UtId && a.UserName == User.Identity.GetUserName()).FirstOrDefault();
+            if (UniteTestScoreInfo == null)
+            {
+                joinUniteTest = true;
+            }
+            else
+            {
+                joinUniteTest = false;
             }
             //如果能加入统测
             if (joinUniteTest)
@@ -321,7 +340,7 @@ namespace HOPU.Controllers
                     AnswerD = c.AnswerD,
                     Answer = c.Answer,
                     CourseID = c.CourseID,
-                    TopicID = (c.TopicID * (UserName - 2000000000)) % 3 * 10,
+                    TopicID = (c.TopicID * (UserName - 200000000)) % 3 * 100,
 
                 });
                 if (UserName % 2 == 0)
@@ -334,26 +353,25 @@ namespace HOPU.Controllers
                 }
                 return View();
             }
-            else//否则只能以查看模式进入
+            else
             {
-                return Json("加入失败", JsonRequestBehavior.AllowGet);
+                return RedirectToAction("UnifiedTestType", new { page = "null" });
             }
         }
         #endregion
 
+        #region 校验统测答案
         //校验答案
         [HttpPost]
         public JsonResult UnifiedTest(string[] Answer, int UtId)
         {
-            //List<string> userAnswer = Answer.ToList();
-            //获取答案
             //据UtId获取答案
             HopuDBDataContext db = new HopuDBDataContext();
             int UserName = Convert.ToInt32(User.Identity.GetUserName());
             var topicListResult = db.UniteTestInfo.Where(a => a.UtId == UtId).ToList().Select(c =>
             new UniteTestInfo
             {
-                TopicID = (c.TopicID * (UserName - 2000000000)) % 3 * 10,
+                TopicID = (c.TopicID * (UserName - 200000000)) % 3 * 100,
                 Answer = c.Answer,
             });
             List<UniteTestInfo> answerList = new List<UniteTestInfo>();
@@ -367,13 +385,12 @@ namespace HOPU.Controllers
             }
             //校验答案
             List<UnifiedTestModel> result = new List<UnifiedTestModel>();
-            //分数
             //先算出每题多少分 
-            double itemScore = 100 / answerList.Count;
+            double itemScore = 100F / answerList.Count;
             double SumScore = 0;
+            //校验答案
             for (int i = 0; i < answerList.Count; i++)
             {
-                //UnifiedTestModel Add = new UnifiedTestModel();
                 if (answerList[i].Answer.Equals(Answer[i]))
                 {
                     UnifiedTestModel resultinfo = new UnifiedTestModel
@@ -396,8 +413,28 @@ namespace HOPU.Controllers
                     result.Add(resultinfo);
                 }
             }
-            return Json(result );
+            var UniteTestScoreInfo = db.UniteTestScore.Where(a => a.UtId == UtId && a.UserName == User.Identity.GetUserName()).FirstOrDefault();
+            //如果没有提交过
+            if (UniteTestScoreInfo == null)
+            {
+                //将考试结果存入数据库
+                var uniteTestScore = new UniteTestScore
+                {
+                    UtId = UtId,
+                    UserName = User.Identity.GetUserName(),
+                    EndTime = DateTime.Now,
+                    Score = Convert.ToInt32(Math.Round(SumScore, 0, MidpointRounding.AwayFromZero))
+                };
+                db.UniteTestScore.InsertOnSubmit(uniteTestScore);
+                db.SubmitChanges();
+            }
+            else
+            {
+                return Json(null);
+            }
+            return Json(result);
         }
+        #endregion
 
         #region 权限检测 IsAdmin?
 
