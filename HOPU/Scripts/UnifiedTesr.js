@@ -94,8 +94,70 @@ $(function () {
 });
 
 
+
 $(function () {
     $("#btnTijiao").on('click', function () {
+        var AnswerArray = [];
+        var TopicCount = $("#topicCount").val() * 1;
+        var index = 0;
+        for (var i = 1; i <= TopicCount; i++) {
+            var lstInt = "";
+            if ($("input[name='answerIteam-" + i + "']").attr('type') == 'checkbox') {
+                var items = document.getElementsByName("answerIteam-" + i);
+                for (var j = 0; j < items.length; j++) {
+                    if (items[j].checked) {
+                        lstInt = items[j].value + lstInt;
+                    }
+                }
+                if (lstInt.length <= 0) {
+                    alert("您还有未填项，无法提交!");
+                    return false;
+                } else {
+                    var newlstInt = lstInt.split("");       //分割字符串a为数组b
+                    newlstInt.sort();
+                    AnswerArray[index] = newlstInt.join("");
+                    index++;
+                }
+            } else {
+                var flag = $("input[name='answerIteam-" + i + "']:checked").val();
+                if (flag == null) {
+                    alert("您还有未填项，无法提交!");
+                    return false;
+                } else {
+                    AnswerArray[index] = flag;
+                    index++;
+                }
+            }
+        }
+        //for (var i = 0; i < AnswerArray.length; i++) {
+        //    console.log(AnswerArray[i]);
+        //}
+        var itemScore = 100 / AnswerArray.length;
+        var sumScore = 0;
+        $.ajax({
+            type: "post",
+            url: "UnifiedTest",
+            data: {
+                Answer: AnswerArray,
+                UtId: $("#UtId").val() * 1
+            },
+            datatype: "json",
+            success: function (data, SumScore) {
+                for (var i = 0; i < data.length; i++) {
+                    console.log("所选答案" + data[i].UserAnswer + "正确答案" + data[i].RealAnswer + "结果" + data[i].IsTrue);
+                    if (data[i].IsTrue.toString() == "true") {
+                        sumScore += itemScore;
+                    }
+                }
+                console.log("总分"+sumScore);
+            }
+        })
+    })
+})
+
+
+$(function () {
+    $("#btnTijiao2").on('click', function () {
         var AnswerArray = [];
         var lstInt = "";
         var index = 0;

@@ -38,7 +38,9 @@
                         <input type="hidden" id="startTime" value="@DateTime.Now">
                         <input type="hidden" id="endTime" value="@EndTime.AddMinutes(item.TimeLenth)">
                         <input type="hidden" id="topicCount" value="@item.TopicCount" />
+                        <input type="hidden" id="UtId" value="@item.UtId" />
                     }
+
                 }
                 <div class="well">
                     <span id="timer" class="text-danger" style="font-size:30px;"></span>

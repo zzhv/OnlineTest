@@ -40,7 +40,7 @@ namespace HOPU.Controllers
 
 
         [HttpPost]
-        public ActionResult AllBrowse(int? Tid)
+        public JsonResult AllBrowse(int? Tid)
         {
             List<Topic> list = GetTopicInfomation(Tid ?? 1).ToList();
             return Json(list, JsonRequestBehavior.AllowGet);
@@ -274,7 +274,7 @@ namespace HOPU.Controllers
             db.SubmitChanges();
             return Json(new { Success = true });
         }
-        #endregion 
+        #endregion
 
         #region 统一测试 UnifiedTest
         //public ActionResult UnifiedTest()
@@ -282,7 +282,7 @@ namespace HOPU.Controllers
         //    return View();
 
         //}
-        public bool isFirstGetTopic = true;
+
         public ActionResult UnifiedTest(int? UtId)
         {
             bool joinUniteTest = false;
@@ -309,16 +309,30 @@ namespace HOPU.Controllers
             if (joinUniteTest)
             {
                 //据UtId获取题目列表
-                var topicListResule = db.UniteTestInfo.Where(a => a.UtId == UtId).Select(a => a);
-                List<UniteTestInfo> topicList = topicListResule.ToList();
-                if (isFirstGetTopic)
+                int UserName = Convert.ToInt32(User.Identity.GetUserName());
+                var topicListResult = db.UniteTestInfo.Where(a => a.UtId == UtId).ToList().Select(c =>
+                new UniteTestInfo
                 {
-                    ViewBag.topicList = topicList.OrderBy(s => Guid.NewGuid());
-                    isFirstGetTopic = false;
-                    return View();
+                    UtId = c.UtId,
+                    Title = c.Title,
+                    AnswerA = c.AnswerA,
+                    AnswerB = c.AnswerB,
+                    AnswerC = c.AnswerC,
+                    AnswerD = c.AnswerD,
+                    Answer = c.Answer,
+                    CourseID = c.CourseID,
+                    TopicID = (c.TopicID * (UserName - 2000000000)) % 3 * 10,
+
+                });
+                if (UserName % 2 == 0)
+                {
+                    ViewBag.topicList = topicListResult.OrderBy(s => s.TopicID).ToList();
+                }
+                else
+                {
+                    ViewBag.topicList = topicListResult.OrderByDescending(s => s.TopicID).ToList();
                 }
                 return View();
-
             }
             else//否则只能以查看模式进入
             {
@@ -326,6 +340,64 @@ namespace HOPU.Controllers
             }
         }
         #endregion
+
+        //校验答案
+        [HttpPost]
+        public JsonResult UnifiedTest(string[] Answer, int UtId)
+        {
+            //List<string> userAnswer = Answer.ToList();
+            //获取答案
+            //据UtId获取答案
+            HopuDBDataContext db = new HopuDBDataContext();
+            int UserName = Convert.ToInt32(User.Identity.GetUserName());
+            var topicListResult = db.UniteTestInfo.Where(a => a.UtId == UtId).ToList().Select(c =>
+            new UniteTestInfo
+            {
+                TopicID = (c.TopicID * (UserName - 2000000000)) % 3 * 10,
+                Answer = c.Answer,
+            });
+            List<UniteTestInfo> answerList = new List<UniteTestInfo>();
+            if (UserName % 2 == 0)
+            {
+                answerList = topicListResult.OrderBy(s => s.TopicID).ToList();
+            }
+            else
+            {
+                answerList = topicListResult.OrderByDescending(s => s.TopicID).ToList();
+            }
+            //校验答案
+            List<UnifiedTestModel> result = new List<UnifiedTestModel>();
+            //分数
+            //先算出每题多少分 
+            double itemScore = 100 / answerList.Count;
+            double SumScore = 0;
+            for (int i = 0; i < answerList.Count; i++)
+            {
+                //UnifiedTestModel Add = new UnifiedTestModel();
+                if (answerList[i].Answer.Equals(Answer[i]))
+                {
+                    UnifiedTestModel resultinfo = new UnifiedTestModel
+                    {
+                        UserAnswer = Answer[i],
+                        RealAnswer = answerList[i].Answer,
+                        IsTrue = true
+                    };
+                    result.Add(resultinfo);
+                    SumScore += itemScore;
+                }
+                else
+                {
+                    UnifiedTestModel resultinfo = new UnifiedTestModel
+                    {
+                        UserAnswer = Answer[i],
+                        RealAnswer = answerList[i].Answer,
+                        IsTrue = false
+                    };
+                    result.Add(resultinfo);
+                }
+            }
+            return Json(result );
+        }
 
         #region 权限检测 IsAdmin?
 
@@ -353,11 +425,6 @@ namespace HOPU.Controllers
         }
         #endregion
 
-        public JsonResult Test(string[] Answer)
-        {
-
-            return Json(Answer.ToList());
-        }
 
     }
     #region Linq To Sql 动态条件 PredicateBuilder 
