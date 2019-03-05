@@ -7,7 +7,7 @@
 //倒计时
 var kaishi = document.getElementById("startTime").value;  // $("#startTime").val();
 var jieshu = document.getElementById("endTime").value;// $("#endTime").val();
-var time_now_server, time_now_client, time_end, time_server_client, timerID;
+var time_now_server, time_now_client, time_end, time_server_client, timerID, isTrue = true, score;
 time_end = new Date(jieshu);//结束的时间
 time_end = time_end.getTime();
 time_now_server = new Date(kaishi);//开始的时间
@@ -18,9 +18,12 @@ time_now_client = time_now_client.getTime();
 
 time_server_client = time_now_server - time_now_client;
 
-setTimeout("show_time()", 1000);
+var timerID = setTimeout("show_time()", 1000);
 
-function show_time() {
+function show_time(Stop) {
+    if (Stop == 1) {
+        isTrue = false;
+    }
     var timer = document.getElementById("timer");
     if (!timer) {
         return;
@@ -32,7 +35,7 @@ function show_time() {
     var time_now = new Date();
     time_now = time_now.getTime() + time_server_client;
     time_distance = time_end - time_now;
-    if (time_distance > 0) {
+    if (time_distance > 0 && isTrue) {
         int_day = Math.floor(time_distance / 86400000)
         time_distance -= int_day * 86400000;
         int_hour = Math.floor(time_distance / 3600000)
@@ -53,63 +56,67 @@ function show_time() {
     }
     else {
         //时间结束，自动提交
+        clearTimeout(timerID)
         timer.innerText = "结束";
         var AnswerArray = [];
         var TopicCount = $("#topicCount").val() * 1;
         var index = 0;
-        for (var i = 1; i <= TopicCount; i++) {
-            var lstInt = "";
-            if ($("input[name='answerIteam-" + i + "']").attr('type') == 'checkbox') {
-                var items = document.getElementsByName("answerIteam-" + i);
-                for (var j = 0; j < items.length; j++) {
-                    if (items[j].checked) {
-                        lstInt = items[j].value + lstInt;
+        if (isTrue) {
+
+            for (var i = 1; i <= TopicCount; i++) {
+                var lstInt = "";
+                if ($("input[name='answerIteam-" + i + "']").attr('type') == 'checkbox') {
+                    var items = document.getElementsByName("answerIteam-" + i);
+                    for (var j = 0; j < items.length; j++) {
+                        if (items[j].checked) {
+                            lstInt = items[j].value + lstInt;
+                        }
+                    }
+                    if (lstInt.length <= 0) {
+                        alert("您还有未填项，无法提交!");
+                        return false;
+                    } else {
+                        var newlstInt = lstInt.split("");       //分割字符串a为数组b
+                        newlstInt.sort();
+                        AnswerArray[index] = newlstInt.join("");
+                        index++;
+                    }
+                } else {
+                    var flag = $("input[name='answerIteam-" + i + "']:checked").val();
+                    if (flag == null) {
+                        alert("您还有未填项，无法提交!");
+                        return false;
+                    } else {
+                        AnswerArray[index] = flag;
+                        index++;
                     }
                 }
-                if (lstInt.length <= 0) {
-                    alert("您还有未填项，无法提交!");
-                    return false;
-                } else {
-                    var newlstInt = lstInt.split("");       //分割字符串a为数组b
-                    newlstInt.sort();
-                    AnswerArray[index] = newlstInt.join("");
-                    index++;
-                }
-            } else {
-                var flag = $("input[name='answerIteam-" + i + "']:checked").val();
-                if (flag == null) {
-                    alert("您还有未填项，无法提交!");
-                    return false;
-                } else {
-                    AnswerArray[index] = flag;
-                    index++;
-                }
             }
+            //for (var i = 0; i < AnswerArray.length; i++) {
+            //    console.log(AnswerArray[i]);
+            //}
+            var itemScore = 100 / AnswerArray.length;
+            var sumScore = 0;
+            $.ajax({
+                type: "post",
+                url: "UnifiedTest",
+                data: {
+                    Answer: AnswerArray,
+                    UtId: $("#UtId").val() * 1
+                },
+                datatype: "json",
+                success: function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        console.log("所选答案" + data[i].UserAnswer + "正确答案" + data[i].RealAnswer + "结果" + data[i].IsTrue);
+                        if (data[i].IsTrue.toString() == "true") {
+                            sumScore += itemScore;
+                        }
+                    }
+                    console.log("总分" + Math.round(sumScore));
+                }
+            })
         }
-        //for (var i = 0; i < AnswerArray.length; i++) {
-        //    console.log(AnswerArray[i]);
-        //}
-        var itemScore = 100 / AnswerArray.length;
-        var sumScore = 0;
-        $.ajax({
-            type: "post",
-            url: "UnifiedTest",
-            data: {
-                Answer: AnswerArray,
-                UtId: $("#UtId").val() * 1
-            },
-            datatype: "json",
-            success: function (data) {
-                for (var i = 0; i < data.length; i++) {
-                    console.log("所选答案" + data[i].UserAnswer + "正确答案" + data[i].RealAnswer + "结果" + data[i].IsTrue);
-                    if (data[i].IsTrue.toString() == "true") {
-                        sumScore += itemScore;
-                    }
-                }
-                console.log("总分" + Math.round(sumScore));
-            }
-        })
-        clearTimeout(timerID)
+
     }
 }
 
@@ -143,7 +150,7 @@ $(function () {
 });
 
 
-//提交答案
+//提交试卷
 $(function () {
     $("#btnTijiao").on('click', function () {
         var AnswerArray = [];
@@ -181,8 +188,11 @@ $(function () {
         //for (var i = 0; i < AnswerArray.length; i++) {
         //    console.log(AnswerArray[i]);
         //}
-        var itemScore = 100 / AnswerArray.length;
-        var sumScore = 0;
+        //答案收集完成
+        var itemScore = 100 / AnswerArray.length;//计算单题分数
+        var sumScore = 0;//总分
+        //开始提交
+        show_time(1);//关闭倒计时
         $.ajax({
             type: "post",
             url: "UnifiedTest",
@@ -197,7 +207,11 @@ $(function () {
                     if (data[i].IsTrue.toString() == "true") {
                         sumScore += itemScore;
                     }
+
                 }
+                $("#timer").attr('id', 'score');
+                //$("#Score").css('display', 'block');
+                $("#score").text(Math.round(sumScore) + " 分");
                 console.log("总分" + Math.round(sumScore));
             }
         })

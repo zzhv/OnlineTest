@@ -29,7 +29,6 @@
                     }
                 </ul>
             </div>
-
             <div class="navbar navbar-fixed-bottom" id="tijiaoshijuan">
                 @{
                     foreach (var item in ViewBag.timeInfo)
@@ -40,10 +39,10 @@
                         <input type="hidden" id="topicCount" value="@item.TopicCount" />
                         <input type="hidden" id="UtId" value="@item.UtId" />
                     }
-
                 }
                 <div class="well">
-                    <span id="timer" class="text-danger" style="font-size:30px;"></span>
+                    <span id="timer" class="text-danger text-center" style="font-size:30px;margin:0px auto"></span>
+                    @*<div id="Score" class="text-success" style="font-size:30px;display:none">11</div>*@
                 </div>
                 <div class="btn-group">
                     <div class="col-sm-6">
@@ -60,7 +59,6 @@
                     foreach (var item in ViewBag.topicList)
                     {
                         <div id="topicType">
-
                             @{
                                 string answer = item.Answer;
                                 if (answer.Length >= 2)

@@ -310,7 +310,7 @@ namespace HOPU.Controllers
                 }
                 else
                 {
-
+                    //如果不能进入考试，    以后再写
                     return RedirectToAction("UnifiedTestType");
                 }
 
@@ -355,6 +355,7 @@ namespace HOPU.Controllers
             }
             else
             {
+                //如果不能进入考试，    以后再写
                 return RedirectToAction("UnifiedTestType", new { page = "null" });
             }
         }
@@ -365,74 +366,95 @@ namespace HOPU.Controllers
         [HttpPost]
         public JsonResult UnifiedTest(string[] Answer, int UtId)
         {
-            //据UtId获取答案
             HopuDBDataContext db = new HopuDBDataContext();
-            int UserName = Convert.ToInt32(User.Identity.GetUserName());
-            var topicListResult = db.UniteTestInfo.Where(a => a.UtId == UtId).ToList().Select(c =>
-            new UniteTestInfo
+            //判断时间是否在考试时间段内
+            bool commitAnswer = false;
+            var timeInfo = db.UniteTest.Where(a => a.UtId == UtId).Select(a => a);
+            foreach (var item in timeInfo)
             {
-                TopicID = (c.TopicID * (UserName - 200000000)) % 3 * 100,
-                Answer = c.Answer,
-            });
-            List<UniteTestInfo> answerList = new List<UniteTestInfo>();
-            if (UserName % 2 == 0)
-            {
-                answerList = topicListResult.OrderBy(s => s.TopicID).ToList();
-            }
-            else
-            {
-                answerList = topicListResult.OrderByDescending(s => s.TopicID).ToList();
-            }
-            //校验答案
-            List<UnifiedTestModel> result = new List<UnifiedTestModel>();
-            //先算出每题多少分 
-            double itemScore = 100F / answerList.Count;
-            double SumScore = 0;
-            //校验答案
-            for (int i = 0; i < answerList.Count; i++)
-            {
-                if (answerList[i].Answer.Equals(Answer[i]))
+                //如果结束时间大于当前时间，可以提交
+                if (Convert.ToDateTime(item.StartTime).AddMinutes(item.TimeLenth) > DateTime.Now)
                 {
-                    UnifiedTestModel resultinfo = new UnifiedTestModel
-                    {
-                        UserAnswer = Answer[i],
-                        RealAnswer = answerList[i].Answer,
-                        IsTrue = true
-                    };
-                    result.Add(resultinfo);
-                    SumScore += itemScore;
+                    commitAnswer = true;
+                    break;
                 }
                 else
                 {
-                    UnifiedTestModel resultinfo = new UnifiedTestModel
-                    {
-                        UserAnswer = Answer[i],
-                        RealAnswer = answerList[i].Answer,
-                        IsTrue = false
-                    };
-                    result.Add(resultinfo);
+                    return Json("false");
                 }
+
             }
-            var UniteTestScoreInfo = db.UniteTestScore.Where(a => a.UtId == UtId && a.UserName == User.Identity.GetUserName()).FirstOrDefault();
-            //如果没有提交过
-            if (UniteTestScoreInfo == null)
+            if (commitAnswer)
             {
-                //将考试结果存入数据库
-                var uniteTestScore = new UniteTestScore
+                //据UtId获取答案
+                int UserName = Convert.ToInt32(User.Identity.GetUserName());
+                var topicListResult = db.UniteTestInfo.Where(a => a.UtId == UtId).ToList().Select(c =>
+                new UniteTestInfo
                 {
-                    UtId = UtId,
-                    UserName = User.Identity.GetUserName(),
-                    EndTime = DateTime.Now,
-                    Score = Convert.ToInt32(Math.Round(SumScore, 0, MidpointRounding.AwayFromZero))
-                };
-                db.UniteTestScore.InsertOnSubmit(uniteTestScore);
-                db.SubmitChanges();
+                    TopicID = (c.TopicID * (UserName - 200000000)) % 3 * 100,
+                    Answer = c.Answer,
+                });
+                List<UniteTestInfo> answerList = new List<UniteTestInfo>();
+                if (UserName % 2 == 0)
+                {
+                    answerList = topicListResult.OrderBy(s => s.TopicID).ToList();
+                }
+                else
+                {
+                    answerList = topicListResult.OrderByDescending(s => s.TopicID).ToList();
+                }
+                //校验答案
+                List<UnifiedTestModel> result = new List<UnifiedTestModel>();
+                //先算出每题多少分 
+                double itemScore = 100F / answerList.Count;
+                double SumScore = 0;
+                //校验答案
+                for (int i = 0; i < answerList.Count; i++)
+                {
+                    if (answerList[i].Answer.Equals(Answer[i]))
+                    {
+                        UnifiedTestModel resultinfo = new UnifiedTestModel
+                        {
+                            UserAnswer = Answer[i],
+                            RealAnswer = answerList[i].Answer,
+                            IsTrue = true
+                        };
+                        result.Add(resultinfo);
+                        SumScore += itemScore;
+                    }
+                    else
+                    {
+                        UnifiedTestModel resultinfo = new UnifiedTestModel
+                        {
+                            UserAnswer = Answer[i],
+                            RealAnswer = answerList[i].Answer,
+                            IsTrue = false
+                        };
+                        result.Add(resultinfo);
+                    }
+                }
+                var UniteTestScoreInfo = db.UniteTestScore.Where(a => a.UtId == UtId && a.UserName == User.Identity.GetUserName()).FirstOrDefault();
+                //如果是第一次提交答案
+                if (UniteTestScoreInfo == null)
+                {
+                    //将考试结果存入数据库
+                    var uniteTestScore = new UniteTestScore
+                    {
+                        UtId = UtId,
+                        UserName = User.Identity.GetUserName(),
+                        EndTime = DateTime.Now,
+                        Score = Convert.ToInt32(Math.Round(SumScore, 0, MidpointRounding.AwayFromZero))
+                    };
+                    db.UniteTestScore.InsertOnSubmit(uniteTestScore);
+                    db.SubmitChanges();
+                }
+                else
+                {
+                    return Json("false");
+                }
+                return Json(result);
             }
-            else
-            {
-                return Json(null);
-            }
-            return Json(result);
+            return Json("false");
         }
         #endregion
 
