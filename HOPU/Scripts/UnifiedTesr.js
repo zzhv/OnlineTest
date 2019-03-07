@@ -107,16 +107,17 @@ function show_time(Stop) {
                 datatype: "json",
                 success: function (data) {
                     for (var i = 0; i < data.length; i++) {
-                        console.log("所选答案" + data[i].UserAnswer + "正确答案" + data[i].RealAnswer + "结果" + data[i].IsTrue);
+                        //console.log("所选答案" + data[i].UserAnswer + "正确答案" + data[i].RealAnswer + "结果" + data[i].IsTrue);
                         if (data[i].IsTrue.toString() == "true") {
                             sumScore += itemScore;
+                        } else {
+                            document.getElementById("S_" + id).style.border = "1px solid #ddd";
                         }
                     }
                     console.log("总分" + Math.round(sumScore));
                 }
             })
         }
-
     }
 }
 
@@ -124,10 +125,10 @@ function show_time(Stop) {
 function liBorder(id) {
     var flag = $("input[name='answerIteam-" + id + "']:checked").val();
     //alert(flag);
-    if (true != null) {
+    if (flag != null) {
         document.getElementById("S_" + id).style.border = "1px solid #0088cc";
     } else {
-        document.getElementById("S_" + id).style.border = "1px solid #000";
+        document.getElementById("S_" + id).style.border = "1px solid #ddd";
     }
 }
 
@@ -206,9 +207,18 @@ $(function () {
                     console.log("所选答案" + data[i].UserAnswer + "正确答案" + data[i].RealAnswer + "结果" + data[i].IsTrue);
                     if (data[i].IsTrue.toString() == "true") {
                         sumScore += itemScore;
-                    }
+                        $("#ATrue-" + (i + 1) + "").css('display', 'block');
+                        document.getElementById("S_" + (i + 1)).style.border = "1px solid #0f0";
+                    } else {
+                        $("#AFalse-" + (i + 1) + "").text("正确答案：" + data[i].RealAnswer);
+                        $("#AFalse-" + (i + 1) + "").css('display', 'block');
+                        document.getElementById("S_" + (i + 1)).style.border = "1px solid red";
 
+                        //$("#labelanswerA-" + (i + 1) + "")
+                    }
+                    $("input[name='answerIteam-" + (i + 1) + "']").attr("disabled", "disabled");
                 }
+                $("#btnTijiao").attr("disabled", "disabled");
                 $("#timer").attr('id', 'score');
                 //$("#Score").css('display', 'block');
                 $("#score").text(Math.round(sumScore) + " 分");

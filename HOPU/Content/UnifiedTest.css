@@ -24,12 +24,12 @@ ul.nav-tabs {
         ul.nav-tabs li a {
             margin: 0;
             padding: 1px 1px 1px 1px;
-            border-radius: 0
+            border-radius: 1px
         }
 
         ul.nav-tabs li.active a, ul.nav-tabs li.active a:hover {
             color: #fff;
-            background: #0088cc;
+            background: #08c;
             border: 1px solid #0088cc;
             /*border-radius: 20px 20px 20px 20px*/
         }
@@ -63,7 +63,7 @@ pre {
     word-wrap: break-word; /* Internet Explorer 5.5+ */
     margin-left: 70px;
     margin-right: 70px;
-    font-size:15px;
+    font-size: 15px;
 }
 
 #answerUl {
@@ -104,7 +104,7 @@ pre {
     font-size: 16px;
     width: 888px;
     border-radius: 3px 3px 3px 3px;
-    font-family:微软雅黑;
+    font-family: 微软雅黑;
     font-weight: normal
 }
 

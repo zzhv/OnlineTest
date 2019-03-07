@@ -126,20 +126,58 @@ namespace HOPU.Controllers
 
         #endregion
 
-        #region SubmitTest
+        #region  成绩列表 Score 
 
-        public ActionResult SubmitTest()
+        public ActionResult Score(int? UtId)
         {
-            if (!IsAdmin())//如果不是admin权限
-            {
-                return RedirectToAction("Error");
+            //if (!IsAdmin())//如果不是admin权限
+            //{
+            //    return RedirectToAction("Error");
 
-                //return HttpNotFound();
-            }
+            //    //return HttpNotFound();
+            //}
             //分类表
-            List<ClassifieTypedBrowseModel> topicType = GetCourseInfo().ToList();
-            ViewBag.topictype = topicType;
+            //List<ClassifieTypedBrowseModel> topicType = GetCourseInfo().ToList();
+            ViewBag.UtIdList = UnifiedTestModel.GetUtId();
+            ViewBag.UtId = UtId;
             return View();
+        }
+
+        [HttpPost]
+        public JsonResult AdminGetScore(int UtId, int limit, int offset)
+        {
+            HopuDBDataContext db = new HopuDBDataContext();
+            var result = db.UniteTestScore
+                .Where(a => a.UtId == UtId).Join(db.AspNetUsers, a => a.UserName, b => b.UserName, (a, b) => new { a, b })
+                .ToList()
+                .Select(a => new UniteTestScore
+                {
+                    Id = a.a.Id,
+                    UtId = a.a.UtId,
+                    UserName = a.b.RealUserName + "(" + a.a.UserName + ")",
+                    EndTime = a.a.EndTime,
+                    Score = a.a.Score
+                });
+            List<UniteTestScore> score = new List<UniteTestScore>();
+            foreach (var a in result)
+            {
+                UniteTestScore u = new UniteTestScore()
+                {
+                    Id = a.Id,
+                    UtId = a.UtId,
+                    UserName = a.UserName,
+                    EndTime = a.EndTime,
+                    Score = a.Score
+                };
+                score.Add(u);
+            }
+            var totalq = score.Count;
+            var rowsq = score.Skip(offset).Take(limit);
+            return Json(new
+            {
+                total = totalq,
+                rows = rowsq
+            }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -260,12 +298,12 @@ namespace HOPU.Controllers
         #region 删除统测
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult DeleteTest(int UtId)
+        public JsonResult DeleteTest(int UtId)
         {
             HopuDBDataContext db = new HopuDBDataContext();
             if (!IsAdmin())//如果不是admin权限
             {
-                return HttpNotFound();
+                return Json(null);
             }
             var testInfo = db.UniteTestInfo.Where(a => a.UtId == UtId).Select(a => a);
             var test = db.UniteTest.SingleOrDefault(a => a.UtId == UtId);
@@ -310,11 +348,12 @@ namespace HOPU.Controllers
                 }
                 else
                 {
-                    //如果不能进入考试，    以后再写
-                    return RedirectToAction("UnifiedTestType");
+                    //如果因为考试已结束不能进入考试，
+                    return RedirectToAction("Score", new { UtId });
                 }
 
             }
+            //如果是第一次提交答案
             var UniteTestScoreInfo = db.UniteTestScore.Where(a => a.UtId == UtId && a.UserName == User.Identity.GetUserName()).FirstOrDefault();
             if (UniteTestScoreInfo == null)
             {
@@ -323,6 +362,7 @@ namespace HOPU.Controllers
             else
             {
                 joinUniteTest = false;
+                return RedirectToAction("Score", new { UtId });
             }
             //如果能加入统测
             if (joinUniteTest)
@@ -351,13 +391,9 @@ namespace HOPU.Controllers
                 {
                     ViewBag.topicList = topicListResult.OrderByDescending(s => s.TopicID).ToList();
                 }
-                return View();
             }
-            else
-            {
-                //如果不能进入考试，    以后再写
-                return RedirectToAction("UnifiedTestType", new { page = "null" });
-            }
+            return View();
+
         }
         #endregion
 
@@ -380,7 +416,7 @@ namespace HOPU.Controllers
                 }
                 else
                 {
-                    return Json("false");
+                    return Json(false);
                 }
 
             }
@@ -450,11 +486,11 @@ namespace HOPU.Controllers
                 }
                 else
                 {
-                    return Json("false");
+                    return Json(false);
                 }
                 return Json(result);
             }
-            return Json("false");
+            return Json(false);
         }
         #endregion
 
@@ -486,40 +522,4 @@ namespace HOPU.Controllers
 
 
     }
-    #region Linq To Sql 动态条件 PredicateBuilder 
-
-    public static class PredicateBuilder
-    {
-
-        /// <summary>
-        /// 机关函数应用True时：单个AND有效，多个AND有效；单个OR无效，多个OR无效；混应时写在AND后的OR有效  
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static Expression<Func<T, bool>> True<T>() { return f => true; }
-
-        /// <summary>
-        /// 机关函数应用False时：单个AND无效，多个AND无效；单个OR有效，多个OR有效；混应时写在OR后面的AND有效  
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static Expression<Func<T, bool>> False<T>() { return f => false; }
-
-        public static Expression<Func<T, bool>> Or<T>(this Expression<Func<T, bool>> expr1,
-                                                            Expression<Func<T, bool>> expr2)
-        {
-            var invokedExpr = Expression.Invoke(expr2, expr1.Parameters.Cast<Expression>());
-            return Expression.Lambda<Func<T, bool>>
-                  (Expression.Or(expr1.Body, invokedExpr), expr1.Parameters);
-        }
-
-        public static Expression<Func<T, bool>> And<T>(this Expression<Func<T, bool>> expr1,
-                                                             Expression<Func<T, bool>> expr2)
-        {
-            var invokedExpr = Expression.Invoke(expr2, expr1.Parameters.Cast<Expression>());
-            return Expression.Lambda<Func<T, bool>>
-                  (Expression.And(expr1.Body, invokedExpr), expr1.Parameters);
-        }
-    }
-    #endregion
 }
