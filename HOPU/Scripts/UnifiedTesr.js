@@ -99,7 +99,7 @@ function show_time(Stop) {
             var sumScore = 0;
             $.ajax({
                 type: "post",
-                url: "UnifiedTest",
+                url: "UifiedTest",
                 data: {
                     Answer: AnswerArray,
                     UtId: $("#UtId").val() * 1
@@ -186,9 +186,9 @@ $(function () {
                 }
             }
         }
-        //for (var i = 0; i < AnswerArray.length; i++) {
-        //    console.log(AnswerArray[i]);
-        //}
+        for (var i = 0; i < AnswerArray.length; i++) {
+            console.log(AnswerArray[i]);
+        }
         //答案收集完成
         var itemScore = 100 / AnswerArray.length;//计算单题分数
         var sumScore = 0;//总分
@@ -196,7 +196,7 @@ $(function () {
         show_time(1);//关闭倒计时
         $.ajax({
             type: "post",
-            url: "UnifiedTest",
+            url: "../UifiedTest",
             data: {
                 Answer: AnswerArray,
                 UtId: $("#UtId").val() * 1
@@ -205,7 +205,7 @@ $(function () {
             success: function (data) {
                 for (var i = 0; i < data.length; i++) {
                     console.log("所选答案" + data[i].UserAnswer + "正确答案" + data[i].RealAnswer + "结果" + data[i].IsTrue);
-                    if (data[i].IsTrue.toString() == "true") {
+                    if (data[i].IsTrue == true) {
                         sumScore += itemScore;
                         $("#ATrue-" + (i + 1) + "").css('display', 'block');
                         document.getElementById("S_" + (i + 1)).style.border = "1px solid #0f0";

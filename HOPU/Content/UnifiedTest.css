@@ -24,7 +24,7 @@ ul.nav-pills {
             text-align: center;
             line-height: 25px;
             padding: 0px 0px 0px 0px;
-            border-radius: 0px
+            border-radius: 0 0 0 0;
         }
 
 
@@ -33,7 +33,9 @@ ul.nav-pills {
             border-radius: 0px 0px 0 0;
         }
 
-
+        ul.nav-pills li:only-child a {
+            border-radius: 0 0 0px 0px;
+        }
 
         ul.nav-pills li:last-child a {
             border-radius: 0 0 0px 0px;
@@ -171,6 +173,12 @@ pre {
 }
 
 
+#PreBorder {
+    border: 1px solid #ddd;
+    margin-left: 30px;
+    margin-right: 30px;
+    border-radius:4px 4px 4px 4px;
+}
 /*radio样式*/
 .radio-custom input[type=radio] {
     position: absolute;

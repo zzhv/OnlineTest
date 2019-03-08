@@ -128,7 +128,7 @@ namespace HOPU.Controllers
 
         #region  成绩列表 Score 
 
-        public ActionResult Score(int? UtId)
+        public ActionResult Score(int? Id)
         {
             //if (!IsAdmin())//如果不是admin权限
             //{
@@ -139,16 +139,16 @@ namespace HOPU.Controllers
             //分类表
             //List<ClassifieTypedBrowseModel> topicType = GetCourseInfo().ToList();
             ViewBag.UtIdList = UnifiedTestModel.GetUtId();
-            ViewBag.UtId = UtId;
+            ViewBag.UtId = Id;
             return View();
         }
 
         [HttpPost]
-        public JsonResult AdminGetScore(int UtId, int limit, int offset)
+        public JsonResult AdminGetScore(int Id, int limit, int offset)
         {
             HopuDBDataContext db = new HopuDBDataContext();
             var result = db.UniteTestScore
-                .Where(a => a.UtId == UtId).Join(db.AspNetUsers, a => a.UserName, b => b.UserName, (a, b) => new { a, b })
+                .Where(a => a.UtId == Id).Join(db.AspNetUsers, a => a.UserName, b => b.UserName, (a, b) => new { a, b })
                 .ToList()
                 .Select(a => new UniteTestScore
                 {
@@ -325,19 +325,24 @@ namespace HOPU.Controllers
 
         //}
 
-        public ActionResult UnifiedTest(int? UtId)
+        public ActionResult UnifiedTest(int? Id)
         {
+            HopuDBDataContext db = new HopuDBDataContext();
+            int? UtId = Id;
             bool joinUniteTest = false;
             if (UtId == null)
             {
-                return HttpNotFound();
+                return PartialView("Error");
             }
-            HopuDBDataContext db = new HopuDBDataContext();
             var result = db.UniteTest.Where(a => a.UtId == UtId).Select(a => a);
             List<UniteTest> timeInfo = result.ToList();//时间等信息
             ViewBag.timeInfo = timeInfo;
             ViewBag.Title = UtId;
             //能否进入考试
+            if (timeInfo.Count() == 0)
+            {
+                return HttpNotFound();
+            }
             foreach (var item in result)
             {
                 //如果结束时间大于当前时间，可以进入考试
@@ -392,7 +397,7 @@ namespace HOPU.Controllers
                     ViewBag.topicList = topicListResult.OrderByDescending(s => s.TopicID).ToList();
                 }
             }
-            return View();
+            return View("UnifiedTest");
 
         }
         #endregion
@@ -400,7 +405,7 @@ namespace HOPU.Controllers
         #region 校验统测答案
         //校验答案
         [HttpPost]
-        public JsonResult UnifiedTest(string[] Answer, int UtId)
+        public JsonResult UifiedTest(string[] Answer, int UtId)
         {
             HopuDBDataContext db = new HopuDBDataContext();
             //判断时间是否在考试时间段内
@@ -519,7 +524,6 @@ namespace HOPU.Controllers
             return View("About");
         }
         #endregion
-
 
     }
 }

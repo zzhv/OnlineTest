@@ -1,18 +1,17 @@
 ﻿<link href="~/Content/UnifiedTest.css" rel="stylesheet" />
 <link href="~/Content/vs.css" rel="stylesheet" />
 <script src="~/Scripts/highlight.pack.js"></script>
-<div class="ml-auto">
-    <div class="page-title row text-center">
-        <h2>第<span class="text-primary">@ViewBag.Title</span>次统测</h2>
-    </div>
-</div>
 <nav class="breadcrumb">
     <a class="breadcrumb-item" href="~/SysHome/Home">首页</a>
     <span class="breadcrumb-item active">测试中心</span>
     <a class="breadcrumb-item" href="~/SysHome/UnifiedTestType">统测列表</a>
-    <span class="breadcrumb-item active">第<span class="text-primary">@ViewBag.Title</span>次统测</span>
+    <span class="breadcrumb-item active">第<span class="text-primary">@ViewBag.Title</span>号统测</span>
 </nav>
+<div class="row text-center">
+    <h2 style="margin:0px auto;">第<span class="text-primary">@ViewBag.Title</span>号统测</h2>
+</div>
 <body data-spy="scroll" data-target="#myScrollspy" data-offset="1">
+
     @{
         foreach (var item in ViewBag.timeInfo)
         {
@@ -24,22 +23,25 @@
         }
     }
 
+    <div class="fixed-bottom" id="tijiaoshijuan">
+        <div class="jumbotron" style="max-height:20px;">
+            <span id="timer" class="text-danger text-center" style="font-size:30px;margin:0px auto;"></span>
+        </div>
+        <div class="btn-group">
+            <input type="button" id="btnTijiao" class=" btn btn-success" value="提交试卷">
+        </div>
+    </div>
     <div class="container-fluid">
         <div class="row">
             <nav class="col-sm-2 col-2" id="myScrollspy" style="margin-left:-80px;">
-                <ul class="nav nav-pills flex-column">
+                <ul class="nav nav-pills flex-row">
                     @{
                         int i = 1;
                         foreach (var item in ViewBag.topicList)
                         {
                             <li class="nav-item float-left" id="S_@i">
                                 <a class="nav-link" href="#section-@i">@i</a>
-
                             </li>
-                            @*if (i == 5)
-                                {
-                                    <br />
-                                }*@
                             i++;
                         }
                     }
@@ -64,10 +66,12 @@
                             }
                         </div>
                         <div id="section-@j" style="border: 1px solid #e6e6e6;margin-top:20px;height:auto;width:110%;  ">
-                            <h3 style="margin-left:70px;margin-top:24px;">
-                                @j<small>题</small>
+                            <h3 style="margin-left:70px;margin-top:13px;">
+                                <span style="font-size:45px;">@j</span><small>题</small>
                             </h3>
-                            <pre><code>@item.Title</code></pre>
+                            <div id="PreBorder">
+                                <pre><code>@item.Title</code></pre>
+                            </div>
                             <div class="lx_item" style="margin-top:20px;min-height:320px;">
                                 <ul id="answerUl">
                                     @if (answer.Length < 2)
@@ -146,19 +150,6 @@
                         j++;
                     }
                 }
-            </div>
-        </div>
-    </div>
-    <div class="" id="tijiaoshijuan">
-        <div class="well">
-            <span id="timer" class="text-danger text-center" style="font-size:30px;margin:0px auto"></span>
-        </div>
-        <div class="btn-group">
-            <div class="col-sm-6">
-                <button type="submit" id="btnTijiao" class="btn btn-success">提交</button>
-            </div>
-            <div class="col-sm-6">
-                <button type="button" id="cancel" class="btn btn-danger">放弃</button>
             </div>
         </div>
     </div>
