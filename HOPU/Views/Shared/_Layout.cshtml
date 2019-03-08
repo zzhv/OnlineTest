@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@using MvcSiteMapProvider.Web.Html
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -12,50 +13,109 @@
     @Styles.Render("~/Content/css")
 </head>
 <body id="body">
-    <div class="navbar navbar-default " style="margin-top:-50px">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+    <nav class="navbar navbar-expand-sm bg-secondary navbar-dark" style="top:-50px;">
+        @if (Request.IsAuthenticated)
+        {
+            @Html.ActionLink("题库", "Home", "SysHome", new { area = "" }, new { @class = "navbar-brand" })
+        }
+        else
+        {
+            @Html.ActionLink("题库", "AdminLogin", "SysAdmin", new { area = "" }, new { @class = "navbar-brand" })
+        }
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="navbar-nav">
                 @if (Request.IsAuthenticated)
                 {
-                    @Html.ActionLink("题库", "Home", "SysHome", new { area = "" }, new { @class = "navbar-brand" })
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">测试中心</a>
+                        <div class="dropdown-menu">
+                            @Html.ActionLink("统一测试", "UnifiedTestType", "Syshome", new { @class = "dropdown-item" })
+                            @Html.ActionLink("自我测试", "#", "Syshome", new { @class = "dropdown-item" })
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">浏览中心</a>
+                        <div class="dropdown-menu">
+                            @Html.ActionLink("顺序浏览", "Allbrowse", "Syshome", new { @class = "dropdown-item" })
+                            @Html.ActionLink("分类浏览", "ClassifieTypedBrowse", "Syshome", new { @class = "dropdown-item" })
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("关于我们", "About", "Syshome", new { @class = "nav-link" })
+                    </li>
                 }
-                else
-                {
-                    @Html.ActionLink("题库", "AdminLogin", "SysAdmin", new { area = "" }, new { @class = "navbar-brand" })
-                }
-            </div>
-            <div class="navbar-collapse collapse">
-                @if (Request.IsAuthenticated)
-                {
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">测试中心<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("统一测试", "UnifiedTestType", "Syshome")</li>
-                                <li>@Html.ActionLink("自我测试", "#", "Syshome")</li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">浏览中心<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("顺序浏览", "Allbrowse", "Syshome")</li>
-                                <li>@Html.ActionLink("分类浏览", "ClassifieTypedBrowse", "Syshome")</li>
-                            </ul>
-                        </li>
-                        <li>@Html.ActionLink("关于我们", "About", "Syshome")</li>
-                       
-                    </ul>
-                }
-                @Html.Partial("_LoginPartial")
-            </div>
+            </ul>
+            @Html.Partial("_LoginPartial")
         </div>
-    </div>
+    </nav>
+
+    @*<div class="navbar navbar-default " style="margin-top:-50px">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @if (Request.IsAuthenticated)
+                    {
+                        @Html.ActionLink("题库", "Home", "SysHome", new { area = "" }, new { @class = "navbar-brand" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("题库", "AdminLogin", "SysAdmin", new { area = "" }, new { @class = "navbar-brand" })
+                    }
+                </div>
+                <div class="navbar-collapse collapse">
+                    @if (Request.IsAuthenticated)
+                    {
+                        <ul class="nav navbar-nav">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">测试中心<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("统一测试", "UnifiedTestType", "Syshome")</li>
+                                    <li>@Html.ActionLink("自我测试", "#", "Syshome")</li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">浏览中心<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <li>@Html.ActionLink("顺序浏览", "Allbrowse", "Syshome")</li>
+                                    <li>@Html.ActionLink("分类浏览", "ClassifieTypedBrowse", "Syshome")</li>
+                                </ul>
+                            </li>
+                            <li>@Html.ActionLink("关于我们", "About", "Syshome")</li>
+
+                        </ul>
+                    }
+
+                </div>
+            </div>
+        </div>*@
     <div class="container body-content">
+        <!--Only for demo-->
+        @*<ul class="nav">
+                @{
+                    var childSettings = Html.MvcSiteMap().SiteMap.FindSiteMapNodeFromKey("General");
+                    var currentNode = Html.MvcSiteMap().SiteMap.CurrentNode;
+                    foreach (var node in childSettings.ChildNodes)
+                    {
+                        var active = "";
+                        if (currentNode != null && (currentNode.Equals(node) || currentNode.IsDescendantOf(node)))
+                        {
+                            active = "active";
+                        }
+
+
+                        <li class="@active">
+                            <a href="@node.Url">@Html.DisplayFor(x => node.Title)</a>
+                        </li>
+                    }
+                }
+            </ul>*@
         @RenderBody()
         <footer style="margin-top:60px; color:gray">
             <p class="text-center">

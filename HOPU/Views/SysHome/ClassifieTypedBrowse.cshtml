@@ -1,16 +1,11 @@
 ﻿@{
     ViewBag.Title = "分类列表";
 }
-<div class="page-title row text-center">
-    <h2>@ViewBag.Title</h2>
-</div>
-<div>
-    <ul class="breadcrumb" style="width:250px">
-        <li><a href="~/SysHome/Home">首页</a></li>
-        <li class="active">浏览中心</li>
-        <li class="active">@ViewBag.Title</li>
-    </ul>
-</div>
+<nav class="breadcrumb">
+    <a class="breadcrumb-item" href="~/SysHome/Home">首页</a>
+    <span class="breadcrumb-item active">测试中心</span>
+    <span class="breadcrumb-item active">@ViewBag.Title</span>
+</nav>
 <table class="table table-hover table-striped">
     <thead>
         <tr>

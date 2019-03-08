@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<mvcSiteMap xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xmlns="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0"
+            xsi:schemaLocation="http://mvcsitemap.codeplex.com/schemas/MvcSiteMap-File-4.0 MvcSiteMapSchema.xsd">
+
+  <mvcSiteMapNode title="General" key="General" url="General">
+    <mvcSiteMapNode title="Home" controller="SysHome" action="Home"/>
+    <mvcSiteMapNode title="统测" controller="SysHome" action="unifiedTestType"/>
+    <mvcSiteMapNode title="顺序浏览" controller="SysHome" action="AllBrowse"/>
+    <mvcSiteMapNode title="分类浏览" controller="SysHome" action="UnifiedTestType"/>
+  </mvcSiteMapNode>
+
+</mvcSiteMap>
+

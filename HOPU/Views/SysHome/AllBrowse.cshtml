@@ -11,16 +11,11 @@
 <link href="~/Content/Pre.css" rel="stylesheet" />
 <script src="~/Scripts/AllBrowseFirstLoad.js"></script>
 <script src="~/Scripts/highlight.pack.js"></script>
-<div class="page-title row text-center">
-    <h2>@ViewBag.Title</h2>
-</div>
-<div>
-    <ul class="breadcrumb" style="width:250px">
-        <li><a href="~/SysHome/Home">首页</a></li>
-        <li class="active">浏览中心</li>
-        <li class="active">顺序浏览</li>
-    </ul>
-</div>
+<nav class="breadcrumb">
+    <a class="breadcrumb-item" href="~/SysHome/Home">首页</a>
+    <span class="breadcrumb-item active">浏览中心</span>
+    <span class="breadcrumb-item active">@ViewBag.Title</span>
+</nav>
 <div class="examone" id="main_M" style="margin: 0;padding: 0;font-size: 20px;font-family:微软雅黑;">
     <div class="lx_type" style="display: block;position:absolute;height:45px;width:66px;margin-top:5px;background-image:url(../Content/image/icons_1.png);background-repeat:no-repeat;z-index:1">
         <label id="topicType" style="color:aliceblue;font-size:14px;text-align:center;line-height:45px;margin-left:5px;">单选题</label>
