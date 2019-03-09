@@ -20,7 +20,7 @@ namespace HOPU.Models
             var result = from a in db.UniteTest
                          select new SelectListItem()
                          {
-                             Text = a.UtId.ToString(),
+                             Text = "第" + a.UtId.ToString() + "号统测",
                              Value = a.UtId.ToString(),
                          };
             return result.ToList();

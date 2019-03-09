@@ -1,17 +1,18 @@
-﻿<link href="~/Content/UnifiedTest.css" rel="stylesheet" />
-<link href="~/Content/vs.css" rel="stylesheet" />
-<script src="~/Scripts/highlight.pack.js"></script>
+﻿@section Header{
+    <link href="~/Content/UnifiedTest.css" rel="stylesheet" />
+    <link href="~/Content/vs.css" rel="stylesheet" />
+    <script src="~/Scripts/highlight.pack.js"></script>
+}
 <nav class="breadcrumb">
     <a class="breadcrumb-item" href="~/SysHome/Home">首页</a>
     <span class="breadcrumb-item active">测试中心</span>
-    <a class="breadcrumb-item" href="~/SysHome/UnifiedTestType">统测列表</a>
+    <a class="breadcrumb-item" href="~/UifiedTestCenter/UnifiedTestType">统测列表</a>
     <span class="breadcrumb-item active">第<span class="text-primary">@ViewBag.Title</span>号统测</span>
 </nav>
 <div class="row text-center">
     <h2 style="margin:0px auto;">第<span class="text-primary">@ViewBag.Title</span>号统测</h2>
 </div>
 <body data-spy="scroll" data-target="#myScrollspy" data-offset="1">
-
     @{
         foreach (var item in ViewBag.timeInfo)
         {
@@ -22,14 +23,10 @@
             <input type="hidden" id="UtId" value="@item.UtId" />
         }
     }
-
     <div class="fixed-bottom" id="tijiaoshijuan">
-        <div class="jumbotron" style="max-height:20px;">
-            <span id="timer" class="text-danger text-center" style="font-size:30px;margin:0px auto;"></span>
-        </div>
-        <div class="btn-group">
-            <input type="button" id="btnTijiao" class=" btn btn-success" value="提交试卷">
-        </div>
+        <span id="timer" class="btn btn-outline-danger" style="font-size:30px;width:155px;"></span>
+        <hr />
+        <input type="button" id="btnTijiao" class=" btn btn-success" value="提交试卷">
     </div>
     <div class="container-fluid">
         <div class="row">
@@ -72,7 +69,7 @@
                             <div id="PreBorder">
                                 <pre><code>@item.Title</code></pre>
                             </div>
-                            <div class="lx_item" style="margin-top:20px;min-height:320px;">
+                            <div style="margin-top:20px;min-height:320px;">
                                 <ul id="answerUl">
                                     @if (answer.Length < 2)
                                     {
@@ -113,37 +110,29 @@
                                     {
                                         <li>
                                             <input onclick="liBorder(@j)" type='checkbox' value='A' name='answerIteam-@j' id='answer1-@j'>
-                                            <label for="answer1-@j" id="labelanswerA-@j" name="labelanswer">
-                                                A：@item.AnswerA
-                                            </label>
+                                            <label for="answer1-@j" id="labelanswerA-@j" name="labelanswer">A：@item.AnswerA</label>
                                         </li>
                                         <li>
                                             <input onclick="liBorder(@j)" type='checkbox' value='B' name='answerIteam-@j' id='answer2-@j'>
-                                            <label for="answer2-@j" id="labelanswerB-@j" name="labelanswer">
-                                                B： @item.AnswerB
-                                            </label>
+                                            <label for="answer2-@j" id="labelanswerB-@j" name="labelanswer">B： @item.AnswerB</label>
                                         </li>
                                         <li>
                                             <input onclick="liBorder(@j)" type='checkbox' value='C' name='answerIteam-@j' id='answer3-@j'>
-                                            <label for="answer3-@j" id="labelanswerC-@j" name="labelanswer">
-                                                C：@item.AnswerC
-                                            </label>
+                                            <label for="answer3-@j" id="labelanswerC-@j" name="labelanswer">C：@item.AnswerC</label>
                                         </li>
                                         <li>
                                             <input onclick="liBorder(@j)" type='checkbox' value='D' name='answerIteam-@j' id='answer4-@j'>
-                                            <label for="answer4-@j" id="labelanswerD-@j" name="labelanswer">
-                                                D：@item.AnswerD
-                                            </label>
+                                            <label for="answer4-@j" id="labelanswerD-@j" name="labelanswer">D：@item.AnswerD</label>
                                         </li>
                                     }
                                 </ul>
-                                <div>
-                                    <div class="col-sm-4"></div>
-                                    <div class="col-sm-4">
-                                        <span id="ATrue-@j" class="glyphicon glyphicon-ok" style="color: rgb(0, 154, 0);display:none;font-size:40px;line-height:40px"></span>
-                                        <span id="AFalse-@j" class="glyphicon glyphicon-remove" style="color: rgb(225,0,0);display:none;font-size:40px;line-height:40px;"></span>
-                                    </div>
-                                    <div class="col-sm-4"></div>
+                            </div>
+                            <div>
+                                <div id="ATrue-@j" class="card bg-success text-white" style="display:none;">
+                                    <div class="card-body">回答正确</div>
+                                </div>
+                                <div id="AFalse-@j" class="card bg-danger text-white " style="display:none;">
+                                    <div id="AFalse-@j-@j" class="card-body"></div>
                                 </div>
                             </div>
                         </div>
@@ -154,4 +143,6 @@
         </div>
     </div>
 </body>
-<script src="~/Scripts/UnifiedTesr.js"></script>
+@section footer{
+    <script src="~/Scripts/UnifiedTesr.js"></script>
+}

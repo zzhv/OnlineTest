@@ -22,15 +22,21 @@ namespace HOPU
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/pop").Include(
+                        "~/Scripts/umd/popper.js"
+                        ));
+
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/zjxd").Include(
-                      "~/Scripts/my.js"));
+                      "~/Scripts/jquery.scrollUp.js",
+                       "~/Scripts/OpenScrollup.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                         "~/Content/bootstrap.css",
-                        "~/Content/site.css"));
+                        "~/Content/site.css",
+                        "~/Content/Scrollup/image.css"));
         }
     }
 }

@@ -186,9 +186,9 @@ $(function () {
                 }
             }
         }
-        for (var i = 0; i < AnswerArray.length; i++) {
-            console.log(AnswerArray[i]);
-        }
+        //for (var i = 0; i < AnswerArray.length; i++) {
+        //    console.log(AnswerArray[i]);
+        //}
         //答案收集完成
         var itemScore = 100 / AnswerArray.length;//计算单题分数
         var sumScore = 0;//总分
@@ -210,7 +210,7 @@ $(function () {
                         $("#ATrue-" + (i + 1) + "").css('display', 'block');
                         document.getElementById("S_" + (i + 1)).style.border = "1px solid #0f0";
                     } else {
-                        $("#AFalse-" + (i + 1) + "").text("正确答案：" + data[i].RealAnswer);
+                        $("#AFalse-" + (i + 1) + "-" + (i + 1) + "").html("正确答案：" + "<strong style='font-size:30px;'>" + data[i].RealAnswer) + "</strong>";
                         $("#AFalse-" + (i + 1) + "").css('display', 'block');
                         document.getElementById("S_" + (i + 1)).style.border = "1px solid red";
 

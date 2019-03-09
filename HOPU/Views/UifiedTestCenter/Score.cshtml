@@ -1,0 +1,187 @@
+﻿@{
+    ViewBag.Title = "成绩中心";
+}
+@using Microsoft.AspNet.Identity;
+@using HOPU.Models
+@model GetUserType
+@section header{
+    <link href="~/Content/bootstrap-editable.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap-editable.js"><</script>
+    <link href="~/Content/bootstrap-table.css" rel="stylesheet" />
+    <script src="~/Scripts/BTTable/bootstrap-table.js"></script>
+    <script src="~/Scripts/BTTable/bootstrap-table-zh-CN.js"></script>
+    <script src="~/Scripts/BTTable/bootstrap-table-editable.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.zh-CN.js"></script>
+}
+<nav class="breadcrumb">
+    <a class="breadcrumb-item" href="~/SysHome/Home">首页</a>
+    <span class="breadcrumb-item active">测试中心</span>
+    <a class="breadcrumb-item" href="~/UifiedTestCenter/UnifiedTestType">统测列表</a>
+    <span class="breadcrumb-item active">成绩中心</span>
+</nav>
+@if (GetUserType.GetUserTypeInfo(User.Identity.GetUserId()))//如果是admin
+{
+    <div>
+        <input type="hidden" id="UtId" value="@ViewBag.UtId" />
+    </div>
+    <div>
+        <div id="toolbar">
+            <div>
+                @Html.DropDownList("BrickType", ViewBag.UtIdList as IEnumerable<SelectListItem>, new { id = "select", @class = "btn btn-info" })
+            </div>
+        </div>
+        <table id="ScoreTable"></table>
+
+
+        <table id="table"
+               data-toggle="table"
+               data-toolbar="#toolbar"
+               data-height="428"
+               data-url="@Url.Action("AdminGetScore","UifiedTestCenter")"
+               data-method="post"
+               data-page-size="10"
+               data-pagination="true"
+               data-page-number="1"
+               data-side-pagination="server"
+               data-flat="true"
+               data-search="true"
+               data-page-list="[10, 25, 50, 100, 200, All]"
+               data-show-refresh="true"
+                data-show-pagination-switch="true"
+               data-query-params="queryParams">
+            <thead>
+                <tr>
+                    <th data-field="UtId" data-sortable="true">统测号</th>
+                    <th data-field="UserName" data-sortable="true">姓名(学号)</th>
+                    <th data-field="EndTime" data-formatter="changeDateFormat" data-sortable="true">提交时间</th>
+                    <th data-field="Score" data-sortable="true">得分</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
+
+
+
+    <script>
+        function queryParams(params) {
+            var temp = {
+                limit: params.limit,   //页面大小
+                offset: params.offset,  //页码
+                Id: $("#UtId").val()
+                //statu: $("#txt_search_statu").val()
+            };
+            return temp;
+        };
+
+    var $table = $('table')
+    $(function () {
+        $("#select").on("change", function () {
+            $("#UtId").val($('#select option:selected').val());
+            $table.bootstrapTable('refresh');
+            //var form = $("#myform");
+            //form.submit();
+        })
+    })
+
+    function changeDateFormat(cellval) {
+        if (cellval != null) {
+            var date = new Date(parseInt(cellval.replace("/Date(", "").replace(")/", ""), 10));
+            var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+            var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+            return date.getFullYear() + "-" + month + "-" + currentDate;
+        }
+    }
+    </script>
+
+
+    @*<script>
+            var $table= $('ScoreTable')
+        $(function () {
+            $("#select").on("change", function () {
+                $("#UtId").val($('#select option:selected').val());
+                //$table.bootstrapTable('refresh');
+                //var form = $("#myform");
+                //form.submit();
+            })
+        })
+
+        var $button = $('#button')
+
+        $(function () {
+            $button.click(function () {
+                $table.bootstrapTable('refresh')
+            })
+        })
+
+        //初始化Table
+        $('#ScoreTable').bootstrapTable({
+            url: "../AdminGetScore",        //请求后台的URL（*）
+            method: 'post',                      //请求方式（*）
+            toolbar: '#toolbar',                //工具按钮用哪个容器
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+            sortable: true,                     //是否启用排序
+            sortOrder: "asc",                   //排序方式
+            queryParams: queryParams,//传递参数（*）
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1,                       //初始化加载第一页，默认第一页
+            pageSize: 10,                       //每页的记录行数（*）
+            pageList: [10, 25, 50, 'ALL'],        //可供选择的每页的行数（*）
+            search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+            strictSearch: true,
+            showColumns: true,                  //是否显示所有的列
+            showRefresh: true,                  //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            clickToSelect: true,                //是否启用点击选中行
+            height: 500,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            uniqueId: "UtId",                     //每一行的唯一标识，一般为主键列
+            showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
+            cardView: false,                    //是否显示详细视图
+            detailView: false,                   //是否显示父子表
+            columns: [
+                //{
+                //field: 'Id', // 返回json数据中的name
+                //title: 'ID' // 表格表头显示文字
+                //},
+                {
+                    field: 'UtId',
+                    title: '统测号',
+
+                }, {
+                    field: 'UserName',
+                    title: '姓名(学号)',
+                }, {
+                    field: 'EndTime',
+                    title: "提交时间",
+                    formatter: function (value, row, index) {
+                        return changeDateFormat(value)
+                    }
+                }, {
+                    field: "Score",
+                    title: "分数",
+                }]
+        });
+
+        function queryParams(params) {
+            var temp = {   //这里的键的名字和控制器的变量名必须一直，这边改动，控制器也需要改成一样的
+                limit: params.limit,   //页面大小
+                offset: params.offset,  //页码
+                Id: $("#UtId").val()
+                //statu: $("#txt_search_statu").val()
+            };
+            return temp;
+        };
+        function changeDateFormat(cellval) {
+            if (cellval != null) {
+                var date = new Date(parseInt(cellval.replace("/Date(", "").replace(")/", ""), 10));
+                var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+                var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+                return date.getFullYear() + "-" + month + "-" + currentDate;
+            }
+        }
+
+        </script>*@
+
+}

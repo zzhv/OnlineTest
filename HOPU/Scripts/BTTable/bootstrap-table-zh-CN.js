@@ -32,7 +32,7 @@
         return '搜索';
       },
       formatNoMatches: function formatNoMatches() {
-        return '没有找到匹配的记录';
+        return '没有有成绩信息';
       },
       formatPaginationSwitch: function formatPaginationSwitch() {
         return '隐藏/显示分页';
