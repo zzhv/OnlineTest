@@ -1,12 +1,11 @@
 ﻿@using Microsoft.AspNet.Identity;
 @using HOPU.Models
-@model GetRealUserName
 @if (Request.IsAuthenticated)
 {
     <ul class="navbar-nav ml-auto">
         <li class="nav-item ml-auto">
             @Html.ActionLink("你好，" + GetRealUserName.GetRealName(User.Identity.GetUserId()) + " !", "index", "Manage", null, new { @class = "nav-link ml-auto" })
-
+            @*GetRealUserName.GetRealName(User.Identity.GetUserId())*@
         </li>
         @if (GetUserType.GetUserTypeInfo(User.Identity.GetUserId()))//如果是admin
         {

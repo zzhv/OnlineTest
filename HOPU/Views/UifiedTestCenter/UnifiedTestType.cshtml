@@ -6,8 +6,9 @@
 @using X.PagedList.Mvc;
 @using X.PagedList
 @model GetUserType
-<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-@Html.Raw(ViewBag.Js)
+@section Header{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}
 <nav class="breadcrumb">
     <a class="breadcrumb-item" href="~/SysHome/Home">首页</a>
     <span class="breadcrumb-item active">测试中心</span>

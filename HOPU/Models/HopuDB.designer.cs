@@ -1523,6 +1523,8 @@ namespace HOPU.Models
 		
 		private int _UtId;
 		
+		private string _RealUserName;
+		
 		private string _UserName;
 		
 		private System.DateTime _EndTime;
@@ -1539,6 +1541,8 @@ namespace HOPU.Models
     partial void OnIdChanged();
     partial void OnUtIdChanging(int value);
     partial void OnUtIdChanged();
+    partial void OnRealUserNameChanging(string value);
+    partial void OnRealUserNameChanged();
     partial void OnUserNameChanging(string value);
     partial void OnUserNameChanged();
     partial void OnEndTimeChanging(System.DateTime value);
@@ -1593,6 +1597,26 @@ namespace HOPU.Models
 					this._UtId = value;
 					this.SendPropertyChanged("UtId");
 					this.OnUtIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RealUserName", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string RealUserName
+		{
+			get
+			{
+				return this._RealUserName;
+			}
+			set
+			{
+				if ((this._RealUserName != value))
+				{
+					this.OnRealUserNameChanging(value);
+					this.SendPropertyChanging();
+					this._RealUserName = value;
+					this.SendPropertyChanged("RealUserName");
+					this.OnRealUserNameChanged();
 				}
 			}
 		}

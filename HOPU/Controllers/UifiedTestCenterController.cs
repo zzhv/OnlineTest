@@ -84,7 +84,7 @@ namespace HOPU.Controllers
                 else
                 {
                     //如果因为考试已结束不能进入考试，
-                    return RedirectToAction("Score", new { Id });
+                    return RedirectToAction("Score", "ScoreCenter", new { Id });
                 }
 
             }
@@ -97,7 +97,7 @@ namespace HOPU.Controllers
             else
             {
                 joinUniteTest = false;
-                return RedirectToAction("Score", new { Id });
+                return RedirectToAction("Score", "ScoreCenter", new { Id });
             }
             //如果能加入统测
             if (joinUniteTest)
@@ -212,6 +212,7 @@ namespace HOPU.Controllers
                     var uniteTestScore = new UniteTestScore
                     {
                         UtId = UtId,
+                        RealUserName = GetRealUserName.GetRealName(User.Identity.GetUserId()),
                         UserName = User.Identity.GetUserName(),
                         EndTime = DateTime.Now,
                         Score = Convert.ToInt32(Math.Round(SumScore, 0, MidpointRounding.AwayFromZero))
@@ -226,62 +227,6 @@ namespace HOPU.Controllers
                 return Json(result);
             }
             return Json(false);
-        }
-        #endregion
-
-        #region  成绩列表 Score 
-
-        public ActionResult Score(int? Id)
-        {
-            var pageNumber = Id ?? 1;
-            //if (!IsAdmin())//如果不是admin权限
-            //{
-            //    return RedirectToAction("Error");
-
-            //    //return HttpNotFound();
-            //}
-            //分类表
-            //List<ClassifieTypedBrowseModel> topicType = GetCourseInfo().ToList();
-            ViewBag.UtIdList = UnifiedTestModel.GetUtId();
-            ViewBag.UtId = pageNumber;
-            return View();
-        }
-
-        [HttpPost]
-        public JsonResult AdminGetScore(int Id, int limit, int offset)
-        {
-            HopuDBDataContext db = new HopuDBDataContext();
-            var result = db.UniteTestScore
-                .Where(a => a.UtId == Id).Join(db.AspNetUsers, a => a.UserName, b => b.UserName, (a, b) => new { a, b })
-                .ToList()
-                .Select(a => new UniteTestScore
-                {
-                    Id = a.a.Id,
-                    UtId = a.a.UtId,
-                    UserName = a.b.RealUserName + "(" + a.a.UserName + ")",
-                    EndTime = a.a.EndTime,
-                    Score = a.a.Score
-                });
-            List<UniteTestScore> score = new List<UniteTestScore>();
-            foreach (var a in result)
-            {
-                UniteTestScore u = new UniteTestScore()
-                {
-                    Id = a.Id,
-                    UtId = a.UtId,
-                    UserName = a.UserName,
-                    EndTime = a.EndTime,
-                    Score = a.Score
-                };
-                score.Add(u);
-            }
-            var totalq = score.Count;
-            var rowsq = score.Skip(offset).Take(limit);
-            return Json(new
-            {
-                total = totalq,
-                rows = rowsq
-            }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

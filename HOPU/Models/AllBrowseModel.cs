@@ -46,7 +46,7 @@ namespace HOPU.Models
         {
             string userType = "";
             HopuDBDataContext db = new HopuDBDataContext();
-            var result = db.UserClaims.Where(a => a.UserId == id).Select(a=>a.ClaimType).ToArray();
+            var result = db.UserClaims.Where(a => a.UserId == id).Select(a => a.ClaimType).ToArray();
             if (result.Count() >= 1)
             {
                 userType = result[0];

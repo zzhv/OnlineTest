@@ -83,6 +83,7 @@
     <Type Name="UniteTestScore">
       <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="UtId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RealUserName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="UserName" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
       <Column Name="EndTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="Score" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />

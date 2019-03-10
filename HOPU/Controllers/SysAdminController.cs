@@ -102,7 +102,7 @@ namespace HOPU.Controllers
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "登录失败，请检查用户名或密码！");
-                    return View();
+                    return View(model);
             }
         }
 
@@ -299,7 +299,7 @@ namespace HOPU.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View();
             }
             var user = await UserManager.FindByNameAsync(model.Email);
             if (user == null)
@@ -313,7 +313,7 @@ namespace HOPU.Controllers
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
             AddErrors(result);
-            return View();
+            return View(model);
         }
 
         //
