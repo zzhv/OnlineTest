@@ -144,7 +144,7 @@ namespace HOPU.Controllers
             foreach (var item in timeInfo)
             {
                 //如果结束时间大于当前时间，可以提交
-                if (Convert.ToDateTime(item.StartTime).AddMinutes(item.TimeLenth) > DateTime.Now)
+                if (Convert.ToDateTime(item.StartTime).AddMinutes(item.TimeLenth) > DateTime.Now.AddSeconds(-5))//给五秒的冗余时间 否则js倒计时0时提交会失败
                 {
                     commitAnswer = true;
                     break;

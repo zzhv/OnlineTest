@@ -4,40 +4,59 @@
     ViewBag.Title = "注册";
 }
 <h2>创建新帐户</h2>
-
 @using (Html.BeginForm("AdminRegister", "SysAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
     <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
+    @Html.ValidationSummary(true,"", new { @class = "text-danger" })
     <div class="form-group">
         @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+            <div class="d-flex align-items-start bg-white">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                <div class="p-2 ">
+                    @Html.ValidationMessageFor(m => m.UserName, "", new { @class = "text-danger" })
+                </div>
+            </div>
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.RealUserName, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.TextBoxFor(m => m.RealUserName, new { @class = "form-control" })
+            <div class="d-flex align-items-start bg-white">
+                @Html.TextBoxFor(m => m.RealUserName, new { @class = "form-control" })
+                <div class="p-2 ">
+                    @Html.ValidationMessageFor(m => m.RealUserName, "", new { @class = "text-danger" })
+                </div>
+            </div>
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.Password, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            <div class="d-flex align-items-start bg-white">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                <div class="p-2 ">
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
         </div>
     </div>
     <div class="form-group">
         @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-2 control-label" })
         <div class="col-md-10">
-            @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+            <div class="d-flex align-items-start bg-white">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                <div class="p-2 ">
+                    @Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "text-danger" })
+                </div>
+            </div>
         </div>
 
     </div>
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-success" value="注册" />
+            <input type="submit" class="btn btn-block btn-success" value="注册" />
         </div>
     </div>
 }
@@ -45,101 +64,3 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
-
-
-
-
-
-
-
-@*
-    <!DOCTYPE html>
-
-    <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>注册</title>
-        <link href="~/Content/Admin/css/animate.min.css" rel="stylesheet" />
-        <link href="~/Content/Admin/css/bootstrap.min14ed.css" rel="stylesheet" />
-        <link href="~/Content/Admin/css/font-awesome.min93e3.css" rel="stylesheet" />
-        <link href="~/Content/Admin/css/style.min862f.css" rel="stylesheet" />
-        <!--[if lt IE 9]>
-        <meta http-equiv="refresh" content="0;ie.html" />
-        <![endif]-->
-
-        <script>
-
-            function pwd() {
-                var pwd1 = document.getElementById("userPwd").value;
-                var pwd2 = document.getElementById("repeatUserPwd").value;
-                if (pwd1 != pwd2) {
-                    document.getElementById("pwdError").innerHTML = "两次输入的密码不一样，请重试！";
-                    return false;
-                } else {
-                    document.getElementById("pwdError").innerHTML = "&nbsp;";
-                    document.getElementById("register").disabled = false;
-                    return true;
-                }
-
-            }
-
-            //if (window.top !== window.self) {
-            //    window.top.location = window.location;
-            //}
-            //function check() {
-            //    if (document.getElementById("userAccount").value == null || document.getElementById("userPwd".value == null)) {
-            //        return false;
-            //    } else {
-            //        return true;
-            //    }
-            //}
-            function registerState(){
-                 var data = @Html.Raw(Json.Encode(ViewBag.Data));
-                    if (data == true) {
-                        document.getElementById('divvv').style.display = 'block';
-                    } else {
-                        document.getElementById('divvv').style.display = 'none';
-                    }
-            }
-        </script>
-    </head>
-    <body class="gray-bg" onload="registerState()">
-        <div class="middle-box text-center loginscreen  animated fadeInDown">
-            <div>
-                <div>
-                    <h1 class="logo-name">Register</h1>
-                </div>
-                <h3>注册</h3>
-                <form action="~/SysAdmin/AdminRegister" method="post" />
-                <div class="form-group">
-                    <input type="text" id="userAccount" name="userAccount" class="form-control" placeholder="账号" required="">
-                </div>
-                <div class="form-group">
-                    <input type="password" id="userPwd" name="userPwd" id="userPwd" class="form-control" placeholder="密码" required="">
-                </div>
-                <div class="form-group">
-                    <input type="password" name="repeatUserPwd" id="repeatUserPwd" class="form-control" placeholder="重复密码" required=""><span id="pwdError" style="color:red">&nbsp;</span>
-                </div>
-                <span style="color:red">@ViewData["RegisterState"]</span>
-                <input id="register" type="submit" class="btn btn-primary block full-width m-b" value="注册" onclick="return pwd()" />
-                </form>
-            </div>
-        </div>
-        <div id="divvv" style="display:none; position:absolute;margin-top:-16%; margin-left:41%; border: 1px black solid; width:400px;height:300px; background-color:white">
-            <h3 style="text-align:center;margin-top:50px;"><br><span style="color:red;font-weight:100">@ViewData["userAccount"]</span><br><br>注册成功！</h3>
-            <a href="~/SysAdmin/AdminLogin">
-                <input id="goLogin" type="button" class="btn btn-primary block m-b"
-                       style="width:100px;margin:50px auto;padding-right:100px;" value="立即前往登录 " />
-            </a>
-        </div>
-        <script src="~/Content/Admin/Js/bootstrap.min.js"></script>
-        <script src="~/Content/Admin/Js/jquery.min.js"></script>
-        <script>
-
-
-        </script>
-
-    </body>
-    </html>
-*@

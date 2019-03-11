@@ -49,12 +49,12 @@ namespace HOPU.Models
 
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "学号不得为空！")]
         [Display(Name = "学号")]
-        //[EmailAddress]
+        [StringLength(10, ErrorMessage = "学号不能超过10个字符！")]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "密码不得为空！")]
         [DataType(DataType.Password)]
         [Display(Name = "密码")]
         public string Password { get; set; }
@@ -63,6 +63,17 @@ namespace HOPU.Models
         public bool RememberMe { get; set; }
     }
 
+    public class OnlyNumberAttribute : RegularExpressionAttribute
+    {
+        public OnlyNumberAttribute() : base("[mf]")
+        {
+
+        }
+        public override string FormatErrorMessage(string name)
+        {
+            return "性别只能输入m(男)或者f(女)";
+        }
+    }
     //public class RegisterViewModel
     //{
     //    [Required]
@@ -86,24 +97,27 @@ namespace HOPU.Models
 
     public class RegisterViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "学号不得为空！")]
         [Display(Name = "学号")]
+        [StringLength(10, ErrorMessage = "学号不能超过10个字符！")]
         public string UserName { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage = "姓名不得为空！")]
         [Display(Name = "姓名")]
+        [StringLength(10, ErrorMessage = "你确定你名字有这么长？")]
         public string RealUserName { get; set; }
 
 
-        [Required]
+        [Required(ErrorMessage = "密码不得为空！")]
         [DataType(DataType.Password)]
         [Display(Name = "密码")]
         public string Password { get; set; }
 
+        [Required(ErrorMessage = "确认密码不得为空！")]
         [DataType(DataType.Password)]
         [Display(Name = "确认密码")]
-        [Compare("Password", ErrorMessage = "密码和确认密码不匹配。")]
+        [Compare("Password", ErrorMessage = "密码和确认密码不一致。")]
         public string ConfirmPassword { get; set; }
     }
 

@@ -20,7 +20,7 @@
     } catch (e) {
         // ignore
     }
-
+    //更换bootstrap4后bootstrap table 右上角图标显示不出来 暂时手动修改
     const constants = {
         3: {
             theme: 'bootstrap3',
@@ -34,7 +34,9 @@
                 columns: 'glyphicon-th icon-th',
                 detailOpen: 'glyphicon-plus icon-plus',
                 detailClose: 'glyphicon-minus icon-minus',
-                fullscreen: 'glyphicon-fullscreen'
+                fullscreen: 'glyphicon-fullscreen',
+                //export: 'glyphicon-export icon-share'
+                // export: 'glyphicon glyphicon-download-alt'
             },
             classes: {
                 buttonsPrefix: 'btn',
@@ -48,25 +50,47 @@
                 dropup: 'dropup',
                 dropdownActive: 'active',
                 paginationActive: 'active'
+
+                //buttonsPrefix: 'btn',
+                //buttons: 'info',
+                //buttonsGroup: 'btn-group',
+                //buttonsDropdown: 'btn-group',
+                //pull: 'float',
+                //inputGroup: '',
+                //input: 'form-control',
+                //paginationDropdown: 'btn-group dropdown',
+                //dropup: 'dropup',
+                //dropdownActive: 'active',
+                //paginationActive: 'active'
             },
             html: {
-                toobarDropdow: ['<ul class="dropdown-menu" role="menu">', '</ul>'],
-                toobarDropdowItem: '<li role="menuitem"><label>%s</label></li>',
-                pageDropdown: ['<ul class="dropdown-menu" role="menu">', '</ul>'],
-                pageDropdownItem: '<li role="menuitem" class="%s"><a href="#">%s</a></li>',
+                //toobarDropdow: ['<ul class="dropdown-menu" role="menu">', '</ul>'],
+                //toobarDropdowItem: '<li role="menuitem"><label>%s</label></li>',
+                //pageDropdown: ['<ul class="dropdown-menu" role="menu">', '</ul>'],
+                //pageDropdownItem: '<li role="menuitem" class="%s"><a href="#">%s</a></li>',
+                //dropdownCaret: '<span class="caret"></span>',
+                //pagination: ['<ul class="pagination%s">', '</ul>'],
+                //paginationItem: '<li class="page-item%s"><a class="page-link" href="#">%s</a></li>',
+                toobarDropdow: ['<div class="dropdown-menu dropdown-menu-right">', '</div>'],
+                toobarDropdowItem: '<label class="dropdown-item">%s</label>',
+                pageDropdown: ['<div class="dropdown-menu">', '</div>'],
+                pageDropdownItem: '<a class="dropdown-item %s" href="#">%s</a>',
                 dropdownCaret: '<span class="caret"></span>',
                 pagination: ['<ul class="pagination%s">', '</ul>'],
                 paginationItem: '<li class="page-item%s"><a class="page-link" href="#">%s</a></li>',
-                icon: '<i class="%s %s"></i>'
+                icon: '<span class="%s %s"></span>'
             }
         },
         4: {
             theme: 'bootstrap4',
+            //原 fa glyphicon
             iconsPrefix: 'fa',
             icons: {
                 paginationSwitchDown: 'fa-caret-square-down',
                 paginationSwitchUp: 'fa-caret-square-up',
                 refresh: 'fa-sync',
+                //只能手动替换图标 start
+                //refresh: 'glyphicon-refresh icon-refresh',
                 toggleOff: 'fa-toggle-off',
                 toggleOn: 'fa-toggle-on',
                 columns: 'fa-th-list',

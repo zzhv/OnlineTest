@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "统测列表";
+    ViewBag.Title = "统一测试";
 }
 @using Microsoft.AspNet.Identity;
 @using HOPU.Models
@@ -114,7 +114,7 @@
                             <span class="badge badge-success">OPEN</span>
                         </td>
                         <td class="text-right">
-                            @Html.ActionLink("加入", "UnifiedTest", new { Id = i.UtId }, new { @class = "btn btn-success btn-sm" })
+                            @Html.ActionLink("查看", "UnifiedTest", new { Id = i.UtId }, new { @class = "btn btn-success btn-sm" })
                             @if (adminFlag)
                             {
                                 @Ajax.ActionLink("删除", "DeleteTest",
@@ -152,7 +152,6 @@
                     }
 
                 </tr>
-
             }
         }
     </tbody>

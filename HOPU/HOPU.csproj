@@ -238,6 +238,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\all.css" />
     <Content Include="Content\bootstrap-editable.css" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
@@ -246,18 +247,22 @@
     <Content Include="Content\bootstrap-table.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\image\download.png" />
     <Content Include="Content\image\homeLunbo\img_fjords_wide.jpg" />
     <Content Include="Content\image\homeLunbo\img_mountains_wide.jpg" />
     <Content Include="Content\image\homeLunbo\img_nature_wide.jpg" />
     <Content Include="Content\image\icons_1.png" />
     <Content Include="Content\image\top.png" />
+    <Content Include="Content\open-iconic-bootstrap.css" />
     <Content Include="Content\Pre.css" />
     <Content Include="Content\prettify.css" />
-    <Content Include="Content\Scrollup\image.css" />
+    <Content Include="Content\image.css" />
     <Content Include="Content\timeline.css" />
     <Content Include="Content\UnifiedTest.css" />
     <Content Include="Content\vs.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="fonts\open-iconic.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="ApplicationInsights.config">
@@ -275,6 +280,15 @@
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-reboot.min.css.map" />
+    <Content Include="fonts\open-iconic.eot" />
+    <Content Include="fonts\open-iconic.otf" />
+    <Content Include="fonts\open-iconic.ttf" />
+    <Content Include="fonts\open-iconic.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="fonts\fa-solid-900.woff2" />
     <None Include="Models\HopuDB.dbml.layout">
       <DependentUpon>HopuDB.dbml</DependentUpon>
     </None>
@@ -292,6 +306,7 @@
     <Content Include="Scripts\bootstrap-datepicker.zh-CN.js" />
     <Content Include="Scripts\bootstrap-editable.js" />
     <Content Include="Scripts\bootstrap-editable.min.js" />
+    <Content Include="Scripts\BTTable\bootstrap-table-export.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -299,6 +314,7 @@
     <Content Include="Scripts\BTTable\bootstrap-table-editable.js" />
     <Content Include="Scripts\BTTable\bootstrap-table-zh-CN.js" />
     <Content Include="Scripts\BTTable\bootstrap-table.js" />
+    <Content Include="Scripts\BTTable\tableExport.min.js" />
     <Content Include="Scripts\ClassifieBrowse.js" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
@@ -334,7 +350,6 @@
     <Content Include="Scripts\popper-utils.min.js" />
     <Content Include="Scripts\popper.js" />
     <Content Include="Scripts\popper.min.js" />
-    <Content Include="Scripts\SubmitTest.js" />
     <Content Include="Scripts\umd\popper-utils.js" />
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
