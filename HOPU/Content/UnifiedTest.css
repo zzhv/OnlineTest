@@ -149,7 +149,7 @@ pre {
     position: absolute;
     height: 45px;
     width: 66px;
-    margin-top: 40px;
+    margin-top: 120px;
     margin-left: -3px;
     background-image: url(../Content/image/icons_1.png);
     background-repeat: no-repeat;
@@ -177,7 +177,7 @@ pre {
     border: 1px solid #ddd;
     margin-left: 30px;
     margin-right: 30px;
-    border-radius:4px 4px 4px 4px;
+    border-radius: 4px 4px 4px 4px;
 }
 /*radio样式*/
 .radio-custom input[type=radio] {

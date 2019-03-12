@@ -57,7 +57,7 @@ function show_time(Stop) {
     else {
         //时间结束，自动提交
         clearTimeout(timerID)
-        timer.innerText = "结束";
+        timer.innerText = "检测中";
         if (isTrue) {
             //show_time(1);//关闭倒计时
             var AnswerArray = [];

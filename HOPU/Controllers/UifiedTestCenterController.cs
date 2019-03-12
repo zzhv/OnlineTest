@@ -328,20 +328,31 @@ namespace HOPU.Controllers
         //[ValidateAntiForgeryToken]
         public JsonResult DeleteTest(int UtId)
         {
-            HopuDBDataContext db = new HopuDBDataContext();
-            if (!IsAdmin())//如果不是admin权限
+            using (var db = new HopuDBDataContext())
             {
-                return Json(null);
+
+                if (!IsAdmin())//如果不是admin权限
+                {
+                    return Json(null);
+                }
+                //把要删除的统测题目查出来
+                var testInfo = db.UniteTestInfo.Where(a => a.UtId == UtId).Select(a => a);
+                //把要删除的统测查出来
+                var test = db.UniteTest.SingleOrDefault(a => a.UtId == UtId);
+                //把要删除的成绩信息查出来
+                var scoreInfo = db.UniteTestScore.Where(a => a.UtId == UtId);
+                if (test == null || testInfo == null)
+                {
+                    return Json(UtId + "不存在！");
+                }
+                else
+                {
+                    db.UniteTestScore.DeleteAllOnSubmit(scoreInfo);
+                    db.UniteTestInfo.DeleteAllOnSubmit(testInfo);
+                    db.UniteTest.DeleteOnSubmit(test);
+                    db.SubmitChanges();
+                }
             }
-            var testInfo = db.UniteTestInfo.Where(a => a.UtId == UtId).Select(a => a);
-            var test = db.UniteTest.SingleOrDefault(a => a.UtId == UtId);
-            if (test == null || testInfo == null)
-            {
-                return Json(UtId + "不存在！");
-            }
-            db.UniteTestInfo.DeleteAllOnSubmit(testInfo);
-            db.UniteTest.DeleteOnSubmit(test);
-            db.SubmitChanges();
             return Json(new { Success = true });
         }
         #endregion
