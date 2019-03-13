@@ -46,6 +46,8 @@ namespace HOPU.Controllers
             //数据请求
             var scoreList = db.ExecuteQuery<UniteTestScore>(sql).ToList();
             List<UniteTestScore> score = new List<UniteTestScore>();
+            //检测到循环引用报错，所以只能暂时这样转换一下，看以后有没有更好的办法
+            //test
             foreach (var i in scoreList)
             {
                 UniteTestScore a = new UniteTestScore()
