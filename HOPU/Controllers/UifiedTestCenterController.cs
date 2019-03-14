@@ -1,4 +1,5 @@
-﻿using HOPU.Models;
+﻿using HOPU.InterFace;
+using HOPU.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -12,10 +13,14 @@ namespace HOPU.Controllers
 {
     public class UifiedTestCenterController : Controller
     {
+        private readonly IsAdminInterface _isAdminInterface;
+        public UifiedTestCenterController(IsAdminInterface isAdminInterface)
+        {
+            _isAdminInterface = isAdminInterface;
+        }
         // GET: UifiedTestCenter
         public ActionResult Index()
         {
-
             return View();
         }
 
@@ -32,7 +37,7 @@ namespace HOPU.Controllers
             var onePage = products.ToPagedList(pageNumber, 10);
             ViewBag.uniteTest = onePage;
 
-            List<ClassifieTypedBrowseModel> topicType = GetCourseInfo().ToList();
+            List<ClassifieTypedBrowseViewModel> topicType = GetCourseInfo().ToList();
             ViewBag.topictype = topicType;
 
             return View();
@@ -237,7 +242,9 @@ namespace HOPU.Controllers
         public ActionResult AddTest(string[] submitCheckbox, int topicCount, int timeLenth)
         {
             HopuDBDataContext db = new HopuDBDataContext();
-            if (!IsAdmin())//如果不是admin权限
+
+            //if (!IsAdmin())//如果不是admin权限
+            if (!_isAdminInterface.Isadmins(User.Identity.GetUserId()))//如果不是admin权限
             {
                 return HttpNotFound();
             }
@@ -261,12 +268,12 @@ namespace HOPU.Controllers
                 }
             }
             //以上步骤正常的话按要求获取题目
-            List<UniteTestInfo> uniteTestInfos = new List<UniteTestInfo>();
             string selectTopicSql = "select top " + topicCount + " * from Topic where " + addSelectTopic + " order by NEWID()";
-            DataTable dt = SQLHelper.GetTable(selectTopicSql);
-            if (dt.Rows.Count < topicCount)//如果所取题目总数小于要求的数量
+            var topicList = db.ExecuteQuery<Topic>(selectTopicSql).ToList();
+            //DataTable dt = SQLHelper.GetTable(selectTopicSql);
+            if (topicList.Count < topicCount)//如果所取题目总数小于要求的数量
             {
-                return Json("所填数量不得大于实际数量" + dt.Rows.Count);
+                return Json("所填数量不得大于实际数量" + topicList.Count);
             }
             //获取最大统测UtId
             int realMaxUtid = 0;
@@ -280,22 +287,24 @@ namespace HOPU.Controllers
                 realMaxUtid = Convert.ToInt32(maxUtid.Max() + 1);
             }
             //向uniteTestInfo表添加题目信息
-            foreach (DataRow dr in dt.Rows)
+            List<UniteTestInfo> uniteTestInfos = new List<UniteTestInfo>();
+            foreach (var s in topicList)
             {
                 UniteTestInfo u = new UniteTestInfo
                 {
                     UtId = realMaxUtid,
-                    Title = Convert.ToString(dr["Title"]),
-                    TopicID = Convert.ToInt32(dr["TopicId"]),
-                    AnswerA = Convert.ToString(dr["AnswerA"]),
-                    AnswerB = Convert.ToString(dr["AnswerB"]),
-                    AnswerC = Convert.ToString(dr["AnswerC"]),
-                    AnswerD = Convert.ToString(dr["AnswerD"]),
-                    Answer = Convert.ToString(dr["Answer"]),
-                    CourseID = Convert.ToString(dr["CourseID"])
+                    Title = s.Title,
+                    TopicID = Convert.ToInt32(s.TopicID),
+                    AnswerA = s.AnswerA,
+                    AnswerB = s.AnswerB,
+                    AnswerC = s.AnswerC,
+                    AnswerD = s.AnswerD,
+                    Answer = s.AnswerA,
+                    CourseID = s.CourseID.ToString()
                 };
                 uniteTestInfos.Add(u);
             }
+            //想UniteTest表添加统测信息
             var newTest = new UniteTest
             {
                 UtId = realMaxUtid,
@@ -305,20 +314,9 @@ namespace HOPU.Controllers
                 CourseId = strCourseId,
                 CourseName = courseName
             };
-            //以上步骤没问题就向uniteTest表中添加统测信息*2s
             db.UniteTest.InsertOnSubmit(newTest);
             db.UniteTestInfo.InsertAllOnSubmit(uniteTestInfos);
             db.SubmitChanges();
-            //var list = db.Topic;
-            //var where = PredicateBuilder.False<Topic>();
-            //if (!string.IsNullOrEmpty(submitCheckbox[0]))
-            //{
-            //    double id = Convert.ToDouble(submitCheckbox[0]);
-            //    where = where.Or(p => p.CourseID == id);
-            //}
-            //此处不知道怎么用linq to sql来实现，用ado.net来写
-            //var result = list.Where(where.Compile()).Take(topicCount).OrderBy(x => Guid.NewGuid());
-
             return Json(new { Success = true });
         }
         #endregion
@@ -360,13 +358,13 @@ namespace HOPU.Controllers
         #region 分类表 GetCourseInfo
 
         //获取分类表
-        protected static IQueryable<ClassifieTypedBrowseModel> GetCourseInfo()
+        protected static IQueryable<ClassifieTypedBrowseViewModel> GetCourseInfo()
         {
             HopuDBDataContext db = new HopuDBDataContext();
             var result = from p in db.TypeInfo
                          join c in db.Course on p.TID equals c.TID
                          orderby p.TID
-                         select new ClassifieTypedBrowseModel
+                         select new ClassifieTypedBrowseViewModel
                          {
                              TId = p.TID,
                              TypeName = p.TypeName,

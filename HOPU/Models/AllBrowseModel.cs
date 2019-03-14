@@ -9,6 +9,7 @@ using System.Linq;
 using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
+using System;
 
 namespace HOPU.Models
 {
@@ -58,6 +59,16 @@ namespace HOPU.Models
                 default:
                     return false;
             }
+        }
+
+        internal static bool GetUserTypeInfo(object p)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static bool GetUserTypeInfo(object p1, object p2)
+        {
+            throw new NotImplementedException();
         }
 
         //[DisplayName("时长")]

@@ -8,14 +8,9 @@ using System.Web.Mvc;
 
 namespace HOPU.Controllers
 {
+    [Authorize]
     public class BrowseCenterController : Controller
     {
-        // GET: UifiedTestCenter
-        public ActionResult Index()
-        {
-
-            return View();
-        }
 
         #region 顺序浏览 AllBrowse
 
@@ -45,21 +40,21 @@ namespace HOPU.Controllers
         #endregion
 
         #region 分类列表 ClassifieTypedBrowse
-        public ActionResult ClassifieTypedBrowse(int? Tid)
+        public ActionResult ClassifieTypedBrowse(int? tid)
         {
-            List<ClassifieTypedBrowseModel> topicType = GetTopicType(Tid ?? 1).ToList();
+            List<ClassifieTypedBrowseViewModel> topicType = GetTopicType(tid ?? 1).ToList();
             ViewBag.topictype = topicType;
             return View();
         }
 
-        private static IQueryable<ClassifieTypedBrowseModel> GetTopicType(int topicid)
+        private static IQueryable<ClassifieTypedBrowseViewModel> GetTopicType(int topicid)
         {
             //select distinct * from[dbo].[TypeInfo] a,[dbo].[Course] b where a.TID = b.TID
             HopuDBDataContext db = new HopuDBDataContext();
             var result = from p in db.TypeInfo
                          join c in db.Course on p.TID equals c.TID
                          orderby p.TID
-                         select new ClassifieTypedBrowseModel
+                         select new ClassifieTypedBrowseViewModel
                          {
                              TId = p.TID,
                              TypeName = p.TypeName,
@@ -87,13 +82,13 @@ namespace HOPU.Controllers
         #region 分类表 GetCourseInfo
 
         //获取分类表
-        protected static IQueryable<ClassifieTypedBrowseModel> GetCourseInfo()
+        protected static IQueryable<ClassifieTypedBrowseViewModel> GetCourseInfo()
         {
             HopuDBDataContext db = new HopuDBDataContext();
             var result = from p in db.TypeInfo
                          join c in db.Course on p.TID equals c.TID
                          orderby p.TID
-                         select new ClassifieTypedBrowseModel
+                         select new ClassifieTypedBrowseViewModel
                          {
                              TId = p.TID,
                              TypeName = p.TypeName,

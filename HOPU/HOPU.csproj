@@ -215,6 +215,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="InterFace\IsAdmin.cs" />
+    <Compile Include="InterFace\IsAdminInterface.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ClassifiedBrowseModel.cs" />
     <Compile Include="Models\AllBrowseModel.cs" />

@@ -13,6 +13,7 @@ using System.Web.Mvc;
 
 namespace HOPU.Controllers
 {
+    [Authorize]
     public class ScoreCenterController : Controller
     {
         // GET: ScoreCenter
