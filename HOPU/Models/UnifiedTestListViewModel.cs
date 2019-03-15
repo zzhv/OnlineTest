@@ -6,13 +6,8 @@ using System.Web.Mvc;
 
 namespace HOPU.Models
 {
-    public class UnifiedTestModel
+    public class UnifiedTestListViewModel
     {
-        public string UserAnswer { get; set; }
-        public string RealAnswer { get; set; }
-        public bool IsTrue { get; set; }
-
-
         public static List<SelectListItem> GetUtId()
         {
             HopuDBDataContext db = new HopuDBDataContext();

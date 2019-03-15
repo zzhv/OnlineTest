@@ -8,7 +8,7 @@ namespace HOPU.Models
     /// <summary>
     /// 题目分类明细
     /// </summary>
-    public class ClassifieTypedBrowseViewModel
+    public class CourseNameViewModel
     {
         public double? TId { get; set; }
         public string TypeName { get; set; }

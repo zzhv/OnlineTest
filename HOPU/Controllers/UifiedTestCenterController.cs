@@ -1,11 +1,8 @@
-﻿using HOPU.InterFace;
-using HOPU.Models;
+﻿using HOPU.Models;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using X.PagedList;
 
@@ -13,37 +10,49 @@ namespace HOPU.Controllers
 {
     public class UifiedTestCenterController : Controller
     {
-        private readonly IsAdminInterface _isAdminInterface;
-        public UifiedTestCenterController(IsAdminInterface isAdminInterface)
-        {
-            _isAdminInterface = isAdminInterface;
-        }
-        // GET: UifiedTestCenter
-        public ActionResult Index()
-        {
-            return View();
-        }
+        //public UifiedTestCenterController()
+        //{
 
+        //}
+        //private readonly IRepository<ClassifieTypedBrowseViewModel> _iRepository;
+
+        //public UifiedTestCenterController(IRepository<ClassifieTypedBrowseViewModel> iRepository)
+        //{
+        //    _iRepository = iRepository;
+        //}
 
         #region 统测列表 UnifiedTestType
         public ActionResult UnifiedTestType(int? page)
         {
-            //if (page == null)
-            //{
-            //    ViewBag.Js = "<script>alert(123456)</script>";
-            //}
             var products = GetTestInfo().ToList();
             var pageNumber = page ?? 1;
-            var onePage = products.ToPagedList(pageNumber, 10);
-            ViewBag.uniteTest = onePage;
-
-            List<ClassifieTypedBrowseViewModel> topicType = GetCourseInfo().ToList();
-            ViewBag.topictype = topicType;
-
-            return View();
+            var onePage = products.ToPagedList(pageNumber, 5);
+            var list = GetCourseInfo().ToList();
+            var vms = list.Select(x => new CourseNameViewModel
+            {
+                CourseId = x.CourseId,
+                CourseName = x.CourseName,
+                TypeName = x.TypeName,
+                TId = x.TId
+            });
+            var vmu = onePage.Select(x => new UniteTest
+            {
+                UtId = x.UtId,
+                StartTime = x.StartTime,
+                TimeLenth = x.TimeLenth,
+                TopicCount = x.TopicCount,
+                CourseName = x.CourseName,
+                CourseId = x.CourseName
+            });
+            var vm = new UnifiedTestTypeViewModel
+            {
+                CourseNames = vms,
+                UniteTests = vmu
+            };
+            return View(vm);
         }
 
-        protected static IQueryable<UniteTest> GetTestInfo()
+        protected static IEnumerable<UniteTest> GetTestInfo()
         {
 
             HopuDBDataContext db = new HopuDBDataContext();
@@ -180,7 +189,7 @@ namespace HOPU.Controllers
                     answerList = topicListResult.OrderByDescending(s => s.TopicID).ToList();
                 }
                 //校验答案
-                List<UnifiedTestModel> result = new List<UnifiedTestModel>();
+                List<UnifiedTestViewModel> result = new List<UnifiedTestViewModel>();
                 //先算出每题多少分 
                 double itemScore = 100F / answerList.Count;
                 double SumScore = 0;
@@ -189,7 +198,7 @@ namespace HOPU.Controllers
                 {
                     if (answerList[i].Answer.Equals(Answer[i]))
                     {
-                        UnifiedTestModel resultinfo = new UnifiedTestModel
+                        UnifiedTestViewModel resultinfo = new UnifiedTestViewModel
                         {
                             UserAnswer = Answer[i],
                             RealAnswer = answerList[i].Answer,
@@ -200,7 +209,7 @@ namespace HOPU.Controllers
                     }
                     else
                     {
-                        UnifiedTestModel resultinfo = new UnifiedTestModel
+                        UnifiedTestViewModel resultinfo = new UnifiedTestViewModel
                         {
                             UserAnswer = Answer[i],
                             RealAnswer = answerList[i].Answer,
@@ -244,7 +253,7 @@ namespace HOPU.Controllers
             HopuDBDataContext db = new HopuDBDataContext();
 
             //if (!IsAdmin())//如果不是admin权限
-            if (!_isAdminInterface.Isadmins(User.Identity.GetUserId()))//如果不是admin权限
+            if (!IsAdmin())//如果不是admin权限
             {
                 return HttpNotFound();
             }
@@ -358,13 +367,13 @@ namespace HOPU.Controllers
         #region 分类表 GetCourseInfo
 
         //获取分类表
-        protected static IQueryable<ClassifieTypedBrowseViewModel> GetCourseInfo()
+        protected static IQueryable<CourseNameViewModel> GetCourseInfo()
         {
             HopuDBDataContext db = new HopuDBDataContext();
             var result = from p in db.TypeInfo
                          join c in db.Course on p.TID equals c.TID
                          orderby p.TID
-                         select new ClassifieTypedBrowseViewModel
+                         select new CourseNameViewModel
                          {
                              TId = p.TID,
                              TypeName = p.TypeName,

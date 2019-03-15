@@ -14,8 +14,10 @@ using System.Reflection;
 namespace HOPU.Controllers
 {
     [Authorize]
+
     public class SysHomeController : Controller
     {
+
         #region 首页 Home
 
         // GET: SysHome
@@ -30,8 +32,6 @@ namespace HOPU.Controllers
             return View();
         }
         #endregion
-
-
 
         #region 关于 About
         public ActionResult About()

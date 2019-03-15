@@ -42,19 +42,19 @@ namespace HOPU.Controllers
         #region 分类列表 ClassifieTypedBrowse
         public ActionResult ClassifieTypedBrowse(int? tid)
         {
-            List<ClassifieTypedBrowseViewModel> topicType = GetTopicType(tid ?? 1).ToList();
+            List<CourseNameViewModel> topicType = GetTopicType(tid ?? 1).ToList();
             ViewBag.topictype = topicType;
             return View();
         }
 
-        private static IQueryable<ClassifieTypedBrowseViewModel> GetTopicType(int topicid)
+        private static IQueryable<CourseNameViewModel> GetTopicType(int topicid)
         {
             //select distinct * from[dbo].[TypeInfo] a,[dbo].[Course] b where a.TID = b.TID
             HopuDBDataContext db = new HopuDBDataContext();
             var result = from p in db.TypeInfo
                          join c in db.Course on p.TID equals c.TID
                          orderby p.TID
-                         select new ClassifieTypedBrowseViewModel
+                         select new CourseNameViewModel
                          {
                              TId = p.TID,
                              TypeName = p.TypeName,
@@ -67,14 +67,14 @@ namespace HOPU.Controllers
         #endregion
 
         #region 分类浏览 ClassifieBrowse
-        public ActionResult ClassifieBrowse(int CourseId, string CourseName)
+        public ActionResult ClassifieBrowse(int courseId, string courseName)
         {
             HopuDBDataContext db = new HopuDBDataContext();
-            var result = db.Topic.Where(a => a.CourseID == CourseId).Select(b => b.TopicID).Max();//题目最大ID
-            var result2 = db.Topic.Where(a => a.CourseID == CourseId).Select(b => b.TopicID).Min();//题目最小ID
+            var result = db.Topic.Where(a => a.CourseID == courseId).Select(b => b.TopicID).Max();//题目最大ID
+            var result2 = db.Topic.Where(a => a.CourseID == courseId).Select(b => b.TopicID).Min();//题目最小ID
             ViewBag.maxTopicId = result;
             ViewBag.minTopicId = result2;
-            ViewBag.courseName = CourseName;
+            ViewBag.courseName = courseName;
             return View();
         }
         #endregion
@@ -82,13 +82,13 @@ namespace HOPU.Controllers
         #region 分类表 GetCourseInfo
 
         //获取分类表
-        protected static IQueryable<ClassifieTypedBrowseViewModel> GetCourseInfo()
+        protected static IQueryable<CourseNameViewModel> GetCourseInfo()
         {
             HopuDBDataContext db = new HopuDBDataContext();
             var result = from p in db.TypeInfo
                          join c in db.Course on p.TID equals c.TID
                          orderby p.TID
-                         select new ClassifieTypedBrowseViewModel
+                         select new CourseNameViewModel
                          {
                              TId = p.TID,
                              TypeName = p.TypeName,

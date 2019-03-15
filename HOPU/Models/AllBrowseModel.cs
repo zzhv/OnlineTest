@@ -1,14 +1,4 @@
-﻿using System.Web.Mvc;
-using HOPU.Models;
-using System.Data.SqlClient;
-using System.Data;
-using System.Collections.Generic;
-using X.PagedList;
-using Microsoft.AspNet.Identity;
-using System.Linq;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
+﻿using System.Linq;
 using System;
 
 namespace HOPU.Models

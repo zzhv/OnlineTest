@@ -212,15 +212,14 @@
     <Compile Include="Controllers\SysAdminController.cs" />
     <Compile Include="Controllers\SysHomeController.cs" />
     <Compile Include="Controllers\UifiedTestCenterController.cs" />
+    <Compile Include="CustomControllerFactory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="InterFace\IsAdmin.cs" />
-    <Compile Include="InterFace\IsAdminInterface.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ClassifiedBrowseModel.cs" />
     <Compile Include="Models\AllBrowseModel.cs" />
-    <Compile Include="Models\ClassifieTypedBrowseModel.cs" />
+    <Compile Include="Models\CourseNameViewModel.cs" />
     <Compile Include="Models\HopuDB.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -230,13 +229,17 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PageHelper.cs" />
     <Compile Include="Models\SQLHelper.cs" />
-    <Compile Include="Models\UnifiedTestModel.cs" />
+    <Compile Include="Models\UnifiedTestTypeViewModel.cs" />
+    <Compile Include="Models\UnifiedTestListViewModel.cs" />
+    <Compile Include="Models\UnifiedTestViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Repository\InServerRepository.cs" />
+    <Compile Include="Repository\IServerRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

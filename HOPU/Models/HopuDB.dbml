@@ -3,7 +3,7 @@
   <Table Name="dbo.Course" Member="Course">
     <Type Name="Course">
       <Column Name="CourseID" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="CourseName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="courseName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="TID" Type="System.Double" DbType="Float" CanBeNull="true" />
     </Type>
   </Table>
@@ -73,8 +73,8 @@
       <Column Name="StartTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="TimeLenth" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="TopicCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CourseId" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="CourseName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="courseId" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="courseName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Association Name="UniteTest_UniteTestInfo" Member="UniteTestInfo" ThisKey="UtId" OtherKey="UtId" Type="UniteTestInfo" />
       <Association Name="UniteTest_UniteTestScore" Member="UniteTestScore" ThisKey="UtId" OtherKey="UtId" Type="UniteTestScore" />
     </Type>

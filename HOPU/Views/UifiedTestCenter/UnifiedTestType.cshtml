@@ -5,7 +5,7 @@
 @using HOPU.Models
 @using X.PagedList.Mvc;
 @using X.PagedList
-@model GetUserType
+@model UnifiedTestTypeViewModel
 @section Header{
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
 }
@@ -46,7 +46,7 @@
                         int i = 1;
                         <div class="modal-content" style="padding:25px;height:400px;">
                             <div class="flex-row">
-                                @foreach (var item in ViewBag.topictype)
+                                @foreach (var item in Model.CourseNames)
                                 {
                                     <label class="checkbox-inline" name="submitlable" for="Checkbox_@i" style="width:160px;">
                                         <input type="checkbox" title="@item.CourseName" id="Checkbox_@i" name="submitCheckbox" value="@item.CourseId">@item.CourseName
@@ -99,7 +99,7 @@
             {
                 adminFlag = true;
             }
-            foreach (var i in ViewBag.uniteTest)
+            foreach (var i in Model.UniteTests)
             {
                 DateTime endTime = Convert.ToDateTime(i.StartTime);
                 <tr>
@@ -157,5 +157,5 @@
     </tbody>
 </table>
 <div style="margin-left:50%">
-    @Html.PagedListPager((IPagedList)ViewBag.uniteTest, page => Url.Action("UnifiedTestType", new { page }))
+    @Html.PagedListPager((IPagedList)Model.UniteTests, page => Url.Action("UnifiedTestType", new { page }))
 </div>

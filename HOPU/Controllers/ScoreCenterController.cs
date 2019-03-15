@@ -16,11 +16,7 @@ namespace HOPU.Controllers
     [Authorize]
     public class ScoreCenterController : Controller
     {
-        // GET: ScoreCenter
-        public ActionResult Index()
-        {
-            return View();
-        }
+
         #region  成绩列表 Score 
 
         public ActionResult Score(int? Id)
@@ -28,7 +24,7 @@ namespace HOPU.Controllers
             if (IsAdmin())
             {
                 var pageNumber = Id ?? 1;
-                ViewBag.UtIdList = UnifiedTestModel.GetUtId();
+                ViewBag.UtIdList = UnifiedTestListViewModel.GetUtId();
                 ViewBag.UtId = pageNumber;
             }
             return View();
