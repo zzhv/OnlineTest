@@ -212,7 +212,6 @@
     <Compile Include="Controllers\SysAdminController.cs" />
     <Compile Include="Controllers\SysHomeController.cs" />
     <Compile Include="Controllers\UifiedTestCenterController.cs" />
-    <Compile Include="CustomControllerFactory.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
