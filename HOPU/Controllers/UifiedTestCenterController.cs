@@ -73,6 +73,7 @@ namespace HOPU.Controllers
         {
             HopuDBDataContext db = new HopuDBDataContext();
             int? UtId = Id;
+            ViewBag.Title = UtId;
             bool joinUniteTest = false;
             if (UtId == null)
             {
@@ -80,8 +81,20 @@ namespace HOPU.Controllers
             }
             var result = db.UniteTest.Where(a => a.UtId == UtId).Select(a => a);
             List<UniteTest> timeInfo = result.ToList();//时间等信息
-            ViewBag.timeInfo = timeInfo;
-            ViewBag.Title = UtId;
+            var vmt = result.Select(x => new UniteTest
+            {
+                UtId = x.UtId,
+                StartTime = x.StartTime,
+                TimeLenth = x.TimeLenth,
+                TopicCount = x.TopicCount,
+                CourseName = x.CourseName,
+                CourseId = x.CourseName
+            });
+            // ViewBag.timeInfo = timeInfo;
+            var vm = new UnifiedTestViewModel
+            {
+                TimeInfo = vmt
+            };
             //能否进入考试
             if (timeInfo.Count() == 0)
             {
@@ -189,7 +202,7 @@ namespace HOPU.Controllers
                     answerList = topicListResult.OrderByDescending(s => s.TopicID).ToList();
                 }
                 //校验答案
-                List<UnifiedTestViewModel> result = new List<UnifiedTestViewModel>();
+                List<UnifiedTestQAViewModel> result = new List<UnifiedTestQAViewModel>();
                 //先算出每题多少分 
                 double itemScore = 100F / answerList.Count;
                 double SumScore = 0;
@@ -198,7 +211,7 @@ namespace HOPU.Controllers
                 {
                     if (answerList[i].Answer.Equals(Answer[i]))
                     {
-                        UnifiedTestViewModel resultinfo = new UnifiedTestViewModel
+                        UnifiedTestQAViewModel resultinfo = new UnifiedTestQAViewModel
                         {
                             UserAnswer = Answer[i],
                             RealAnswer = answerList[i].Answer,
@@ -209,7 +222,7 @@ namespace HOPU.Controllers
                     }
                     else
                     {
-                        UnifiedTestViewModel resultinfo = new UnifiedTestViewModel
+                        UnifiedTestQAViewModel resultinfo = new UnifiedTestQAViewModel
                         {
                             UserAnswer = Answer[i],
                             RealAnswer = answerList[i].Answer,

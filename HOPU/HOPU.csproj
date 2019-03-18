@@ -230,6 +230,7 @@
     <Compile Include="Models\SQLHelper.cs" />
     <Compile Include="Models\UnifiedTestTypeViewModel.cs" />
     <Compile Include="Models\UnifiedTestListViewModel.cs" />
+    <Compile Include="Models\UnifiedTestQAViewModel.cs" />
     <Compile Include="Models\UnifiedTestViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
