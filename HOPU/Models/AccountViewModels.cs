@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 namespace HOPU.Models
 {
     public class ExternalLoginConfirmationViewModel

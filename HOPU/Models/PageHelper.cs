@@ -1,5 +1,4 @@
 ﻿using HOPU.Models;
-using System.Data;
 using System.Linq;
 using System.Web.Mvc;
 using X.PagedList;

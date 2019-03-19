@@ -30,7 +30,6 @@
     <div>
         <div id="toolbar">
             @Html.DropDownList("BrickType", ViewBag.UtIdList as IEnumerable<SelectListItem>, new { id = "select", @class = "btn btn-info" })
-            <button id="button" class="btn btn-secondary">OK</button>
         </div>
         <table id="table"
                data-toggle="table"
@@ -70,9 +69,6 @@
     </div>
 
     <script>
-
-
-
         function queryParams(params) {
             var temp = {
                 limit: params.limit,   //页面大小

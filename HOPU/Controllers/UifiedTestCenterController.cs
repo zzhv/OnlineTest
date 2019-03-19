@@ -10,17 +10,6 @@ namespace HOPU.Controllers
 {
     public class UifiedTestCenterController : Controller
     {
-        //public UifiedTestCenterController()
-        //{
-
-        //}
-        //private readonly IRepository<ClassifieTypedBrowseViewModel> _iRepository;
-
-        //public UifiedTestCenterController(IRepository<ClassifieTypedBrowseViewModel> iRepository)
-        //{
-        //    _iRepository = iRepository;
-        //}
-
         #region 统测列表 UnifiedTestType
         public ActionResult UnifiedTestType(int? page)
         {
@@ -63,12 +52,6 @@ namespace HOPU.Controllers
         #endregion
 
         #region 统测 UnifiedTest
-        //public ActionResult UnifiedTest()
-        //{
-        //    return View();
-
-        //}
-
         public ActionResult UnifiedTest(int? Id)
         {
             HopuDBDataContext db = new HopuDBDataContext();
@@ -79,28 +62,19 @@ namespace HOPU.Controllers
             {
                 return PartialView("Error");
             }
-            var result = db.UniteTest.Where(a => a.UtId == UtId).Select(a => a);
-            List<UniteTest> timeInfo = result.ToList();//时间等信息
-            var vmt = result.Select(x => new UniteTest
+            var vmt = db.UniteTest.Where(a => a.UtId == UtId).ToList().Select(x => new UniteTest
             {
                 UtId = x.UtId,
                 StartTime = x.StartTime,
                 TimeLenth = x.TimeLenth,
                 TopicCount = x.TopicCount,
-                CourseName = x.CourseName,
-                CourseId = x.CourseName
             });
-            // ViewBag.timeInfo = timeInfo;
-            var vm = new UnifiedTestViewModel
-            {
-                TimeInfo = vmt
-            };
-            //能否进入考试
-            if (timeInfo.Count() == 0)
+            //以下综合判断能否进入考试 有一项不符合就直接拒绝
+            if (vmt.Count() == 0)
             {
                 return HttpNotFound();
             }
-            foreach (var item in result)
+            foreach (var item in vmt)
             {
                 //如果结束时间大于当前时间，可以进入考试
                 if (Convert.ToDateTime(item.StartTime).AddMinutes(item.TimeLenth) > DateTime.Now)
@@ -126,36 +100,69 @@ namespace HOPU.Controllers
                 joinUniteTest = false;
                 return RedirectToAction("Score", "ScoreCenter", new { Id });
             }
-            //如果能加入统测
+            //以上验证完成，如果能加入统测
             if (joinUniteTest)
             {
                 //据UtId获取题目列表
                 int UserName = Convert.ToInt32(User.Identity.GetUserName());
-                var topicListResult = db.UniteTestInfo.Where(a => a.UtId == UtId).ToList().Select(c =>
-                new UniteTestInfo
-                {
-                    UtId = c.UtId,
-                    Title = c.Title,
-                    AnswerA = c.AnswerA,
-                    AnswerB = c.AnswerB,
-                    AnswerC = c.AnswerC,
-                    AnswerD = c.AnswerD,
-                    Answer = c.Answer,
-                    CourseID = c.CourseID,
-                    TopicID = (c.TopicID * (UserName - 200000000)) % 3 * 100,
+                var TopicInfo = db.UniteTestInfo.Where(a => a.UtId == UtId).ToList().Select(c =>
+                    new UniteTestInfo
+                    {
+                        UtId = c.UtId,
+                        Title = c.Title,
+                        AnswerA = c.AnswerA,
+                        AnswerB = c.AnswerB,
+                        AnswerC = c.AnswerC,
+                        AnswerD = c.AnswerD,
+                        Answer = c.Answer,
+                        CourseID = c.CourseID,
+                        TopicID = (c.TopicID * (UserName - 200000000)) % 3 * 100,
 
-                });
+                    });
                 if (UserName % 2 == 0)
                 {
-                    ViewBag.topicList = topicListResult.OrderBy(s => s.TopicID).ToList();
+                    var vmtopic = TopicInfo.OrderBy(s => s.TopicID).ToList().Select(c => new UniteTestInfo
+                    {
+                        UtId = c.UtId,
+                        Title = c.Title,
+                        AnswerA = c.AnswerA,
+                        AnswerB = c.AnswerB,
+                        AnswerC = c.AnswerC,
+                        AnswerD = c.AnswerD,
+                        Answer = c.Answer,
+                        CourseID = c.CourseID,
+                        TopicID = c.TopicID
+                    });
+                    var vm = new UnifiedTestViewModel
+                    {
+                        TopicInfo = vmtopic,
+                        TimeInfo = vmt
+                    };
+                    return View(vm);
                 }
                 else
                 {
-                    ViewBag.topicList = topicListResult.OrderByDescending(s => s.TopicID).ToList();
+                    var vmtopic = TopicInfo.OrderByDescending(s => s.TopicID).ToList().Select(c => new UniteTestInfo
+                    {
+                        UtId = c.UtId,
+                        Title = c.Title,
+                        AnswerA = c.AnswerA,
+                        AnswerB = c.AnswerB,
+                        AnswerC = c.AnswerC,
+                        AnswerD = c.AnswerD,
+                        Answer = c.Answer,
+                        CourseID = c.CourseID,
+                        TopicID = c.TopicID
+                    });
+                    var vm = new UnifiedTestViewModel
+                    {
+                        TimeInfo = vmt,
+                        TopicInfo = vmtopic
+                    };
+                    return View(vm);
                 }
             }
-            return View("UnifiedTest");
-
+            return View();
         }
         #endregion
 
@@ -321,7 +328,7 @@ namespace HOPU.Controllers
                     AnswerB = s.AnswerB,
                     AnswerC = s.AnswerC,
                     AnswerD = s.AnswerD,
-                    Answer = s.AnswerA,
+                    Answer = s.Answer,
                     CourseID = s.CourseID.ToString()
                 };
                 uniteTestInfos.Add(u);

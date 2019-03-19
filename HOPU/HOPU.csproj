@@ -227,7 +227,6 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PageHelper.cs" />
-    <Compile Include="Models\SQLHelper.cs" />
     <Compile Include="Models\UnifiedTestTypeViewModel.cs" />
     <Compile Include="Models\UnifiedTestListViewModel.cs" />
     <Compile Include="Models\UnifiedTestQAViewModel.cs" />

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace HOPU.Models
 {
@@ -10,7 +7,7 @@ namespace HOPU.Models
     /// </summary>
     public class UnifiedTestViewModel
     {
-        public IEnumerable<UnifiedTestQAViewModel> Answer { get; set; }//校验完后的答案
         public IEnumerable<UniteTest> TimeInfo { get; set; }//统测时间信息
+        public IEnumerable<UniteTestInfo> TopicInfo { get; set; }//题目信息
     }
 }
