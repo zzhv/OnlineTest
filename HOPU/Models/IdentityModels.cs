@@ -1,4 +1,5 @@
-﻿using System.Security.Claims;
+﻿using System.Data.Entity;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
@@ -28,6 +29,9 @@ namespace HOPU.Models
             : base("SQLConnString", throwIfV1Schema: false)
         {
         }
+        public DbSet<SelfTestModel> SelfTest { get; set; }
+        public DbSet<SelfTestScore> SelfTestScore { get; set; }
+        public DbSet<SelfTestInfoModel> SelfTestInfo { get; set; }
 
         public static ApplicationDbContext Create()
         {
