@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace HOPU.Models
 {
-    public class SelfTestScore
+    [Table("SelfTestScore")]
+    public class SelfTestScoreModel
     {
         //Id, UtId, RealUserName, UserName, EndTime, Score
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]//主键和自增                                                                                                                                                                                                                                                       

@@ -1,0 +1,160 @@
+﻿@{
+    ViewBag.Title = "自我测试";
+}
+@using Microsoft.AspNet.Identity;
+@using HOPU.Models
+@using X.PagedList.Mvc;
+@using X.PagedList
+@model SelfTestViewModel
+@section Header{
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+}
+<nav class="breadcrumb">
+    <a class="breadcrumb-item" href="~/SysHome/Home">首页</a>
+    <span class="breadcrumb-item active">测试中心</span>
+    <span class="breadcrumb-item active">@ViewBag.Title</span>
+</nav>
+
+<script src="~/Scripts/UnifiedTestType.js"></script>
+<button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal">
+    开始独测
+</button>
+<!-- 模态框 -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <!-- 模态框头部 -->
+            <div class="modal-header">
+                <h4 class="modal-title">请选择题目类别</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            
+            <!-- 模态框主体 -->
+            <div class="modal-body">
+                @using (Ajax.BeginForm("AddTest", "SelfTestCenter",
+                   new AjaxOptions()
+                   {
+                       HttpMethod = "post",
+                       InsertionMode = InsertionMode.Replace,
+                       OnSuccess = "formSuccess",
+                       OnFailure = "formFailure"
+                   }))
+                {
+                    @Html.AntiForgeryToken();
+                    int i = 1;
+                    <div class="modal-content" style="padding:25px;height:400px;">
+                        <div class="flex-row">
+                            @foreach (var item in Model.CourseNames)
+                            {
+                                <label class="checkbox-inline" name="submitlable" for="Checkbox_@i" style="width:160px;">
+                                    <input type="checkbox" title="@item.CourseName" id="Checkbox_@i" name="submitCheckbox" value="@item.CourseId">@item.CourseName
+                                </label>
+                                i++;
+                            }
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <div class="col-md-6 flex-row">
+                            <div id="failure" class="alert alert-danger p-2 flex-fill" style="display:none"><strong>错误！</strong>失败的操作</div>
+                            <div id="error" class="alert alert-danger p-2 flex-fill" role="alert" style="display:none"></div>
+                        </div>
+                        <div class="col-md-6 flex-row">
+                            <label class="p-2 flex-fill" style="margin-right:10px;">时长：<input type="number" name="timeLenth" title="时长" class="form-control" value="60" placeholder="必填" style="width:80px" /></label>
+                            <label class="p-2 flex-fill" style="margin-right:10px;">题数：<input type="number" name="topicCount" title="题数" class="form-control" value="50" placeholder="必填" style="width:80px" /></label>
+                            <button type="button" class="btn btn-danger p-2 flex-fill" data-dismiss="modal">关闭</button>
+                            <input type="submit" class="btn btn-success p-2 flex-fill" id="addTest" title="提交" />
+                        </div>
+                    </div>
+                }
+            </div>
+            @*模态框底部*@
+            @*<div class="modal-footer">
+
+                </div>*@
+        </div>
+    </div>
+</div>
+
+@*@using (Html.BeginForm("UnifiedTest", "SysHome", FormMethod.Post))
+    {*@
+<table class="table table-hover table-striped">
+    <thead>
+        <tr>
+            <th class="text-left">序号</th>
+            <th class="text-center">开始时间</th>
+            <th class="text-center">时长(分)</th>
+            <th class="text-center">题数</th>
+            <th class="text-center">种类</th>
+            <th class="text-center">状态</th>
+            <th class="text-right ">选项</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            bool adminFlag = false;
+            if (GetUserType.GetUserTypeInfo(User.Identity.GetUserId()))//如果是admin
+            {
+                adminFlag = true;
+            }
+            foreach (var i in Model.SelfTest)
+            {
+                DateTime endTime = Convert.ToDateTime(i.StartTime);
+                <tr>
+                    <td class="text-left">@i.StId</td>
+                    <td class="text-center">@i.StartTime</td>
+                    <td class="text-center">@i.TimeLenth</td>
+                    <td class="text-center">@i.TopicCount</td>
+                    <td class="text-center">@i.CourseName</td>
+                    @if (endTime.AddMinutes(i.TimeLenth) > DateTime.Now)//如果结束时间大于当前时间
+                    {
+                        <td class="text-success text-center">
+                            <span class="badge badge-success">OPEN</span>
+                        </td>
+                        <td class="text-right">
+                            @Html.ActionLink("查看", "SelfTest", new { Id = i.StId }, new { @class = "btn btn-success btn-sm" })
+                            @if (adminFlag)
+                            {
+                                @Ajax.ActionLink("删除", "DeleteTest",
+                               new { UtId = i.StId },
+                               new AjaxOptions {
+                                   HttpMethod = "post",
+                                   InsertionMode = InsertionMode.Replace,
+                                   OnSuccess= "deleteTest",
+                                   Confirm = "确定要删除吗？",
+                               },
+                               new { @id="delete", @class= "btn btn-danger btn-sm" })
+                            }
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="text-danger text-center">
+                            <span class="badge badge-danger">OVER</span>
+                        </td>
+                        <td class="text-right ">
+                            @Html.ActionLink("查看", "SelfTest", new { Id = i.StId }, new { @class = "btn btn-primary btn-sm" })
+                            @if (adminFlag)
+                            {
+                                @Ajax.ActionLink("删除", "DeleteTest",
+                               new { UtId = i.StId },
+                               new AjaxOptions {
+                                   HttpMethod = "post",
+                                   InsertionMode = InsertionMode.Replace,
+                                   OnSuccess= "deleteTest",
+                                   Confirm = "确定要删除吗？",
+                               },
+                               new { @id="delete", @class= "btn btn-danger btn-sm" })
+                            }
+                        </td>
+                    }
+
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<div style="margin-left:50%">
+    @Html.PagedListPager((IPagedList)Model.SelfTest, page => Url.Action("SelfTestType", new { page }))
+</div>

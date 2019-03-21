@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HOPU.Models
 {
+    [Table("SelfTest")]
     public class SelfTestModel
     {
         [Key]

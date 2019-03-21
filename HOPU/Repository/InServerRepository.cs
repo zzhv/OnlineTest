@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HOPU
 {
-   public class InServerRepository : IRepository<CourseNameViewModel>
+    public class InServerRepository : IRepository<CourseNameViewModel>
     {
         public IEnumerable<CourseNameViewModel> GetUnifiedTestList()
         {

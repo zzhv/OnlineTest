@@ -1,8 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HOPU.Models
 {
+    [Table("SelfTestInfo")]
     public class SelfTestInfoModel
     {
         //id, UtId, TopicID, Title, AnswerA, AnswerB, AnswerC, AnswerD, Answer, CourseID

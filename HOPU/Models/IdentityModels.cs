@@ -29,8 +29,9 @@ namespace HOPU.Models
             : base("SQLConnString", throwIfV1Schema: false)
         {
         }
+
         public DbSet<SelfTestModel> SelfTest { get; set; }
-        public DbSet<SelfTestScore> SelfTestScore { get; set; }
+        public DbSet<SelfTestScoreModel> SelfTestScore { get; set; }
         public DbSet<SelfTestInfoModel> SelfTestInfo { get; set; }
 
         public static ApplicationDbContext Create()
