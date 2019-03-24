@@ -1,0 +1,197 @@
+﻿@using HOPU.Models
+@using Microsoft.AspNet.Identity
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>@ViewBag.title</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="robots" content="all,follow">
+    <link rel="stylesheet" href="~/vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/vendor/font-awesome/css/font-awesome.min.css">
+    <link href="~/Content/css/fontastic.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
+    <link href="~/Content/css/style.default.css" rel="stylesheet" />
+    <link href="~/Content/css/custom.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="~/Content/Mimg/favicon.ico">
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+</head>
+<body>
+    <div class="page">
+        <!-- Main Navbar-->
+        <header class="header">
+            <nav class="navbar">
+                <!-- Search Box-->
+                <div class="search-box">
+                    <button class="dismiss"><i class="icon-close"></i></button>
+                    <form id="searchForm" action="#" role="search">
+                        <input type="search" placeholder="你想找些什么？" class="form-control">
+                    </form>
+                </div>
+                <div class="container-fluid">
+                    <div class="navbar-holder d-flex align-items-center justify-content-between">
+                        <!-- 导航栏头部-->
+                        <div class="navbar-header">
+                            <!-- 导航栏--><a href="~/SysManage/SysManageIndex" class="navbar-brand d-none d-sm-inline-block">
+                                <div class="brand-text d-none d-lg-inline-block"><strong>题库后台管理</strong></div>
+                                @*<div class="brand-text d-none d-sm-inline-block d-lg-none"><strong>BD</strong></div>*@
+                            </a>
+                            <!-- 切换按钮--><a id="toggle-btn" href="#" class="menu-btn active"><span></span><span></span><span></span></a>
+                        </div>
+                        <!-- Navbar Menu -->
+                        <ul class="nav-menu list-unstyled d-flex flex-md-row align-items-md-center">
+                            <!-- 搜索-->
+                            <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i class="icon-search"></i></a></li>
+                            <!--右上角的图标-->
+                            @*<li class="nav-item dropdown">
+                                    <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o"></i><span class="badge bg-red badge-corner">12</span></a>
+                                    <ul aria-labelledby="notifications" class="dropdown-menu">
+                                        <li>
+                                            <a rel="nofollow" href="#" class="dropdown-item">
+                                                <div class="notification">
+                                                    <div class="notification-content"><i class="fa fa-envelope bg-green"></i>You have 6 new messages </div>
+                                                    <div class="notification-time"><small>4 minutes ago</small></div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a rel="nofollow" href="#" class="dropdown-item">
+                                                <div class="notification">
+                                                    <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
+                                                    <div class="notification-time"><small>4 minutes ago</small></div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a rel="nofollow" href="#" class="dropdown-item">
+                                                <div class="notification">
+                                                    <div class="notification-content"><i class="fa fa-upload bg-orange"></i>Server Rebooted</div>
+                                                    <div class="notification-time"><small>4 minutes ago</small></div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a rel="nofollow" href="#" class="dropdown-item">
+                                                <div class="notification">
+                                                    <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>You have 2 followers</div>
+                                                    <div class="notification-time"><small>10 minutes ago</small></div>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>view all notifications                                            </strong></a></li>
+                                    </ul>
+                                </li>*@
+                            <!-- 消息列表 -->
+                            <li class="nav-item dropdown">
+                                <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-envelope-o"></i><span class="badge bg-orange badge-corner">10</span></a>
+                                <ul aria-labelledby="notifications" class="dropdown-menu">
+                                    <li>
+                                        <a rel="nofollow" href="#" class="dropdown-item d-flex">
+                                            <div class="msg-profile"> <img src="~/Content/Mimg/avatar-3.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                                            <div class="msg-body">
+                                                <h3 class="h5">Ashley Wood</h3><span>Sent You Message</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>查看所有消息</strong></a></li>
+                                </ul>
+                            </li>
+                            <!-- 语言选择-->
+                            @*<li class="nav-item dropdown">
+                                    <a id="languages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle"><img src="~/Content/Mimg/flags/16/GB.png" alt="English"><span class="d-none d-sm-inline-block">English</span></a>
+                                    <ul aria-labelledby="languages" class="dropdown-menu">
+                                        <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="img/flags/16/DE.png" alt="English" class="mr-2">German</a></li>
+                                        <li><a rel="nofollow" href="#" class="dropdown-item"> <img src="img/flags/16/FR.png" alt="English" class="mr-2">French                                         </a></li>
+                                    </ul>
+                                </li>*@
+                            <!-- 注销    -->
+                            @using (Html.BeginForm("LogOff", "SysAdmin", FormMethod.Post, new { id = "logoutForm" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <li class="nav-item">
+                                    <span class="d-none d-sm-inline">
+                                        <a href="javascript:document.getElementById('logoutForm').submit()">注销</a>
+                                    </span>
+                                    <i class="fa fa-sign-out"></i>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <div class="page-content d-flex align-items-stretch">
+            <!-- Side Navbar -->
+            <nav class="side-navbar">
+                <!-- Sidebar Header-->
+                <div class="sidebar-header d-flex align-items-center">
+                    <div class="avatar"><img src="~/Content/Mimg/avatar-1.jpg" alt="..." class="img-fluid rounded-circle"></div>
+                    <div class="title">
+                        <h1 class="h4">@GetRealUserName.GetRealName(User.Identity.GetUserId())</h1>
+                        <p>管理员</p>
+                    </div>
+                </div>
+                <!-- 小标题--><span class="heading">菜单</span>
+                <ul class="list-unstyled">
+                    <li class="active">
+                        <a href="~/SysManage/SysManageIndex"> <i class="icon-home"></i>主页 </a>
+                    </li>
+                    <li><a href="#"> <i class="icon-grid"></i>题库管理 </a></li>
+                    <li><a href="#"> <i class="fa fa-bar-chart"></i>数据中心 </a></li>
+                    <li>
+                        <a href="#tikuDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>题库管理 </a>
+                        <ul id="tikuDropdown" class="collapse list-unstyled ">
+                            <li><a href="#">题目管理</a></li>
+                            <li><a href="#">题目分类</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="~/SysHome/Home"> <i class="icon-page"></i>网站首页 </a>
+                    </li>
+                </ul>
+                @*<span class="heading">Extras</span>
+                    <ul class="list-unstyled">
+                        <li> <a href="#"> <i class="icon-flask"></i>Demo </a></li>
+                        <li> <a href="#"> <i class="icon-screen"></i>Demo </a></li>
+                        <li> <a href="#"> <i class="icon-mail"></i>Demo </a></li>
+                        <li> <a href="#"> <i class="icon-picture"></i>Demo </a></li>
+                    </ul>*@
+            </nav>
+            <div class="content-inner">
+                <header class="page-header">
+                    <div class="container-fluid">
+                        <h2 class="no-margin-bottom">@ViewBag.SingleTitle</h2>
+                    </div>
+                </header>
+
+                @RenderBody()
+
+                <footer class="main-footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <p>&copy;2017 - @DateTime.Now.Year XXX.All Rights Reserved.</p>
+                            </div>
+                            <div class="col-sm-6 text-right">
+                                <p>黔ICP备16006898号-1</p>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <script src="~/vendor/jquery/jquery.min.js"></script>
+    <script src="~/vendor/popper.js/umd/popper.min.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/vendor/jquery.cookie/jquery.cookie.js"></script>
+    <script src="~/vendor/chart.js/Chart.min.js"></script>
+    <script src="~/vendor/jquery-validation/jquery.validate.min.js"></script>
+    <script src="~/Scripts/js/charts-home.js"></script>
+    <script src="~/Scripts/js/front.js"></script>
+</body>
+</html>

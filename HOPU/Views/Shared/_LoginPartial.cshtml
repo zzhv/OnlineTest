@@ -10,7 +10,7 @@
         @if (GetUserType.GetUserTypeInfo(User.Identity.GetUserId()))//如果是admin
         {
             <li class="nav-item ml-auto">
-                @Html.ActionLink("控制面板", "About", "Syshome", new { @class = "nav-link" })
+                @Html.ActionLink("后台管理", "SysManageIndex", "SysManage", null, new { @class = "nav-link" })
             </li>
         }
         @using (Html.BeginForm("LogOff", "SysAdmin", FormMethod.Post, new { id = "logoutForm" }))
