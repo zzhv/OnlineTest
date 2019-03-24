@@ -14,7 +14,6 @@ using System.Reflection;
 namespace HOPU.Controllers
 {
     [Authorize]
-
     public class SysHomeController : Controller
     {
 

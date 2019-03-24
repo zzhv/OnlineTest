@@ -1,5 +1,4 @@
-﻿@using MvcSiteMapProvider.Web.Html
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -18,7 +17,7 @@
     <nav class="navbar navbar-expand-sm bg-secondary navbar-dark" style="top:-50px;">
         @if (Request.IsAuthenticated)
         {
-            @Html.ActionLink("题库", "Home", "SysHome", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("题库", "Home", "SysHome", new { area = "" }, new { @class = "navbar-brand", style = "margin-left:10%" })
         }
         else
         {
@@ -57,26 +56,7 @@
         </div>
     </nav>
     <div class="container body-content">
-        <!--Only for demo-->
-        @*<ul class="nav">
-                @{
-                    var childSettings = Html.MvcSiteMap().SiteMap.FindSiteMapNodeFromKey("General");
-                    var currentNode = Html.MvcSiteMap().SiteMap.CurrentNode;
-                    foreach (var node in childSettings.ChildNodes)
-                    {
-                        var active = "";
-                        if (currentNode != null && (currentNode.Equals(node) || currentNode.IsDescendantOf(node)))
-                        {
-                            active = "active";
-                        }
 
-
-                        <li class="@active">
-                            <a href="@node.Url">@Html.DisplayFor(x => node.Title)</a>
-                        </li>
-                    }
-                }
-            </ul>*@
         @RenderBody()
 
         <footer class="pt-4 my-md-5 pt-md-5 border-top">
@@ -113,16 +93,6 @@
                 </div>
             </div>
         </footer>
-        @*<footer style="margin-top:60px; color:gray">
-                <div class="jumbotron text-center" style="margin-bottom:0">
-                    <p class="text-center">
-                        Copyright &copy; @DateTime.Now.Year XXX.All Rights Reserved.
-                    </p>
-                    <p class="text-center">
-                        <span>黔ICP备16006898号-1</span>
-                    </p>
-                </div>
-            </footer>*@
     </div>
     @RenderSection("scripts", required: false)
     @RenderSection("footer", required: false)

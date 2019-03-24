@@ -3,12 +3,8 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
-using Microsoft.Owin.Security.Google;
 using Owin;
 using HOPU.Models;
-using Microsoft.Owin.Builder;
-using Microsoft.Owin.Security;
-using MvcSiteMapProvider.Reflection;
 
 namespace HOPU
 {

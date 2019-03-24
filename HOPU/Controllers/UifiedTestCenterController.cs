@@ -8,6 +8,7 @@ using X.PagedList;
 
 namespace HOPU.Controllers
 {
+    [Authorize]
     public class UifiedTestCenterController : Controller
     {
         #region 统测列表 UnifiedTestType

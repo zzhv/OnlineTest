@@ -8,6 +8,7 @@ using X.PagedList;
 
 namespace HOPU.Controllers
 {
+    [Authorize]
     public class SelfTestCenterController : Controller
     {
         // GET: SeltTestCenter
