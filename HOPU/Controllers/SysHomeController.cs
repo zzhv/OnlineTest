@@ -1,15 +1,4 @@
 ﻿using System.Web.Mvc;
-using HOPU.Models;
-using System.Data.SqlClient;
-using System.Data;
-using System.Collections.Generic;
-using X.PagedList;
-using Microsoft.AspNet.Identity;
-using System.Linq;
-using System;
-using System.Linq.Expressions;
-using System.Data.Linq.Mapping;
-using System.Reflection;
 
 namespace HOPU.Controllers
 {

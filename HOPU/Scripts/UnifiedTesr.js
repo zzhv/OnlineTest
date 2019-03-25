@@ -218,7 +218,7 @@ $(function () {
             datatype: "json",
             success: function (data) {
                 for (var i = 0; i < data.length; i++) {
-                    //console.log("所选答案" + data[i].UserAnswer + "正确答案" + data[i].RealAnswer + "结果" + data[i].IsTrue);
+                    console.log("所选答案" + data[i].UserAnswer + "正确答案" + data[i].RealAnswer + "结果" + data[i].IsTrue);
                     if (data[i].IsTrue == true) {
                         sumScore += itemScore;
                         $("#ATrue-" + (i + 1) + "").css('display', 'block');

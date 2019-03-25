@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Web.Mvc;
 using X.PagedList;
 
@@ -105,9 +106,9 @@ namespace HOPU.Controllers
             if (joinUniteTest)
             {
                 //据UtId获取题目列表
-                int UserName = Convert.ToInt32(User.Identity.GetUserName());
+                string UserName = User.Identity.GetUserName();
                 var TopicInfo = db.UniteTestInfo.Where(a => a.UtId == UtId).ToList().Select(c =>
-                    new UniteTestInfo
+                    new UnifiedTestNewTopicIdViewModel
                     {
                         UtId = c.UtId,
                         Title = c.Title,
@@ -117,51 +118,15 @@ namespace HOPU.Controllers
                         AnswerD = c.AnswerD,
                         Answer = c.Answer,
                         CourseID = c.CourseID,
-                        TopicID = (c.TopicID * (UserName - 200000000)) % 3 * 100,
+                        TopicID = ToHMACSHA1(c.TopicID.ToString(), UserName)
 
                     });
-                if (UserName % 2 == 0)
+                var vm = new UnifiedTestViewModel
                 {
-                    var vmtopic = TopicInfo.OrderBy(s => s.TopicID).ToList().Select(c => new UniteTestInfo
-                    {
-                        UtId = c.UtId,
-                        Title = c.Title,
-                        AnswerA = c.AnswerA,
-                        AnswerB = c.AnswerB,
-                        AnswerC = c.AnswerC,
-                        AnswerD = c.AnswerD,
-                        Answer = c.Answer,
-                        CourseID = c.CourseID,
-                        TopicID = c.TopicID
-                    });
-                    var vm = new UnifiedTestViewModel
-                    {
-                        TopicInfo = vmtopic,
-                        TimeInfo = vmt
-                    };
-                    return View(vm);
-                }
-                else
-                {
-                    var vmtopic = TopicInfo.OrderByDescending(s => s.TopicID).ToList().Select(c => new UniteTestInfo
-                    {
-                        UtId = c.UtId,
-                        Title = c.Title,
-                        AnswerA = c.AnswerA,
-                        AnswerB = c.AnswerB,
-                        AnswerC = c.AnswerC,
-                        AnswerD = c.AnswerD,
-                        Answer = c.Answer,
-                        CourseID = c.CourseID,
-                        TopicID = c.TopicID
-                    });
-                    var vm = new UnifiedTestViewModel
-                    {
-                        TimeInfo = vmt,
-                        TopicInfo = vmtopic
-                    };
-                    return View(vm);
-                }
+                    TopicInfo = TopicInfo.OrderBy(x => x.TopicID),
+                    TimeInfo = vmt
+                };
+                return View(vm);
             }
             return View();
         }
@@ -193,23 +158,16 @@ namespace HOPU.Controllers
             if (commitAnswer)
             {
                 //据UtId获取答案
-                int UserName = Convert.ToInt32(User.Identity.GetUserName());
+                string UserName = User.Identity.GetUserName();
                 var topicListResult = db.UniteTestInfo.Where(a => a.UtId == UtId).ToList().Select(c =>
-                new UniteTestInfo
+                new UnifiedTestNewTopicIdViewModel
                 {
-                    TopicID = (c.TopicID * (UserName - 200000000)) % 3 * 100,
+                    TopicID = ToHMACSHA1(c.TopicID.ToString(), UserName),
                     Answer = c.Answer,
                 });
-                List<UniteTestInfo> answerList = new List<UniteTestInfo>();
-                if (UserName % 2 == 0)
-                {
-                    answerList = topicListResult.OrderBy(s => s.TopicID).ToList();
-                }
-                else
-                {
-                    answerList = topicListResult.OrderByDescending(s => s.TopicID).ToList();
-                }
-                //校验答案
+                //答案集合
+                List<UnifiedTestNewTopicIdViewModel> answerList = topicListResult.OrderBy(s => s.TopicID).ToList();
+                //开始校验答案
                 List<UnifiedTestQAViewModel> result = new List<UnifiedTestQAViewModel>();
                 //先算出每题多少分 
                 double itemScore = 100F / answerList.Count;
@@ -423,5 +381,16 @@ namespace HOPU.Controllers
         }
 
         #endregion
+
+
+        public static string ToHMACSHA1(string encryptText, string encryptKey)
+        {
+            //HMACSHA1加密
+            HMACSHA1 hmacsha1 = new HMACSHA1();
+            hmacsha1.Key = System.Text.Encoding.UTF8.GetBytes(encryptKey);
+            byte[] dataBuffer = System.Text.Encoding.UTF8.GetBytes(encryptText);
+            byte[] hashBytes = hmacsha1.ComputeHash(dataBuffer);
+            return Convert.ToBase64String(hashBytes);
+        }
     }
 }
