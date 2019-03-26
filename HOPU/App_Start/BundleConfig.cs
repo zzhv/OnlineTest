@@ -34,7 +34,7 @@ namespace HOPU
                       "~/Scripts/jquery.scrollUp.js",
                        "~/Scripts/OpenScrollup.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
+            bundles.Add(new StyleBundle("~/Content/aaaa").Include(
                         "~/Content/bootstrap.css",
                         "~/Content/site.css",
                         "~/Content/image.css"
