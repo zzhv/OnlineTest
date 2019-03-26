@@ -5,17 +5,16 @@
 @using HOPU.Models
 @using X.PagedList.Mvc;
 @using X.PagedList
-@model SelfTestViewModel
+@model SelfTestTypeViewModel
 @section Header{
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/SelfTestType.js"></script>
 }
 <nav class="breadcrumb">
     <a class="breadcrumb-item" href="~/SysHome/Home">首页</a>
     <span class="breadcrumb-item active">测试中心</span>
     <span class="breadcrumb-item active">@ViewBag.Title</span>
 </nav>
-
-<script src="~/Scripts/UnifiedTestType.js"></script>
 <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#myModal">
     开始独测
 </button>
@@ -29,7 +28,7 @@
                 <h4 class="modal-title">请选择题目类别</h4>
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
-            
+
             <!-- 模态框主体 -->
             <div class="modal-body">
                 @using (Ajax.BeginForm("AddTest", "SelfTestCenter",
@@ -93,11 +92,6 @@
     </thead>
     <tbody>
         @{
-            bool adminFlag = false;
-            if (GetUserType.GetUserTypeInfo(User.Identity.GetUserId()))//如果是admin
-            {
-                adminFlag = true;
-            }
             foreach (var i in Model.SelfTest)
             {
                 DateTime endTime = Convert.ToDateTime(i.StartTime);
@@ -114,18 +108,17 @@
                         </td>
                         <td class="text-right">
                             @Html.ActionLink("查看", "SelfTest", new { Id = i.StId }, new { @class = "btn btn-success btn-sm" })
-                            @if (adminFlag)
-                            {
-                                @Ajax.ActionLink("删除", "DeleteTest",
-                               new { UtId = i.StId },
-                               new AjaxOptions {
-                                   HttpMethod = "post",
-                                   InsertionMode = InsertionMode.Replace,
-                                   OnSuccess= "deleteTest",
-                                   Confirm = "确定要删除吗？",
-                               },
-                               new { @id="delete", @class= "btn btn-danger btn-sm" })
-                            }
+
+                            @Ajax.ActionLink("删除", "DeleteTest",
+                           new { StId = i.StId },
+                           new AjaxOptions {
+                               HttpMethod = "post",
+                               InsertionMode = InsertionMode.Replace,
+                               OnSuccess= "deleteTest",
+                               Confirm = "确定要删除吗？",
+                           },
+                           new { @id="delete", @class= "btn btn-danger btn-sm" })
+
                         </td>
                     }
                     else
@@ -135,18 +128,15 @@
                         </td>
                         <td class="text-right ">
                             @Html.ActionLink("查看", "SelfTest", new { Id = i.StId }, new { @class = "btn btn-primary btn-sm" })
-                            @if (adminFlag)
-                            {
-                                @Ajax.ActionLink("删除", "DeleteTest",
-                               new { UtId = i.StId },
-                               new AjaxOptions {
-                                   HttpMethod = "post",
-                                   InsertionMode = InsertionMode.Replace,
-                                   OnSuccess= "deleteTest",
-                                   Confirm = "确定要删除吗？",
-                               },
-                               new { @id="delete", @class= "btn btn-danger btn-sm" })
-                            }
+                            @Ajax.ActionLink("删除", "DeleteTest",
+                           new { StId = i.StId },
+                           new AjaxOptions {
+                               HttpMethod = "post",
+                               InsertionMode = InsertionMode.Replace,
+                               OnSuccess= "deleteTest",
+                               Confirm = "确定要删除吗？",
+                           },
+                           new { @id="delete", @class= "btn btn-danger btn-sm" })
                         </td>
                     }
 

@@ -225,6 +225,7 @@
     <Compile Include="Models\PageHelper.cs" />
     <Compile Include="Models\SelfTestModel.cs" />
     <Compile Include="Models\SelfTestScoreModel.cs" />
+    <Compile Include="Models\SelfTestTypeViewModel.cs" />
     <Compile Include="Models\SelfTestViewModel.cs" />
     <Compile Include="Models\UnifiedTestTypeViewModel.cs" />
     <Compile Include="Models\UnifiedTestListViewModel.cs" />
@@ -672,6 +673,7 @@
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
     <Content Include="Scripts\UnifiedTesr.js" />
+    <Content Include="Scripts\SelfTestType.js" />
     <Content Include="Scripts\UnifiedTestType.js" />
     <Content Include="vendor\bootstrap\css\bootstrap-grid.css" />
     <Content Include="vendor\bootstrap\css\bootstrap-grid.min.css" />

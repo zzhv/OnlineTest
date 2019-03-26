@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="HopuDB">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 12.625" name="HopuDB">
   <DataContextMoniker Name="/HopuDBDataContext" />
   <nestedChildShapes>
     <classShape Id="76c2a8de-808c-4005-a877-93f640848b24" absoluteBounds="0.5, 0.5, 2, 1.3525109863281251">
@@ -32,7 +32,7 @@
         <elementListCompartment Id="f36557fa-31b8-4ee2-8e6f-b47e25d0115f" absoluteBounds="2.6400000000000006, 3.46, 1.9700000000000002, 0.60771687825520826" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.5 : 4.78772603352865); (2.625 : 4.78772603352865)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.5 : 4.78772603352865); (2.625 : 4.78772603352865)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/HopuDBDataContext/AspNetUsers/AspNetUsers_UserClaims" />
       <nodes>
         <classShapeMoniker Id="c75b22b0-cbbf-442b-8837-db2d839449f1" />
@@ -51,7 +51,7 @@
         <elementListCompartment Id="ee7b1775-2e92-4fea-b489-0088986d613f" absoluteBounds="4.765, 0.96, 1.9700000000000002, 1.346893310546875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.75 : 2.40689331054688); (5.75 : 2.625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.75 : 2.40689331054688); (5.75 : 2.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/HopuDBDataContext/UniteTest/UniteTest_UniteTestInfo" />
       <nodes>
         <classShapeMoniker Id="85f648c2-c930-4f75-8389-b063b1ceed98" />
@@ -64,43 +64,43 @@
         <elementListCompartment Id="ade6f274-94dc-42eb-9f0c-b1ac355d8b50" absoluteBounds="6.8900000000000006, 0.96, 1.9700000000000002, 1.346893310546875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(6.75 : 1.45344665527344); (6.875 : 1.45344665527344)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(6.75 : 1.45344665527344); (6.875 : 1.45344665527344)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/HopuDBDataContext/UniteTest/UniteTest_UniteTestScore" />
       <nodes>
         <classShapeMoniker Id="85f648c2-c930-4f75-8389-b063b1ceed98" />
         <classShapeMoniker Id="bdcac2bb-12f5-43c0-9469-323d88dfa33a" />
       </nodes>
     </associationConnector>
-    <classShape Id="9f460e13-e612-4d98-87c0-05e3c10f69d2" absoluteBounds="4.75, 5.5, 2, 1.9068933105468737">
+    <classShape Id="7aa1a560-9353-4533-abc3-6e35240f4723" absoluteBounds="0.75, 8.75, 2, 1.9068933105468737">
       <DataClassMoniker Name="/HopuDBDataContext/SelfTest" />
       <nestedChildShapes>
-        <elementListCompartment Id="0a55211c-7928-4346-82a0-de394938a8da" absoluteBounds="4.7650000000000006, 5.9600000000000009, 1.9700000000000002, 1.346893310546875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="aa01bc83-f88b-42f5-9fa0-1bd87ef1d1b5" absoluteBounds="0.765, 9.21, 1.9700000000000002, 1.346893310546875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="2aaa19a2-cb13-474e-965c-ab3f62a2088a" absoluteBounds="6.875, 4.75, 2, 2.6460697428385416">
+    <classShape Id="e18a6029-d2f3-4784-b1a8-5833b7e18390" absoluteBounds="3.5, 9.75, 2, 2.6460697428385416">
       <DataClassMoniker Name="/HopuDBDataContext/SelfTestInfo" />
       <nestedChildShapes>
-        <elementListCompartment Id="3efa108e-bcbb-4e9b-bb9c-3a50d6505295" absoluteBounds="6.89, 5.2100000000000009, 1.9700000000000002, 2.0860697428385415" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="cd836f01-2a59-4a48-a28b-7e114dab5f78" absoluteBounds="3.515, 10.21, 1.9700000000000002, 2.0860697428385415" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="dbd5565f-6aea-46f3-9798-41ce108971f3" absoluteBounds="6.875, 2.625, 2, 1.9068933105468746">
+    <classShape Id="9e167691-a0f0-4ba2-b774-9eee37ce9d37" absoluteBounds="3.5, 7.125, 2, 1.9068933105468746">
       <DataClassMoniker Name="/HopuDBDataContext/SelfTestScore" />
       <nestedChildShapes>
-        <elementListCompartment Id="f43c1fc4-becc-4065-a2bb-8e7ab3551444" absoluteBounds="6.89, 3.085, 1.9700000000000002, 1.346893310546875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="bd56c185-2030-485b-88b6-c63bed4d4529" absoluteBounds="3.515, 7.585, 1.9700000000000002, 1.346893310546875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(6.75 : 6.44803487141927); (6.875 : 6.44803487141927)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 10.2034466552734); (3.5 : 10.2034466552734)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/HopuDBDataContext/SelfTest/SelfTest_SelfTestInfo" />
       <nodes>
-        <classShapeMoniker Id="9f460e13-e612-4d98-87c0-05e3c10f69d2" />
-        <classShapeMoniker Id="2aaa19a2-cb13-474e-965c-ab3f62a2088a" />
+        <classShapeMoniker Id="7aa1a560-9353-4533-abc3-6e35240f4723" />
+        <classShapeMoniker Id="e18a6029-d2f3-4784-b1a8-5833b7e18390" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(6.75 : 6.95871609098307); (6.8125 : 6.95871609098307); (6.8125 : 4.6875); (7.875 : 4.6875); (7.875 : 4.53189331054687)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(1.75 : 8.75); (1.75 : 7.9374995); (3.5 : 7.9374995)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/HopuDBDataContext/SelfTest/SelfTest_SelfTestScore" />
       <nodes>
-        <classShapeMoniker Id="9f460e13-e612-4d98-87c0-05e3c10f69d2" />
-        <classShapeMoniker Id="dbd5565f-6aea-46f3-9798-41ce108971f3" />
+        <classShapeMoniker Id="7aa1a560-9353-4533-abc3-6e35240f4723" />
+        <classShapeMoniker Id="9e167691-a0f0-4ba2-b774-9eee37ce9d37" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

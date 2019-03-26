@@ -1816,7 +1816,7 @@ namespace HOPU.Models
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StId", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StId", DbType="Int NOT NULL", IsPrimaryKey=true)]
 		public int StId
 		{
 			get
@@ -1896,7 +1896,7 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseId", DbType="NVarChar(MAX)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseId", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string CourseId
 		{
 			get
@@ -1916,7 +1916,7 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseName", DbType="NVarChar(MAX)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseName", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string CourseName
 		{
 			get
@@ -2131,7 +2131,7 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="NVarChar(MAX)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string Title
 		{
 			get
@@ -2151,7 +2151,7 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerA", DbType="NVarChar(MAX)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerA", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string AnswerA
 		{
 			get
@@ -2171,7 +2171,7 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerB", DbType="NVarChar(MAX)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerB", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string AnswerB
 		{
 			get
@@ -2191,7 +2191,7 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerC", DbType="NVarChar(MAX)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerC", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string AnswerC
 		{
 			get
@@ -2211,7 +2211,7 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerD", DbType="NVarChar(MAX)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerD", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string AnswerD
 		{
 			get
@@ -2231,7 +2231,7 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Answer", DbType="NVarChar(MAX)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Answer", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string Answer
 		{
 			get
@@ -2251,7 +2251,7 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseID", DbType="NVarChar(MAX)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseID", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string CourseID
 		{
 			get
@@ -2414,7 +2414,7 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RealUserName", DbType="NVarChar(MAX)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RealUserName", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string RealUserName
 		{
 			get
@@ -2434,7 +2434,7 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="NVarChar(MAX)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string UserName
 		{
 			get

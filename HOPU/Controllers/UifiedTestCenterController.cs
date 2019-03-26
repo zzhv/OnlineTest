@@ -59,7 +59,7 @@ namespace HOPU.Controllers
             HopuDBDataContext db = new HopuDBDataContext();
             int? UtId = Id;
             ViewBag.Title = UtId;
-            bool joinUniteTest = false;
+            bool joinUniteTest;
             if (UtId == null)
             {
                 return PartialView("Error");
@@ -72,7 +72,7 @@ namespace HOPU.Controllers
                 TopicCount = x.TopicCount,
             });
             //以下综合判断能否进入考试 有一项不符合就直接拒绝
-            if (vmt.Count() == 0)
+            if (!vmt.Any())
             {
                 return HttpNotFound();
             }
@@ -81,15 +81,9 @@ namespace HOPU.Controllers
                 //如果结束时间大于当前时间，可以进入考试
                 if (Convert.ToDateTime(item.StartTime).AddMinutes(item.TimeLenth) > DateTime.Now)
                 {
-                    joinUniteTest = true;
                     break;
                 }
-                else
-                {
-                    //如果因为考试已结束不能进入考试，
-                    return RedirectToAction("Score", "ScoreCenter", new { Id });
-                }
-
+                return RedirectToAction("Score", "ScoreCenter", new { Id });
             }
             //如果是第一次提交答案
             var UniteTestScoreInfo = db.UniteTestScore.Where(a => a.UtId == UtId && a.UserName == User.Identity.GetUserName()).FirstOrDefault();
@@ -99,7 +93,6 @@ namespace HOPU.Controllers
             }
             else
             {
-                joinUniteTest = false;
                 return RedirectToAction("Score", "ScoreCenter", new { Id });
             }
             //以上验证完成，如果能加入统测
@@ -119,7 +112,6 @@ namespace HOPU.Controllers
                         Answer = c.Answer,
                         CourseID = c.CourseID,
                         TopicID = ToHMACSHA1(c.TopicID.ToString(), UserName)
-
                     });
                 var vm = new UnifiedTestViewModel
                 {

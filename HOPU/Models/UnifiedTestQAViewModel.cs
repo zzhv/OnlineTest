@@ -13,7 +13,7 @@
 
     public class UnifiedTestNewTopicIdViewModel
     {
-        public System.Nullable<int> UtId { get; set; }
+        public int? UtId { get; set; }
 
         public string TopicID { get; set; }
 

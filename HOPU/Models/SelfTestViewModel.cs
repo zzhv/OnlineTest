@@ -1,11 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 
 namespace HOPU.Models
 {
     public class SelfTestViewModel
     {
-        public IEnumerable<CourseNameViewModel> CourseNames { get; set; }//题目类名称列表
-        public IEnumerable<SelfTest> SelfTest { get; set; }
-        public IEnumerable<SelfTestInfo> SelfTestInfo { get; set; }
+        public IEnumerable<SelfTest> TimeInfo { get; set; }//独立测时间信息
+        public IEnumerable<SelfTestInfo> TopicInfo { get; set; }//题目信息
     }
 }

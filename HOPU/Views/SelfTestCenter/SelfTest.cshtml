@@ -1,7 +1,152 @@
-﻿
-@{
-    ViewBag.Title = "SelfTest";
+﻿@using HOPU.Models
+@model SelfTestViewModel
+@section Header{
+    <link href="~/Content/UnifiedTest.css" rel="stylesheet" />
+    <link href="~/Content/vs.css" rel="stylesheet" />
+    <script src="~/Scripts/highlight.pack.js"></script>
 }
+<nav class="breadcrumb">
+    <a class="breadcrumb-item" href="~/SysHome/Home">首页</a>
+    <span class="breadcrumb-item active">测试中心</span>
+    <a class="breadcrumb-item" href="~/SelfTestCenter/SelfTestType">独立测试</a>
+    <span class="breadcrumb-item active">第<span class="text-primary">@ViewBag.Title</span>号统测</span>
+</nav>
+<div class="row text-center">
+    <h2 style="margin:0 auto;">第<span class="text-primary">@ViewBag.Title</span>号独测</h2>
+</div>
+<body data-spy="scroll" data-target="#myScrollspy" data-offset="1">
+    @{
+        foreach (var item in Model.TimeInfo)
+        {
+            DateTime EndTime = (Convert.ToDateTime(item.StartTime));
+            <input type="hidden" id="startTime" value="@DateTime.Now">
+            <input type="hidden" id="endTime" value="@EndTime.AddMinutes(item.TimeLenth)">
+            <input type="hidden" id="topicCount" value="@item.TopicCount" />
+            <input type="hidden" id="UtId" value="@item.StId" />
+        }
+    }
+    <div class="fixed-bottom" id="tijiaoshijuan">
+        <span id="timer" class="btn btn-outline-danger" style="font-size:30px;width:155px;"></span>
+        <hr />
+        <input type="button" id="btnTijiao" class=" btn btn-success" value="提交试卷">
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="col-sm-2 col-2" id="myScrollspy" style="margin-left:-80px;">
+                <ul class="nav nav-pills flex-row">
+                    @{
+                        int i = 1;
+                        foreach (var item in Model.TopicInfo)
+                        {
+                            <li class="nav-item float-left" id="S_@i">
+                                <a class="nav-link" href="#section-@i">@i</a>
+                            </li>
+                            i++;
+                        }
+                    }
+                </ul>
+            </nav>
+            <div class="col-sm-10 col-10">
+                @{
+                    int j = 1;
+                    foreach (var item in Model.TopicInfo)
+                    {
+                        <div id="topicType">
+                            @{
 
-<h2>SelfTest</h2>
-
+                                if (item.Answer.Length >= 2)
+                                {
+                                    <label id="topicTypeLabel">多选题</label>
+                                }
+                                else
+                                {
+                                    <label id="topicTypeLabel">单选题</label>
+                                }
+                            }
+                        </div>
+                        <div id="section-@j" style="border: 1px solid #e6e6e6;border-radius:15px ;margin-top:100px;width:110%;  ">
+                            <h3 style="margin-left:70px;margin-top:13px;">
+                                <span style="font-size:45px;">@j</span><small>题</small>
+                            </h3>
+                            <div id="PreBorder">
+                                <pre><code>@item.Title</code></pre>
+                            </div>
+                            <div style="margin-top:20px;min-height:320px;">
+                                <ul id="answerUl">
+                                    @if (item.Answer.Length < 2)
+                                    {
+                                        <li>
+                                            <div class="radio-custom radio-primary">
+                                                <input onclick="liBorder(@j)" type='radio' value='A' name='answerIteam-@j' id='answer1-@j'>
+                                                <label for="answer1-@j" id="labelanswerA-@j" name="labelanswer">
+                                                    A：@item.AnswerA
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="radio-custom radio-primary">
+                                                <input onclick="liBorder(@j)" type='radio' value='B' name='answerIteam-@j' id='answer2-@j'>
+                                                <label for="answer2-@j" id="labelanswerB-@j" name="labelanswer">
+                                                    B： @item.AnswerB
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="radio-custom radio-primary">
+                                                <input onclick="liBorder(@j)" type='radio' value='C' name='answerIteam-@j' id='answer3-@j'>
+                                                <label for="answer3-@j" id="labelanswerC-@j" name="labelanswer">
+                                                    C：@item.AnswerC
+                                                </label>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="radio-custom radio-primary">
+                                                <input onclick="liBorder(@j)" type='radio' value='D' name='answerIteam-@j' id='answer4-@j'>
+                                                <label for="answer4-@j" id="labelanswerD-@j" name="labelanswer">
+                                                    D：@item.AnswerD
+                                                </label>
+                                            </div>
+                                        </li>
+                                    }
+                                    else
+                                    {
+                                        <li>
+                                            <input onclick="liBorder(@j)" type='checkbox' value='A' name='answerIteam-@j' id='answer1-@j'>
+                                            <label for="answer1-@j" id="labelanswerA-@j" name="labelanswer">A：@item.AnswerA</label>
+                                        </li>
+                                        <li>
+                                            <input onclick="liBorder(@j)" type='checkbox' value='B' name='answerIteam-@j' id='answer2-@j'>
+                                            <label for="answer2-@j" id="labelanswerB-@j" name="labelanswer">B： @item.AnswerB</label>
+                                        </li>
+                                        <li>
+                                            <input onclick="liBorder(@j)" type='checkbox' value='C' name='answerIteam-@j' id='answer3-@j'>
+                                            <label for="answer3-@j" id="labelanswerC-@j" name="labelanswer">C：@item.AnswerC</label>
+                                        </li>
+                                        <li>
+                                            <input onclick="liBorder(@j)" type='checkbox' value='D' name='answerIteam-@j' id='answer4-@j'>
+                                            <label for="answer4-@j" id="labelanswerD-@j" name="labelanswer">D：@item.AnswerD</label>
+                                        </li>
+                                    }
+                                </ul>
+                            </div>
+                            <div>
+                                <div id="ATrue-@j" class="card bg-success text-white" style="display:none;">
+                                    <div class="card-body" style="font-size:35px;">
+                                        回答正确！
+                                    </div>
+                                </div>
+                                <div id="AFalse-@j" class="card bg-danger text-white " style="display:none;">
+                                    <div id="AFalse-@j-@j" class="card-body"></div>
+                                </div>
+                            </div>
+                        </div>
+                        j++;
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</body>
+@section footer{
+    <script src="~/Scripts/UnifiedTesr.js"></script>
+}
