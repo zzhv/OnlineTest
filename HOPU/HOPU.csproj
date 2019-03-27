@@ -672,6 +672,7 @@
     <Content Include="Scripts\umd\popper-utils.min.js" />
     <Content Include="Scripts\umd\popper.js" />
     <Content Include="Scripts\umd\popper.min.js" />
+    <Content Include="Scripts\SelfTesr.js" />
     <Content Include="Scripts\UnifiedTesr.js" />
     <Content Include="Scripts\SelfTestType.js" />
     <Content Include="Scripts\UnifiedTestType.js" />
