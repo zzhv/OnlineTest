@@ -4,8 +4,8 @@
 @using HOPU.Models
 @model SelfTestViewModel
 @section Header{
-    <link href="~/Content/UnifiedTest.css" rel="stylesheet" />
     <link href="~/Content/vs.css" rel="stylesheet" />
+    <link href="~/Content/UnifiedTest.css" rel="stylesheet" />
     <script src="~/Scripts/highlight.pack.js"></script>
 }
 <nav class="breadcrumb">
@@ -25,7 +25,7 @@
             <input type="hidden" id="startTime" value="@DateTime.Now">
             <input type="hidden" id="endTime" value="@EndTime.AddMinutes(item.TimeLenth)">
             <input type="hidden" id="topicCount" value="@item.TopicCount" />
-            <input type="hidden" id="UtId" value="@item.StId" />
+            <input type="hidden" id="StId" value="@item.StId" />
         }
     }
     <div class="fixed-bottom" id="tijiaoshijuan">
@@ -151,5 +151,5 @@
     </div>
 </body>
 @section footer{
-    <script src="~/Scripts/UnifiedTesr.js"></script>
+    <script src="~/Scripts/SelfTest.js"></script>
 }

@@ -102,10 +102,10 @@ function show_time(Stop) {
             show_time(1);//关闭倒计时
             $.ajax({
                 type: "post",
-                url: "../UifiedTest",
+                url: "../SelfTest",
                 data: {
                     Answer: AnswerArray,
-                    UtId: $("#UtId").val() * 1
+                    StId: $("#StId").val() * 1
                 },
                 datatype: "json",
                 success: function (data) {
@@ -210,10 +210,10 @@ $(function () {
         show_time(1);//关闭倒计时
         $.ajax({
             type: "post",
-            url: "../UifiedTest",
+            url: "../SelfTest",
             data: {
                 Answer: AnswerArray,
-                UtId: $("#UtId").val() * 1
+                StId: $("#StId").val() * 1
             },
             datatype: "json",
             success: function (data) {

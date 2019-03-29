@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 12.625" name="HopuDB">
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 12.875" name="HopuDB">
   <DataContextMoniker Name="/HopuDBDataContext" />
   <nestedChildShapes>
     <classShape Id="76c2a8de-808c-4005-a877-93f640848b24" absoluteBounds="0.5, 0.5, 2, 1.3525109863281251">
@@ -71,36 +71,36 @@
         <classShapeMoniker Id="bdcac2bb-12f5-43c0-9469-323d88dfa33a" />
       </nodes>
     </associationConnector>
-    <classShape Id="7aa1a560-9353-4533-abc3-6e35240f4723" absoluteBounds="0.75, 8.75, 2, 1.9068933105468737">
+    <classShape Id="e4e9a49c-e84b-4ce5-b096-1b6f56ea6717" absoluteBounds="0.75, 8.75, 2, 2.0916874186197916">
       <DataClassMoniker Name="/HopuDBDataContext/SelfTest" />
       <nestedChildShapes>
-        <elementListCompartment Id="aa01bc83-f88b-42f5-9fa0-1bd87ef1d1b5" absoluteBounds="0.765, 9.21, 1.9700000000000002, 1.346893310546875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="26d798b5-d447-44f7-9db0-f2614420323f" absoluteBounds="0.765, 9.21, 1.9700000000000002, 1.5316874186197915" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="e18a6029-d2f3-4784-b1a8-5833b7e18390" absoluteBounds="3.5, 9.75, 2, 2.6460697428385416">
+    <classShape Id="bef3522e-7c22-41a0-b596-b4a4303b59f8" absoluteBounds="3.5, 9.75, 2, 2.8308638509114559">
       <DataClassMoniker Name="/HopuDBDataContext/SelfTestInfo" />
       <nestedChildShapes>
-        <elementListCompartment Id="cd836f01-2a59-4a48-a28b-7e114dab5f78" absoluteBounds="3.515, 10.21, 1.9700000000000002, 2.0860697428385415" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="962ec459-cefc-4045-8630-fa4613f06be9" absoluteBounds="3.515, 10.21, 1.9700000000000002, 2.270863850911458" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <classShape Id="9e167691-a0f0-4ba2-b774-9eee37ce9d37" absoluteBounds="3.5, 7.125, 2, 1.9068933105468746">
+    <classShape Id="99856477-44e4-43be-954f-a95cfbf708bd" absoluteBounds="3.5, 7.125, 2, 1.9068933105468746">
       <DataClassMoniker Name="/HopuDBDataContext/SelfTestScore" />
       <nestedChildShapes>
-        <elementListCompartment Id="bd56c185-2030-485b-88b6-c63bed4d4529" absoluteBounds="3.515, 7.585, 1.9700000000000002, 1.346893310546875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="db3e610a-b38f-4b26-af2c-0afe6d05c33f" absoluteBounds="3.515, 7.585, 1.9700000000000002, 1.346893310546875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(2.75 : 10.2034466552734); (3.5 : 10.2034466552734)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(2.75 : 10.2958437093099); (3.5 : 10.2958437093099)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/HopuDBDataContext/SelfTest/SelfTest_SelfTestInfo" />
       <nodes>
-        <classShapeMoniker Id="7aa1a560-9353-4533-abc3-6e35240f4723" />
-        <classShapeMoniker Id="e18a6029-d2f3-4784-b1a8-5833b7e18390" />
+        <classShapeMoniker Id="e4e9a49c-e84b-4ce5-b096-1b6f56ea6717" />
+        <classShapeMoniker Id="bef3522e-7c22-41a0-b596-b4a4303b59f8" />
       </nodes>
     </associationConnector>
     <associationConnector edgePoints="[(1.75 : 8.75); (1.75 : 7.9374995); (3.5 : 7.9374995)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/HopuDBDataContext/SelfTest/SelfTest_SelfTestScore" />
       <nodes>
-        <classShapeMoniker Id="7aa1a560-9353-4533-abc3-6e35240f4723" />
-        <classShapeMoniker Id="9e167691-a0f0-4ba2-b774-9eee37ce9d37" />
+        <classShapeMoniker Id="e4e9a49c-e84b-4ce5-b096-1b6f56ea6717" />
+        <classShapeMoniker Id="99856477-44e4-43be-954f-a95cfbf708bd" />
       </nodes>
     </associationConnector>
   </nestedChildShapes>

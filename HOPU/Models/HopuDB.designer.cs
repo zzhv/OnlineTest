@@ -1775,7 +1775,9 @@ namespace HOPU.Models
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private int _StId;
+		private long _StId;
+		
+		private string _UserName;
 		
 		private System.DateTime _StartTime;
 		
@@ -1795,8 +1797,10 @@ namespace HOPU.Models
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnStIdChanging(int value);
+    partial void OnStIdChanging(long value);
     partial void OnStIdChanged();
+    partial void OnUserNameChanging(string value);
+    partial void OnUserNameChanged();
     partial void OnStartTimeChanging(System.DateTime value);
     partial void OnStartTimeChanged();
     partial void OnTimeLenthChanging(int value);
@@ -1816,8 +1820,8 @@ namespace HOPU.Models
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StId", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int StId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StId", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		public long StId
 		{
 			get
 			{
@@ -1832,6 +1836,26 @@ namespace HOPU.Models
 					this._StId = value;
 					this.SendPropertyChanged("StId");
 					this.OnStIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string UserName
+		{
+			get
+			{
+				return this._UserName;
+			}
+			set
+			{
+				if ((this._UserName != value))
+				{
+					this.OnUserNameChanging(value);
+					this.SendPropertyChanging();
+					this._UserName = value;
+					this.SendPropertyChanged("UserName");
+					this.OnUserNameChanged();
 				}
 			}
 		}
@@ -2015,7 +2039,9 @@ namespace HOPU.Models
 		
 		private int _Id;
 		
-		private int _StId;
+		private long _StId;
+		
+		private string _UserName;
 		
 		private int _TopicID;
 		
@@ -2041,8 +2067,10 @@ namespace HOPU.Models
     partial void OnCreated();
     partial void OnIdChanging(int value);
     partial void OnIdChanged();
-    partial void OnStIdChanging(int value);
+    partial void OnStIdChanging(long value);
     partial void OnStIdChanged();
+    partial void OnUserNameChanging(string value);
+    partial void OnUserNameChanged();
     partial void OnTopicIDChanging(int value);
     partial void OnTopicIDChanged();
     partial void OnTitleChanging(string value);
@@ -2087,8 +2115,8 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StId", DbType="Int NOT NULL")]
-		public int StId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StId", DbType="BigInt NOT NULL")]
+		public long StId
 		{
 			get
 			{
@@ -2107,6 +2135,26 @@ namespace HOPU.Models
 					this._StId = value;
 					this.SendPropertyChanged("StId");
 					this.OnStIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string UserName
+		{
+			get
+			{
+				return this._UserName;
+			}
+			set
+			{
+				if ((this._UserName != value))
+				{
+					this.OnUserNameChanging(value);
+					this.SendPropertyChanging();
+					this._UserName = value;
+					this.SendPropertyChanged("UserName");
+					this.OnUserNameChanged();
 				}
 			}
 		}
@@ -2131,7 +2179,7 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string Title
 		{
 			get
@@ -2151,7 +2199,7 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerA", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerA", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string AnswerA
 		{
 			get
@@ -2171,7 +2219,7 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerB", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerB", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string AnswerB
 		{
 			get
@@ -2191,7 +2239,7 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerC", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerC", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string AnswerC
 		{
 			get
@@ -2211,7 +2259,7 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerD", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerD", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string AnswerD
 		{
 			get
@@ -2231,7 +2279,7 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Answer", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Answer", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string Answer
 		{
 			get
@@ -2251,7 +2299,7 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseID", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseID", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string CourseID
 		{
 			get
@@ -2298,7 +2346,7 @@ namespace HOPU.Models
 					}
 					else
 					{
-						this._StId = default(int);
+						this._StId = default(long);
 					}
 					this.SendPropertyChanged("SelfTest");
 				}
@@ -2334,11 +2382,11 @@ namespace HOPU.Models
 		
 		private int _Id;
 		
-		private int _StId;
-		
-		private string _RealUserName;
+		private long _StId;
 		
 		private string _UserName;
+		
+		private string _RealUserName;
 		
 		private System.DateTime _EndTime;
 		
@@ -2352,12 +2400,12 @@ namespace HOPU.Models
     partial void OnCreated();
     partial void OnIdChanging(int value);
     partial void OnIdChanged();
-    partial void OnStIdChanging(int value);
+    partial void OnStIdChanging(long value);
     partial void OnStIdChanged();
-    partial void OnRealUserNameChanging(string value);
-    partial void OnRealUserNameChanged();
     partial void OnUserNameChanging(string value);
     partial void OnUserNameChanged();
+    partial void OnRealUserNameChanging(string value);
+    partial void OnRealUserNameChanged();
     partial void OnEndTimeChanging(System.DateTime value);
     partial void OnEndTimeChanged();
     partial void OnScoreChanging(int value);
@@ -2390,8 +2438,8 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StId", DbType="Int NOT NULL")]
-		public int StId
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StId", DbType="BigInt NOT NULL")]
+		public long StId
 		{
 			get
 			{
@@ -2414,27 +2462,7 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RealUserName", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
-		public string RealUserName
-		{
-			get
-			{
-				return this._RealUserName;
-			}
-			set
-			{
-				if ((this._RealUserName != value))
-				{
-					this.OnRealUserNameChanging(value);
-					this.SendPropertyChanging();
-					this._RealUserName = value;
-					this.SendPropertyChanged("RealUserName");
-					this.OnRealUserNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string UserName
 		{
 			get
@@ -2450,6 +2478,26 @@ namespace HOPU.Models
 					this._UserName = value;
 					this.SendPropertyChanged("UserName");
 					this.OnUserNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RealUserName", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string RealUserName
+		{
+			get
+			{
+				return this._RealUserName;
+			}
+			set
+			{
+				if ((this._RealUserName != value))
+				{
+					this.OnRealUserNameChanging(value);
+					this.SendPropertyChanging();
+					this._RealUserName = value;
+					this.SendPropertyChanged("RealUserName");
+					this.OnRealUserNameChanged();
 				}
 			}
 		}
@@ -2521,7 +2569,7 @@ namespace HOPU.Models
 					}
 					else
 					{
-						this._StId = default(int);
+						this._StId = default(long);
 					}
 					this.SendPropertyChanged("SelfTest");
 				}
