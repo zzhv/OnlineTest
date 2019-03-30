@@ -827,6 +827,7 @@
     <Content Include="vendor\jquery.cookie\component.json" />
     <Content Include="vendor\jquery.cookie\cookie.jquery.json" />
     <Content Include="Views\Shared\_SysManage.cshtml" />
+    <Content Include="Views\ScoreCenter\Score_S.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

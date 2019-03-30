@@ -17,8 +17,9 @@ namespace HOPU.Controllers
             if (IsAdmin())
             {
                 var pageNumber = Id ?? 1;
-                ViewBag.UtIdList = UnifiedTestListViewModel.GetUtId();
+                var utList = UnifiedTestListViewModel.GetUtId();
                 ViewBag.UtId = pageNumber;
+                return View(utList);
             }
             return View();
         }
@@ -192,5 +193,11 @@ namespace HOPU.Controllers
         }
 
         #endregion
+
+        public ActionResult Score_S()
+        {
+
+            return View();
+        }
     }
 }
