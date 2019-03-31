@@ -1,6 +1,7 @@
 ﻿@{
     ViewBag.Title = "成绩中心";
     Layout = "~/views/shared/_Layout.cshtml";
+   
 }
 @using Microsoft.AspNet.Identity;
 @using HOPU.Models
@@ -16,6 +17,7 @@
     <script src="~/Scripts/bootstrap-datepicker.zh-CN.js"></script>
     <script src="~/Scripts/BTTable/tableExport.min.js"></script>
     <script src="~/Scripts/BTTable/bootstrap-table-export.js"></script>
+    
 }
 <nav class="breadcrumb">
     <a class="breadcrumb-item" href="~/SysHome/Home">首页</a>
@@ -38,7 +40,7 @@
                     @Html.DropDownList("BrickType", selectListItems as IEnumerable<SelectListItem>, new { id = "select", @class = "form-control" })
                 </div>
                 <div class="p-2 ">
-      
+
                     @Html.ActionLink("独/统切换", "Score_S", "ScoreCenter", new { area = "" }, new { @class = "btn btn-primary" })
                     <script>
                         var UFCBtn = $("#UFChange");
@@ -145,6 +147,9 @@ else
 {
     //如果不是admin权限
     <div id="toolbar">
+        <div class="p-2 ">
+            @Html.ActionLink("独/统切换", "Score_s", "ScoreCenter", new { id = 1 }, new { @class = "btn btn-primary" })
+        </div>
     </div>
     <table id="ScoreTable"
            data-toggle="table"
@@ -223,3 +228,11 @@ else
     </script>
 
 }
+@*@section footer
+{
+    <script>
+        $(function() {
+            $("#@actionName").addClass("active");
+        });
+    </script>
+}*@

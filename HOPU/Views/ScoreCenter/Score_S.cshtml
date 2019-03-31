@@ -20,7 +20,7 @@
 <nav class="breadcrumb">
     <a class="breadcrumb-item" href="~/SysHome/Home">首页</a>
     <span class="breadcrumb-item active">测试中心</span>
-    <a class="breadcrumb-item" href="~/UifiedTestCenter/UnifiedTestType">统测列表</a>
+    <a class="breadcrumb-item" href="~/SelfTestCenter/SelfTestType">独测列表</a>
     <span class="breadcrumb-item active">成绩中心</span>
 </nav>
 @if (GetUserType.GetUserTypeInfo(User.Identity.GetUserId()))//如果是admin
@@ -29,34 +29,25 @@
         <input type="hidden" id="UtId" value="@ViewBag.UtId" />
     </div>
     <div>
-        <div id="Utoolbar">
+        <div id="toolbar">
             <div class="d-flex">
-                <div class="p-2 ">
-                    @{
-                        var selectListItems = Model;
-                    }
-                    @Html.DropDownList("BrickType", selectListItems as IEnumerable<SelectListItem>, new { id = "select", @class = "form-control" })
-                </div>
+                @*<div class="p-2 ">
+                        @{
+                            var selectListItems = Model;
+                        }
+                        @Html.DropDownList("BrickType", selectListItems as IEnumerable<SelectListItem>, new { id = "select", @class = "form-control" })
+                    </div>*@
                 <div class="p-2 ">
 
-                    @Html.ActionLink("独/统切换", "Score_S", "ScoreCenter", new { area = "" }, new { @class = "btn btn-primary" })
-                    <script>
-                        var UFCBtn = $("#UFChange");
-                        var Table = $("#tableHide");
-                        $(function () {
-                            $("#UFChange").on("click", function () {
-                                alert(11);
-                            });
-                        });
-                    </script>
+                    @Html.ActionLink("独/统切换", "Score", "ScoreCenter", new { id = 1 }, new { @class = "btn btn-primary" })
                 </div>
             </div>
         </div>
-        <div id="UtableHide">
+        <div id="Utable">
             <table id="table"
                    data-toggle="table"
-                   data-toolbar="#Utoolbar"
-                   data-url="@Url.Action("AdminGetScore", "ScoreCenter")"
+                   data-toolbar="#toolbar"
+                   data-url="@Url.Action("AdminGetSelfScore", "ScoreCenter")"
                    data-method="post"
                    data-offset="1"
                    data-page-size="10"
@@ -64,8 +55,8 @@
                    data-page-number="1"
                    data-side-pagination="server"
                    data-flat="true"
-                   data-sort-name="UserName"
-                   data-sort-order="asc"
+                   data-sort-name="EndTime"
+                   data-sort-order="desc"
                    data-search="true"
                    data-page-list="[5,10,All]"
                    data-show-refresh="true"
@@ -76,12 +67,12 @@
                    data-show-footer="false"
                    data-minimum-count-columns="2"
                    data-silent="true"
-                   data-uniqueld="UserName"
+                   data-uniqueld="StId"
                    data-height="460"
                    data-query-params="queryParams">
                 <thead>
                     <tr>
-                        <th data-field="UtId" data-align="center">统测号</th>
+                        <th data-field="StId" data-align="center" data-sortable="true">独测号</th>
                         <th data-field="RealUserName">姓名</th>
                         <th data-field="UserName" data-sortable="true">学号</th>
                         <th data-field="EndTime" data-formatter="changeDateFormat" data-sortable="true">提交时间</th>
@@ -97,7 +88,7 @@
             var temp = {
                 limit: params.limit,   //页面大小
                 offset: params.offset,  //页码
-                Id: $("#UtId").val(),
+                //Id: $("#StId").val(),
                 keyword: params.search,//搜索
                 sortOrder: params.order,//排序
                 sortName: params.sort//排序字段
@@ -135,7 +126,7 @@
         var $button = $('#button');
         $(function () {
             $("#select").on("change", function () {
-                $("#UtId").val($('#select option:selected').val());
+                $("#StId").val($('#select option:selected').val());
                 $table.bootstrapTable('refresh');
             });
         });
@@ -145,11 +136,14 @@ else
 {
     //如果不是admin权限
     <div id="toolbar">
+        <div class="p-2 ">
+            @Html.ActionLink("独/统切换", "Score", "ScoreCenter", new { id = 1 }, new { @class = "btn btn-primary" })
+        </div>
     </div>
     <table id="ScoreTable"
            data-toggle="table"
            data-toolbar="#toolbar"
-           data-url="@Url.Action("GetScore","ScoreCenter")"
+           data-url="@Url.Action("GetSelfScore","ScoreCenter")"
            data-method="get"
            data-Type="json"
            data-offset="0"
@@ -174,7 +168,7 @@ else
            data-query-params="queryParams">
         <thead>
             <tr>
-                <th data-field="UtId" data-align="center" data-sortable="true">统测号</th>
+                <th data-field="StId" data-align="center" data-sortable="true">独测号</th>
                 <th data-field="RealUserName">姓名</th>
                 <th data-field="UserName" data-sortable="false">学号</th>
                 <th data-field="EndTime" data-formatter="changeDateFormat" data-sortable="true">提交时间</th>

@@ -21,5 +21,18 @@ namespace HOPU.Models
             return result.ToList();
 
         }
+
+        public static List<SelectListItem> GetStId()
+        {
+            HopuDBDataContext db = new HopuDBDataContext();
+            var result = from a in db.SelfTest
+                         select new SelectListItem()
+                         {
+                             Text = "第" + a.StId.ToString() + "号统测",
+                             Value = a.StId.ToString(),
+                         };
+            return result.ToList();
+
+        }
     }
 }

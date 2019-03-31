@@ -100,13 +100,13 @@ namespace HOPU.Controllers
                 {
                     break;
                 }
-                return RedirectToAction("Score", "ScoreCenter", new { Id });
+                return RedirectToAction("Score_S", "ScoreCenter", new { Id });
             }
             //如果是第一次提交答案
             var selfTestScoreInfo = db.SelfTestScore.FirstOrDefault(a => a.StId == stId && a.UserName == User.Identity.GetUserName());
             if (selfTestScoreInfo != null)
             {
-                return RedirectToAction("Score", "ScoreCenter", new { Id });
+                return RedirectToAction("Score_S", "ScoreCenter", new { Id });
             }
             //以上验证完成，如果能加入统测
             {

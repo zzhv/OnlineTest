@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var actionName = ViewContext.RouteData.Values["action"].ToString().ToLower();
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -14,41 +17,48 @@
     @RenderSection("Header", false)
 </head>
 <body id="body">
-    <nav class="navbar navbar-expand-sm bg-secondary navbar-dark" style="top:-50px;">
+    <nav class="navbar navbar-expand-sm bg-white navbar-dark border-bottom" style="top: -50px;">
         @if (Request.IsAuthenticated)
         {
-            @Html.ActionLink("题库", "Home", "SysHome", new { area = "" }, new { @class = "navbar-brand", style = "margin-left:10%" })
+            <img src="~/Content/image/ad.jpg" style="width: 25px;margin-left:10%;" />
+            @Html.ActionLink("首页", "Home", "SysHome", new { area = "" }, new { @class = "nav-link  ", id = "Home", style = "font-size:20px;" })
         }
         else
         {
-            @Html.ActionLink("题库", "AdminLogin", "SysAdmin", new { area = "" }, new { @class = "navbar-brand" })
+            <img src="~/Content/image/ad.jpg" style="width: 25px;margin-left:10%;" />
+            @Html.ActionLink("题库", "AdminLogin", "SysAdmin", new { area = "" }, new { @class = "nav-link", style = "font-size:20px;" })
         }
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon btn-info">
+            </span>
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav">
+            <ul class="nav nav-pills">
                 @if (Request.IsAuthenticated)
                 {
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">测试中心</a>
-                        <div class="dropdown-menu">
-                            @Html.ActionLink("统一测试", "UnifiedTestType", "UifiedTestCenter", null, new { @class = "dropdown-item" })
-                            @Html.ActionLink("自我测试", "SelfTestType", "SelfTestCenter", null, new { @class = "dropdown-item" })
-                        </div>
+
+                    <li class="nav-item">
+                        @Html.ActionLink("统一测试", "UnifiedTestType", "UifiedTestCenter", null, new { @class = "nav-link", id = "unifiedtesttype" })
                     </li>
                     <li class="nav-item">
-                        @Html.ActionLink("成绩中心", "Score", "ScoreCenter", null, new { @class = "nav-link" })
+                        @Html.ActionLink("自我测试", "SelfTestType", "SelfTestCenter", null, new { @class = "nav-link", id = "selftesttype" })
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">浏览中心</a>
-                        <div class="dropdown-menu">
-                            @Html.ActionLink("顺序浏览", "Allbrowse", "BrowseCenter", null, new { @class = "dropdown-item" })
-                            @Html.ActionLink("分类浏览", "ClassifieTypedBrowse", "BrowseCenter", null, new { @class = "dropdown-item" })
-                        </div>
-                    </li>
+
                     <li class="nav-item">
-                        @Html.ActionLink("关于我们", "About", "Syshome", null, new { @class = "nav-link" })
+                        @Html.ActionLink("成绩中心", "Score", "ScoreCenter", null, new { @class = "nav-link", id = "score" })
+                    </li>
+
+                    <li class="nav-item">
+                        @Html.ActionLink("顺序浏览", "Allbrowse", "BrowseCenter", null, new { @class = "nav-link", id = "allbrowse" })
+                    </li>
+
+                    <li class="nav-item">
+                        @Html.ActionLink("分类浏览", "ClassifieTypedBrowse", "BrowseCenter", null, new { @class = "nav-link", id = "classifietypedbrowse" })
+
+                    </li>
+
+                    <li class="nav-item">
+                        @Html.ActionLink("关于我们", "About", "Syshome", null, new { @class = "nav-link", id = "about" })
                     </li>
                 }
             </ul>
@@ -56,13 +66,11 @@
         </div>
     </nav>
     <div class="container body-content">
-
         @RenderBody()
-
         <footer class="pt-4 my-md-5 pt-md-5 border-top">
             <div class="row">
                 <div class="col-12 col-md">
-                    <img class="mb-2" src="" alt="" width="24" height="24">
+                    <img class="mb-2" src="~/Content/image/ad.jpg" alt="" width="24" height="24" >
                     <small>黔ICP备16006898号-1</small>
                     <small class="d-block mb-3 text-muted">&copy;2017 - @DateTime.Now.Year XXX.All Rights Reserved.</small>
                 </div>
@@ -96,5 +104,15 @@
     </div>
     @RenderSection("scripts", required: false)
     @RenderSection("footer", required: false)
+    <script>
+        $(function () {
+            var action ="@actionName";
+            if (action.toString() == "score_s") {
+                $("#score").addClass("active");
+                return;
+            }
+            $("#@actionName").addClass("active");
+    });
+    </script>
 </body>
 </html>

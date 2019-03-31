@@ -2,7 +2,7 @@
 @using HOPU.Models
 @if (Request.IsAuthenticated)
 {
-    <ul class="navbar-nav ml-auto">
+    <ul class="nav nav-pills ml-auto">
         <li class="nav-item ml-auto">
             @Html.ActionLink("你好，" + GetRealUserName.GetRealName(User.Identity.GetUserId()) + " !", "index", "Manage", null, new { @class = "nav-link ml-auto" })
             @*GetRealUserName.GetRealName(User.Identity.GetUserId())*@
