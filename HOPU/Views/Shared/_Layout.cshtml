@@ -1,5 +1,5 @@
 ﻿@{
-    var actionName = ViewContext.RouteData.Values["action"].ToString().ToLower();
+    var actionName = ViewContext.RouteData.Values["action"].ToString().ToLower() + "css";
 }
 <!DOCTYPE html>
 <html>
@@ -38,27 +38,27 @@
                 {
 
                     <li class="nav-item">
-                        @Html.ActionLink("统一测试", "UnifiedTestType", "UifiedTestCenter", null, new { @class = "nav-link", id = "unifiedtesttype" })
+                        @Html.ActionLink("统一测试", "UnifiedTestType", "UifiedTestCenter", null, new { @class = "nav-link", id = "unifiedtesttypecss" })
                     </li>
                     <li class="nav-item">
-                        @Html.ActionLink("自我测试", "SelfTestType", "SelfTestCenter", null, new { @class = "nav-link", id = "selftesttype" })
-                    </li>
-
-                    <li class="nav-item">
-                        @Html.ActionLink("成绩中心", "Score", "ScoreCenter", null, new { @class = "nav-link", id = "score" })
+                        @Html.ActionLink("自我测试", "SelfTestType", "SelfTestCenter", null, new { @class = "nav-link", id = "selftesttypecss" })
                     </li>
 
                     <li class="nav-item">
-                        @Html.ActionLink("顺序浏览", "Allbrowse", "BrowseCenter", null, new { @class = "nav-link", id = "allbrowse" })
+                        @Html.ActionLink("成绩中心", "Score", "ScoreCenter", null, new { @class = "nav-link", id = "scorecss" })
                     </li>
 
                     <li class="nav-item">
-                        @Html.ActionLink("分类浏览", "ClassifieTypedBrowse", "BrowseCenter", null, new { @class = "nav-link", id = "classifietypedbrowse" })
+                        @Html.ActionLink("顺序浏览", "Allbrowse", "BrowseCenter", null, new { @class = "nav-link", id = "allbrowsecss" })
+                    </li>
+
+                    <li class="nav-item">
+                        @Html.ActionLink("分类浏览", "ClassifieTypedBrowse", "BrowseCenter", null, new { @class = "nav-link", id = "classifietypedbrowsecss" })
 
                     </li>
 
                     <li class="nav-item">
-                        @Html.ActionLink("关于我们", "About", "Syshome", null, new { @class = "nav-link", id = "about" })
+                        @Html.ActionLink("关于我们", "About", "Syshome", null, new { @class = "nav-link", id = "aboutcss" })
                     </li>
                 }
             </ul>
@@ -70,7 +70,7 @@
         <footer class="pt-4 my-md-5 pt-md-5 border-top">
             <div class="row">
                 <div class="col-12 col-md">
-                    <img class="mb-2" src="~/Content/image/ad.jpg" alt="" width="24" height="24" >
+                    <img class="mb-2" src="~/Content/image/ad.jpg" alt="" width="24" height="24">
                     <small>黔ICP备16006898号-1</small>
                     <small class="d-block mb-3 text-muted">&copy;2017 - @DateTime.Now.Year XXX.All Rights Reserved.</small>
                 </div>
@@ -107,8 +107,8 @@
     <script>
         $(function () {
             var action ="@actionName";
-            if (action.toString() == "score_s") {
-                $("#score").addClass("active");
+            if (action.toString() === "score_scss") {
+                $("#scorecss").addClass("active");
                 return;
             }
             $("#@actionName").addClass("active");

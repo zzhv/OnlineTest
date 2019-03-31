@@ -15,7 +15,9 @@ namespace HOPU.Controllers
         #region 独测列表 SelfTestType
         public ActionResult SelfTestType(int? page)
         {
-            var products = GetTestInfo(User.Identity.GetUserName()).ToList();
+            HopuDBDataContext db = new HopuDBDataContext();
+            string userName = User.Identity.GetUserName();
+            var products = db.SelfTest.Where(x => x.UserName == userName).Select(a => a).OrderByDescending(a => a.StId).ToList();
             var pageNumber = page ?? 1;
             var onePage = products.ToPagedList(pageNumber, 5);
             var list = GetCourseInfo().ToList();
@@ -42,10 +44,10 @@ namespace HOPU.Controllers
             };
             return View(vm);
         }
-        protected static IEnumerable<SelfTest> GetTestInfo(string UserName)
+        protected static IEnumerable<SelfTest> GetTestInfo(string userName)
         {
             HopuDBDataContext db = new HopuDBDataContext();
-            var result = db.SelfTest.Where(x => x.UserName == UserName).Select(a => a).OrderByDescending(a => a.StId);
+            var result = db.SelfTest.Where(x => x.UserName == userName).Select(a => a).OrderByDescending(a => a.StId);
             return result;
         }
         //获取分类表
@@ -80,6 +82,7 @@ namespace HOPU.Controllers
             var vmt = db.SelfTest.Where(a => a.StId == stId && a.UserName == userName).ToList().Select(x => new SelfTest
             {
                 StId = x.StId,
+                UserName = x.UserName,
                 StartTime = x.StartTime,
                 TimeLenth = x.TimeLenth,
                 TopicCount = x.TopicCount,
@@ -115,6 +118,7 @@ namespace HOPU.Controllers
                       new SelfTestInfo()
                       {
                           StId = c.StId,
+                          UserName = c.UserName,
                           Title = c.Title,
                           AnswerA = c.AnswerA,
                           AnswerB = c.AnswerB,
