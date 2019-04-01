@@ -6,6 +6,7 @@
 @using HOPU.Models
 @using X.PagedList.Mvc;
 @using X.PagedList
+@using X.PagedList.Mvc.Common
 @model UnifiedTestTypeViewModel
 @section Header{
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
@@ -44,7 +45,7 @@
                        }))
                     {
                         @Html.AntiForgeryToken();
-                        int i = 1;
+                        var i = 1;
                         <div class="modal-content" style="padding:25px;height:400px;">
                             <div class="flex-row">
                                 @foreach (var item in Model.CourseNames)
@@ -71,16 +72,10 @@
                         </div>
                     }
                 </div>
-                @*模态框底部*@
-                @*<div class="modal-footer">
-
-                    </div>*@
             </div>
         </div>
     </div>
 }
-@*@using (Html.BeginForm("UnifiedTest", "SysHome", FormMethod.Post))
-    {*@
 <table class="table table-hover table-striped">
     <thead>
         <tr>
@@ -95,11 +90,7 @@
     </thead>
     <tbody>
         @{
-            bool adminFlag = false;
-            if (GetUserType.GetUserTypeInfo(User.Identity.GetUserId()))//如果是admin
-            {
-                adminFlag = true;
-            }
+            bool adminFlag = GetUserType.GetUserTypeInfo(User.Identity.GetUserId());
             foreach (var i in Model.UniteTests)
             {
                 DateTime endTime = Convert.ToDateTime(i.StartTime);
@@ -151,12 +142,20 @@
                             }
                         </td>
                     }
-
                 </tr>
             }
         }
     </tbody>
 </table>
-<div style="margin-left:50%">
-    @Html.PagedListPager((IPagedList)Model.UniteTests, page => Url.Action("UnifiedTestType", new { page }))
+<div class="row justify-content-center">
+    <div class="col-4">
+    </div>
+    @Html.PagedListPager((IPagedList)Model.UniteTests, page => Url.Action("UnifiedTestType", new { page }), 
+        new PagedListRenderOptions {
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new string[] { "page-link" }
+        })
+    <div class="col-4">
+    </div>
+
 </div>

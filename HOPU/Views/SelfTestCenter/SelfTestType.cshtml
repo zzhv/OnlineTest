@@ -2,10 +2,10 @@
     ViewBag.Title = "自我测试";
     Layout = "~/views/shared/_Layout.cshtml";
 }
-@using Microsoft.AspNet.Identity;
 @using HOPU.Models
 @using X.PagedList.Mvc;
 @using X.PagedList
+@using X.PagedList.Mvc.Common
 @model SelfTestTypeViewModel
 @section Header{
     <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
@@ -77,8 +77,6 @@
     </div>
 </div>
 
-@*@using (Html.BeginForm("UnifiedTest", "SysHome", FormMethod.Post))
-    {*@
 <table class="table table-hover table-striped">
     <thead>
         <tr>
@@ -147,5 +145,9 @@
     </tbody>
 </table>
 <div style="margin-left:50%">
-    @Html.PagedListPager((IPagedList)Model.SelfTest, page => Url.Action("SelfTestType", new { page }))
+    @Html.PagedListPager((IPagedList)Model.SelfTest, page => Url.Action("SelfTestType", new { page }), 
+        new PagedListRenderOptions {
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new string[] { "page-link" }
+        })
 </div>
