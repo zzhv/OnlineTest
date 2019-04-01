@@ -2,7 +2,11 @@
     ViewBag.Title = "首页";
     Layout = "~/views/shared/_Layout.cshtml";
 }
-@using System.Web.Optimization
+@section Header
+{
+    <script src="~/Scripts/js/vue.js"></script>
+    <script src="~/Scripts/js/axios.min.js"></script>
+}
 <style>
     /* Make the image fully responsive */
     .carousel-inner img {
@@ -41,7 +45,6 @@
 
 </div>
 <div style="margin-top: 25px">
-
     <div class="container mt-3">
         <h6 class="">广告</h6>
         <div class="media border p-3">
@@ -53,92 +56,90 @@
         </div>
     </div>
 </div>
-<div class="row" style="margin-top: 50px; background-color: #F7F6F6; padding-top: 20px;">
-    <div class="col-md-4">
-        <table class="table table-striped table-bordered  text-center">
-            <thead class="bg-white">
-                <tr>
-                    <th>活跃排行榜</th>
+<div id="app">
+    <div class="row" style="margin-top: 50px; background-color: #F7F6F6; padding-top: 20px;">
+        <div class="col-md-4">
+            <table class="table table-striped table-bordered  text-center">
+                <thead class="bg-white">
+                    <tr>
+                        <th>月均分排行榜</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(i,index) in SScoreAvgInfo" :key="i.RealUserName">
+                        <td v-html="">{{ index+1 }}-{{ i.RealUserName }}<span class='badge badge-pill badge-success'>{{ i.Score | formatScore}}分</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <table class="table table-striped table-bordered  text-center">
+                <thead class="bg-white">
+                    <tr>
+                        <th>活跃排行榜</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr v-for="(i,index) in UHYinfo" :key="i.RealUserName">
+                    <td v-if="loading">加载中.....</td>
+                    <td v-if="errored">加载失败</td>
+                    <td>{{ index+1 }}-{{ i.RealUserName }}<span class='badge badge-pill badge-primary'>{{ i.Score }}活跃度</span></td>
                 </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>John</td>
-                </tr>
-                <tr>
-                    <td>John</td>
-                </tr>
-                <tr>
-                    <td>John</td>
-                </tr>
-                <tr>
-                    <td>John</td>
-                </tr>
-                <tr>
-                    <td>John</td>
-                </tr>
-                <tr>
-                    <td>John</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-4">
-        <table class="table table-striped table-bordered  text-center">
-            <thead class="bg-white">
-                <tr>
-                    <th>均分排行榜</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>John</td>
-                </tr>
-                <tr>
-                    <td>John</td>
-                </tr>
-                <tr>
-                    <td>John</td>
-                </tr>
-                <tr>
-                    <td>John</td>
-                </tr>
-                <tr>
-                    <td>John</td>
-                </tr>
-                <tr>
-                    <td>John</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="col-md-4">
-        <table class="table table-striped table-bordered  text-center">
-            <thead class="bg-white">
-                <tr>
-                    <th>活跃排行榜</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>John</td>
-                </tr>
-                <tr>
-                    <td>John</td>
-                </tr>
-                <tr>
-                    <td>John</td>
-                </tr>
-                <tr>
-                    <td>John</td>
-                </tr>
-                <tr>
-                    <td>John</td>
-                </tr>
-                <tr>
-                    <td>John</td>
-                </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-4">
+            <table class="table table-striped table-bordered  text-center">
+                <thead class="bg-white">
+                    <tr>
+                        <th>XX排行榜</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
 </div>
+@section footer
+{
+    <script>
+        new Vue({
+            el: '#app',
+            data() {
+                return {
+                    SScoreAvgInfo: null,
+                    UHYinfo: null,
+                    loading: true,
+                    errored: false
+                }
+            },
+            filters: {
+                formatScore(value) {
+                   // var str = " <span class='badge badge-pill badge-primary'>" + value + "<span>";
+                    return value;
+                }
+            },
+            mounted() {
+                axios
+                        .get('http://localhost:59793/SysHome/GetSScoreAvg')
+                        .then(response => {
+                            this.SScoreAvgInfo = response.data
+                        })
+                        .catch(error => {
+                            console.log(error)
+                            this.errored = true
+                        })
+                        .finally(() => this.loading = false),
+                    axios
+                        .get('http://localhost:59793/SysHome/GetUHYinfo')
+                        .then(response => {
+                            this.UHYinfo = response.data
+                        }).catch(error => {
+                            console.log(error)
+                            this.errored = true
+                        })
+                        .finally(() => this.loading = false)
+            }
+        })
+    </script>
+}

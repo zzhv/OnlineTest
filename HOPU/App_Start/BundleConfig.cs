@@ -35,7 +35,7 @@ namespace HOPU
                        "~/Scripts/OpenScrollup.js"));
 
             bundles.Add(new StyleBundle("~/Content/aaaa").Include(
-                        "~/Content/bootstrap.css",
+                        "~/Content/bootstrap.min.css",
                         "~/Content/site.css",
                         "~/Content/image.css"
                         // "~/Content/open-iconic-bootstrap.css"

@@ -657,9 +657,11 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\js\axios.min.js" />
     <Content Include="Scripts\js\charts-custom.js" />
     <Content Include="Scripts\js\charts-home.js" />
     <Content Include="Scripts\js\front.js" />
+    <Content Include="Scripts\js\vue.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\my.js" />
     <Content Include="Scripts\AllBrowseFirstLoad.js" />
