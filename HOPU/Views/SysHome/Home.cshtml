@@ -121,7 +121,7 @@
             },
             mounted() {
                 axios
-                        .get('http://localhost:59793/SysHome/GetSScoreAvg')
+                        .get('GetSScoreAvg')
                         .then(response => {
                             this.SScoreAvgInfo = response.data
                         })
@@ -131,7 +131,7 @@
                         })
                         .finally(() => this.loading = false),
                     axios
-                        .get('http://localhost:59793/SysHome/GetUHYinfo')
+                        .get('GetUHYinfo')
                         .then(response => {
                             this.UHYinfo = response.data
                         }).catch(error => {
