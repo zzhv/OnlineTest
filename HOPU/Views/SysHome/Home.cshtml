@@ -62,12 +62,12 @@
             <table class="table table-striped table-bordered  text-center">
                 <thead class="bg-white">
                     <tr>
-                        <th>月均分排行榜</th>
+                        <th>统测均分榜</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr v-for="(i,index) in SScoreAvgInfo" :key="i.RealUserName">
-                        <td v-html="">{{ index+1 }}-{{ i.RealUserName }}<span class='badge badge-pill badge-success'>{{ i.Score | formatScore}}分</span></td>
+                        <td v-html="">{{ index+1 }}-{{ i.RealUserName }}<span class='badge badge-pill badge-success'>{{ i.scoreAvg | formatScore}}分</span></td>
                     </tr>
                 </tbody>
             </table>

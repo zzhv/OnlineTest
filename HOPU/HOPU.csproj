@@ -215,6 +215,7 @@
     <Compile Include="Models\ClassifiedBrowseModel.cs" />
     <Compile Include="Models\AllBrowseModel.cs" />
     <Compile Include="Models\CourseNameViewModel.cs" />
+    <Compile Include="Models\HomeViewModel.cs" />
     <Compile Include="Models\HopuDB.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

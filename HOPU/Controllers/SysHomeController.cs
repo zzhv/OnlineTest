@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using HOPU.Models;
@@ -8,6 +9,8 @@ namespace HOPU.Controllers
     [Authorize]
     public class SysHomeController : Controller
     {
+        private HopuDBDataContext db = new HopuDBDataContext();
+
 
         #region 首页 Home
 
@@ -33,23 +36,18 @@ namespace HOPU.Controllers
         #endregion
 
         #region 排行榜
+        //select avg(Score) svoreAvg,b.RealUserName from  UniteTestScore a,AspNetUsers b where a.UserName=b.UserName group by b.RealUserName order by avg(Score)
 
         public JsonResult GetSScoreAvg()
         {
-            var SScoreAvgList = new List<SelfTestScore>
+            using (db)
             {
-                new SelfTestScore{ Score =100,RealUserName = "张一"},
-                new SelfTestScore{ Score =99,RealUserName = "张二"},
-                new SelfTestScore{ Score =88,RealUserName = "张三"},
-                new SelfTestScore{ Score =77,RealUserName = "张四"},
-                new SelfTestScore{ Score =98,RealUserName = "张五"},
-                new SelfTestScore{ Score =65,RealUserName = "张六"},
-                new SelfTestScore{ Score =15,RealUserName = "张七"},
-                new SelfTestScore{ Score =78,RealUserName = "张八"},
-                new SelfTestScore{ Score =12,RealUserName = "张九"},
-                new SelfTestScore{ Score =79,RealUserName = "张拾"}
-            };
-            return Json(SScoreAvgList,JsonRequestBehavior.AllowGet);
+                string sql =
+                    "select avg(Score) scoreAvg,b.RealUserName from  SelfTestScore a,AspNetUsers b where a.UserName=b.UserName group by b.RealUserName";
+                var selfTestScoreAvg = db.ExecuteQuery<UGetSScoreAvgModel>(sql).ToList().OrderByDescending(s => s.scoreAvg).Take(10);
+                return Json(selfTestScoreAvg, JsonRequestBehavior.AllowGet);
+            }
+
         }
 
         public JsonResult GetUHYinfo()

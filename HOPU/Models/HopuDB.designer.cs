@@ -35,7 +35,13 @@ namespace HOPU.Models
     partial void DeleteAspNetUsers(AspNetUsers instance);
     partial void InsertUserClaims(UserClaims instance);
     partial void UpdateUserClaims(UserClaims instance);
-    partial void DeleteUserClaims(UserClaims instance);
+
+        internal object ExecuteQuery<T1, T2>(T2 sql)
+        {
+            throw new NotImplementedException();
+        }
+
+        partial void DeleteUserClaims(UserClaims instance);
     partial void InsertUniteTestInfo(UniteTestInfo instance);
     partial void UpdateUniteTestInfo(UniteTestInfo instance);
     partial void DeleteUniteTestInfo(UniteTestInfo instance);
