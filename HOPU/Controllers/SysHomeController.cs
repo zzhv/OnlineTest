@@ -43,8 +43,8 @@ namespace HOPU.Controllers
             using (db)
             {
                 string sql =
-                    "select avg(Score) scoreAvg,b.RealUserName from  SelfTestScore a,AspNetUsers b where a.UserName=b.UserName group by b.RealUserName";
-                var selfTestScoreAvg = db.ExecuteQuery<UGetSScoreAvgModel>(sql).ToList().OrderByDescending(s => s.scoreAvg).Take(10);
+                    "select avg(Score) number,b.RealUserName from  SelfTestScore a,AspNetUsers b where a.UserName=b.UserName group by b.RealUserName";
+                var selfTestScoreAvg = db.ExecuteQuery<UGetSScoreAvgModel>(sql).ToList().OrderByDescending(s => s.Number).Take(10);
                 return Json(selfTestScoreAvg, JsonRequestBehavior.AllowGet);
             }
 
@@ -52,18 +52,18 @@ namespace HOPU.Controllers
 
         public JsonResult GetUHYinfo()
         {
-            var SScoreAvgList = new List<SelfTestScore>
+            var SScoreAvgList = new List<UGetSScoreAvgModel>
             {
-                new SelfTestScore{ Score =100,RealUserName = "张1"},
-                new SelfTestScore{ Score =99,RealUserName = "张2"},
-                new SelfTestScore{ Score =88,RealUserName = "张3"},
-                new SelfTestScore{ Score =77,RealUserName = "张4"},
-                new SelfTestScore{ Score =98,RealUserName = "张5"},
-                new SelfTestScore{ Score =65,RealUserName = "张六"},
-                new SelfTestScore{ Score =15,RealUserName = "张七"},
-                new SelfTestScore{ Score =78,RealUserName = "张八"},
-                new SelfTestScore{ Score =12,RealUserName = "张九"},
-                new SelfTestScore{ Score =79,RealUserName = "张拾"}
+                new UGetSScoreAvgModel{ Number = 100,RealUserName = "张1"},
+                new UGetSScoreAvgModel{ Number =99,RealUserName = "张2"},
+                new UGetSScoreAvgModel{ Number =88,RealUserName = "张3"},
+                new UGetSScoreAvgModel{ Number =77,RealUserName = "张4"},
+                new UGetSScoreAvgModel{ Number =98,RealUserName = "张5"},
+                new UGetSScoreAvgModel{ Number =65,RealUserName = "张六"},
+                new UGetSScoreAvgModel{ Number =15,RealUserName = "张七"},
+                new UGetSScoreAvgModel{ Number =78,RealUserName = "张八"},
+                new UGetSScoreAvgModel{ Number =12,RealUserName = "张九"},
+                new UGetSScoreAvgModel{ Number =79,RealUserName = "张拾"}
             };
             return Json(SScoreAvgList, JsonRequestBehavior.AllowGet);
         }

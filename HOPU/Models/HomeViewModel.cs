@@ -13,6 +13,6 @@ namespace HOPU.Models
     public class UGetSScoreAvgModel
     {
         public string RealUserName { get; set; }
-        public int scoreAvg { get; set; }
+        public int Number { get; set; }
     }
 }
