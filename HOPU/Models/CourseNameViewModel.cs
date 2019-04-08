@@ -1,4 +1,6 @@
-﻿namespace HOPU.Models
+﻿using System.Collections.Generic;
+
+namespace HOPU.Models
 {
     /// <summary>
     /// 题目分类明细
@@ -9,5 +11,11 @@
         public string TypeName { get; set; }
         public double? CourseId { get; set; }
         public string CourseName { get; set; }
+    }
+
+    public class CourseNameListViewModel
+    {
+        public IEnumerable<CourseNameViewModel> CourseName { get; set; }
+        public IEnumerable<TypeInfo> TypeName { get; set; }
     }
 }

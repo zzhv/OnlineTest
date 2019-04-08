@@ -9,6 +9,7 @@ namespace HOPU.Controllers
     [Authorize]
     public class BrowseCenterController : Controller
     {
+        private HopuDBDataContext db = new HopuDBDataContext();
 
         #region 顺序浏览 AllBrowse
 
@@ -38,14 +39,19 @@ namespace HOPU.Controllers
         #endregion
 
         #region 分类列表 ClassifieTypedBrowse
-        public ActionResult ClassifieTypedBrowse(int? tid)
+        public ActionResult ClassifieTypedBrowse()
         {
-            List<CourseNameViewModel> topicType = GetTopicType(tid ?? 1).ToList();
-            ViewBag.topictype = topicType;
-            return View();
+            //List<CourseNameViewModel> CourseName = 
+            //List<TypeInfo> TypeName = 
+            var vm = new CourseNameListViewModel
+            {
+                CourseName = GetTopicType().ToList(),
+                TypeName = db.TypeInfo.Select(x => x).ToList()
+            };
+            return View(vm);
         }
 
-        private static IQueryable<CourseNameViewModel> GetTopicType(int topicid)
+        private static IQueryable<CourseNameViewModel> GetTopicType()
         {
             //select distinct * from[dbo].[TypeInfo] a,[dbo].[Course] b where a.TID = b.TID
             HopuDBDataContext db = new HopuDBDataContext();

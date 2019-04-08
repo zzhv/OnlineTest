@@ -1,33 +1,40 @@
-﻿@{
+﻿@model HOPU.Models.CourseNameListViewModel
+@{
     ViewBag.Title = "分类列表";
     Layout = "~/views/shared/_Layout.cshtml";
 }
 <nav class="breadcrumb">
-    <a class="breadcrumb-item" href="~/SysHome/Home">首页</a>
+    <a class="breadcrumb-item" href="../SysHome/Home">首页</a>
     <span class="breadcrumb-item active">测试中心</span>
     <span class="breadcrumb-item active">@ViewBag.Title</span>
 </nav>
-<table class="table table-hover table-striped">
-    <thead>
-        <tr>
-            <th class="text-primary">主类</th>
-            <th>次类</th>
-            <th class="text-left">选项</th>
-        </tr>
-    </thead>
-    <tbody>
+<div class="container">
+    <div id="accordion">
         @{
-            foreach (var i in ViewBag.topictype)
+            int j = 0;
+            foreach (var i in Model.TypeName)
             {
-                <tr>
-                    <td class="text-primary">@i.TypeName</td>
-                    <td>@i.CourseName</td>
-                    <td class="text-left">
-                        @Html.ActionLink("进入", "ClassifieBrowse", new { CourseId = i.CourseId, CourseName = i.CourseName }, new { @class = "text-danger" })
-                    </td>
-                </tr>
+                <div class="card">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#collapse_@j">
+                            @i.TypeName
+                        </a>
+                    </div>
+                    <div id="collapse_@j" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            @foreach (var k in Model.CourseName)
+                            {
+                                if (k.TId != null && Equals(k.TId, i.TID))
+                                {
+                                    @Html.ActionLink(k.CourseName, "ClassifieBrowse", new { CourseId = k.CourseId, CourseName = k.CourseName }, new { @class = "text-danger", @style = "margin-left:10px;" })
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+                j++;
             }
         }
-    </tbody>
-</table>
+    </div>
+</div>
 @*@Html.DropDownList("courseName", ViewBag.classlist as List<SelectListItem>, new { @class = "form-control input-short" })*@
