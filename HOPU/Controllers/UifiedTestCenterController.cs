@@ -163,7 +163,7 @@ namespace HOPU.Controllers
                 List<UnifiedTestQAViewModel> result = new List<UnifiedTestQAViewModel>();
                 //先算出每题多少分 
                 double itemScore = 100F / answerList.Count;
-                double SumScore = 0;
+                double sumScore = 0;
                 //校验答案
                 for (int i = 0; i < answerList.Count; i++)
                 {
@@ -176,7 +176,7 @@ namespace HOPU.Controllers
                             IsTrue = true
                         };
                         result.Add(resultinfo);
-                        SumScore += itemScore;
+                        sumScore += itemScore;
                     }
                     else
                     {
@@ -200,7 +200,7 @@ namespace HOPU.Controllers
                         RealUserName = GetRealUserName.GetRealName(User.Identity.GetUserId()),
                         UserName = User.Identity.GetUserName(),
                         EndTime = DateTime.Now,
-                        Score = Convert.ToInt32(Math.Round(SumScore, 0, MidpointRounding.AwayFromZero))
+                        Score = Convert.ToInt32(Math.Round(sumScore, 0, MidpointRounding.AwayFromZero))
                     };
                     db.UniteTestScore.InsertOnSubmit(uniteTestScore);
                     db.SubmitChanges();

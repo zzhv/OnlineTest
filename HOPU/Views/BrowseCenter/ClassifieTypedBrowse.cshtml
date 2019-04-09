@@ -17,7 +17,7 @@
                 <div class="card">
                     <div class="card-header">
                         <a class="card-link" data-toggle="collapse" href="#collapse_@j">
-                            @i.TypeName
+                            <span class="badge badge-pill badge-danger">@(j + 1)</span> @i.TypeName
                         </a>
                     </div>
                     <div id="collapse_@j" class="collapse" data-parent="#accordion">
@@ -26,7 +26,7 @@
                             {
                                 if (k.TId != null && Equals(k.TId, i.TID))
                                 {
-                                    @Html.ActionLink(k.CourseName, "ClassifieBrowse", new { CourseId = k.CourseId, CourseName = k.CourseName }, new { @class = "text-danger", @style = "margin-left:10px;" })
+                                    @Html.ActionLink(k.CourseName, "ClassifieBrowse", new {k.CourseId, k.CourseName }, new { @class = "text-primary", @style = "margin-left:15px;flex-left" })
                                 }
                             }
                         </div>
@@ -37,4 +37,11 @@
         }
     </div>
 </div>
-@*@Html.DropDownList("courseName", ViewBag.classlist as List<SelectListItem>, new { @class = "form-control input-short" })*@
+@section footer
+{
+    <script>
+        $(function () {
+            $("#collapse_0").addClass("show");
+        })
+    </script>
+}
