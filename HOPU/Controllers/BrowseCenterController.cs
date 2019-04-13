@@ -41,8 +41,6 @@ namespace HOPU.Controllers
         #region 分类列表 ClassifieTypedBrowse
         public ActionResult ClassifieTypedBrowse()
         {
-            //List<CourseNameViewModel> CourseName = 
-            //List<TypeInfo> TypeName = 
             var vm = new CourseNameListViewModel
             {
                 CourseName = GetTopicType().ToList(),
