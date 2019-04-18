@@ -200,6 +200,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\Authorize.cs" />
     <Compile Include="Controllers\BrowseCenterController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ScoreCenterController.cs" />
@@ -831,6 +832,7 @@
     <Content Include="vendor\jquery.cookie\cookie.jquery.json" />
     <Content Include="Views\Shared\_SysManage.cshtml" />
     <Content Include="Views\ScoreCenter\Score_S.cshtml" />
+    <Content Include="Views\SysManage\TopicManage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

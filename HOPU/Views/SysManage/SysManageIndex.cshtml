@@ -3,14 +3,6 @@
     ViewBag.SingleTitle = "主页";
     Layout = "~/views/shared/_SysManage.cshtml";
 }
-<div style="display: none">
-    <canvas id="lineCahrt"></canvas>
-    <canvas id="barChartHome"></canvas>
-    <canvas id="pieChart"></canvas>
-    <canvas id="lineChart1"></canvas>
-</div>
-
-
 <section class="dashboard-counts no-padding-bottom">
     <div class="container-fluid">
         <div class="row bg-white has-shadow">
@@ -73,7 +65,6 @@
 <section class="dashboard-header">
     <div class="container-fluid">
         <div class="row">
-            <!-- Statistics -->
             <div class="statistics col-lg-3 col-12">
                 <div class="statistic d-flex align-items-center bg-white has-shadow">
                     <div class="icon bg-red"><i class="fa fa-tasks"></i></div>
@@ -89,7 +80,6 @@
                 </div>
             </div>
             <div class="chart col-lg-3 col-12">
-                <!-- Numbers-->
                 <div class="statistic d-flex align-items-center bg-white has-shadow">
                     <div class="icon bg-green"><i class="fa fa-line-chart"></i></div>
                     <div class="text"><strong>99.9%</strong><br><small>统测及格率</small></div>

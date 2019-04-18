@@ -1,5 +1,8 @@
 ﻿@using HOPU.Models
 @using Microsoft.AspNet.Identity
+@{
+    var actionName = ViewContext.RouteData.Values["action"].ToString().ToLower();
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +19,7 @@
     <link href="~/Content/css/style.default.css" rel="stylesheet" />
     <link href="~/Content/css/custom.css" rel="stylesheet" />
     <link rel="shortcut icon" href="~/Content/Mimg/favicon.ico">
+    @RenderSection("Header", false)
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
@@ -137,15 +141,17 @@
                 </div>
                 <!-- 小标题--><span class="heading">菜单</span>
                 <ul class="list-unstyled">
-                    <li class="active">
+                    <li id="sysmanageindex">
                         <a href="~/SysManage/SysManageIndex"> <i class="icon-home"></i>主页 </a>
                     </li>
-                    <li><a href="#"> <i class="icon-grid"></i>题库管理 </a></li>
+                    <li>
+                        <a href="#"> <i class="icon-grid"></i>题库管理 </a>
+                    </li>
                     <li><a href="#"> <i class="fa fa-bar-chart"></i>数据中心 </a></li>
                     <li>
                         <a href="#tikuDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>题库管理 </a>
                         <ul id="tikuDropdown" class="collapse list-unstyled ">
-                            <li><a href="#">题目管理</a></li>
+                            <li id="topicmanage"><a href="~/SysManage/topicmanage">题目管理</a></li>
                             <li><a href="#">题目分类</a></li>
                         </ul>
                     </li>
@@ -164,10 +170,16 @@
             <div class="content-inner">
                 <header class="page-header">
                     <div class="container-fluid">
-                        <h2 class="no-margin-bottom">@ViewBag.SingleTitle</h2>
+                        <h2 style="margin-bottom: 0;font-size: 20px;font-weight:normal">@ViewBag.SingleTitle</h2>
                     </div>
                 </header>
-
+                @*没有会报错*@
+                <div style="display: none">
+                    <canvas id="lineCahrt"></canvas>
+                    <canvas id="barChartHome"></canvas>
+                    <canvas id="pieChart"></canvas>
+                    <canvas id="lineChart1"></canvas>
+                </div>
                 @RenderBody()
 
                 <footer class="main-footer">
@@ -193,5 +205,14 @@
     <script src="~/vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="~/Scripts/js/charts-home.js"></script>
     <script src="~/Scripts/js/front.js"></script>
+    <script>
+        $(function () {
+            var fatherBro = $("#@actionName").parent("ul").prev("a")
+            fatherBro.attr("aria-expanded", "true");
+            fatherBro.attr("class", "");
+        $("#@actionName").parent("ul").addClass("show");
+        $("#@actionName").addClass("active");
+    });
+    </script>
 </body>
 </html>
