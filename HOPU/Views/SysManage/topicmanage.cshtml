@@ -3,7 +3,8 @@
     ViewBag.Title = ViewBag.SingleTitle = "题目管理";
     Layout = "~/Views/Shared/_SysManage.cshtml";
 }
-<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+@*此处应改为min*@
+<link href="~/Content/bootstrap.css" rel="stylesheet" />
 <link href="~/Content/all.css" rel="stylesheet" />
 <link href="~/Content/bootstrap-editable.css" rel="stylesheet" />
 <link href="~/Content/bootstrap-table.css" rel="stylesheet" />
@@ -13,10 +14,10 @@
 <script src="~/Scripts/BTTable/bootstrap-table-zh-CN.js"></script>
 <script src="~/Scripts/BTTable/bootstrap-table-editable.js"></script>
 @*
-<script src="~/Scripts/bootstrap-datepicker.js"></script>
-<script src="~/Scripts/bootstrap-datepicker.zh-CN.js"></script>
-    <script src="~/Scripts/BTTable/tableExport.min.js"></script>
-    <script src="~/Scripts/BTTable/bootstrap-table-export.js"></script>*@
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.zh-CN.js"></script>
+        <script src="~/Scripts/BTTable/tableExport.min.js"></script>
+        <script src="~/Scripts/BTTable/bootstrap-table-export.js"></script>*@
 
 <div id="UtableHide" class="bg-white no-margin-top ">
     <table id="TopicTable"></table>
@@ -44,7 +45,6 @@
             showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
             cardView: false,                    //是否显示详细视图
             detailView: false,
-        
             offset: 0,
             sortOrder: "asc",                   //排序方式
             sortName: "TopicID",
@@ -67,7 +67,8 @@
                 field: "Title",
                 title: "标题",
                 editable: {
-                    type: 'text',
+                    type: 'textarea',
+                    mode: "inline",
                     title: '标题',
                     validate: function (v) {
                         if (!v) return '不能为空';
@@ -75,9 +76,10 @@
                 }
             }, {
                 field: "AnswerA",
-                title: "",
+                title: "A",
                 editable: {
                     type: 'text',
+                    mode: "inline",
                     title: 'A',
                     validate: function (v) {
                         if (!v) return '不能为空';
@@ -89,6 +91,7 @@
                 title: "B",
                 editable: {
                     type: 'text',
+                    mode: "inline",
                     title: 'B',
                     validate: function (v) {
                         if (!v) return '不能为空';
@@ -100,6 +103,7 @@
                 title: "C",
                 editable: {
                     type: 'text',
+                    mode: "inline",
                     title: 'C',
                     validate: function (v) {
                         if (!v) return '不能为空';
@@ -111,6 +115,7 @@
                 title: "D",
                 editable: {
                     type: 'text',
+                    mode: "inline",
                     title: 'D',
                     validate: function (v) {
                         if (!v) return '不能为空';
@@ -122,6 +127,7 @@
                 title: "答案",
                 editable: {
                     type: 'text',
+                    mode: "inline",
                     title: '答案',
                     validate: function (v) {
                         if (!v) return '不能为空';
@@ -133,6 +139,7 @@
                 title: "分类",
                 editable: {
                     type: 'text',
+                    mode: "inline",
                     title: '分类',
                     validate: function (v) {
                         if (!v) return '不能为空';

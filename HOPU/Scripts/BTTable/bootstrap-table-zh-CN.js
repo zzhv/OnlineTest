@@ -32,7 +32,7 @@
                 return '多条件搜索请用逗号隔开';
             },
             formatNoMatches: function formatNoMatches() {
-                return '没有获取到成绩信息';
+                return '没有获取信息，请重试';
             },
             formatPaginationSwitch: function formatPaginationSwitch() {
                 return '隐藏/显示分页';
