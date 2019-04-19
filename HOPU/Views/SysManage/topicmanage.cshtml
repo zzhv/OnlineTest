@@ -3,105 +3,163 @@
     ViewBag.Title = ViewBag.SingleTitle = "题目管理";
     Layout = "~/Views/Shared/_SysManage.cshtml";
 }
-@section header{
-    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
-    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="~/Content/all.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-editable.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-table.css" rel="stylesheet" />
-    <script src="~/Scripts/bootstrap-editable.min.js"></script>
-    <script src="~/Scripts/BTTable/bootstrap-table.js"></script>
-    <script src="~/Scripts/BTTable/bootstrap-table-zh-CN.js"></script>
-    <script src="~/Scripts/BTTable/bootstrap-table-editable.js"></script>
-    <script src="~/Scripts/bootstrap-datepicker.js"></script>
-    <script src="~/Scripts/bootstrap-datepicker.zh-CN.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/all.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-editable.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-table.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/bootstrap-editable.min.js"></script>
+<script src="~/Scripts/BTTable/bootstrap-table.js"></script>
+<script src="~/Scripts/BTTable/bootstrap-table-zh-CN.js"></script>
+<script src="~/Scripts/BTTable/bootstrap-table-editable.js"></script>
+@*
+<script src="~/Scripts/bootstrap-datepicker.js"></script>
+<script src="~/Scripts/bootstrap-datepicker.zh-CN.js"></script>
     <script src="~/Scripts/BTTable/tableExport.min.js"></script>
-    <script src="~/Scripts/BTTable/bootstrap-table-export.js"></script>
-}
-<section class="bg-white">
-    <div id="UtableHide">
-        <table id="table"
-               data-toggle="table"
-               data-toolbar="#Utoolbar"
-               data-url="@Url.Action("AdminGetScore", "ScoreCenter")"
-               data-method="post"
-               data-offset="1"
-               data-page-size="10"
-               data-pagination="true"
-               data-page-number="1"
-               data-side-pagination="server"
-               data-flat="true"
-               data-sort-name="UserName"
-               data-sort-order="asc"
-               data-search="true"
-               data-page-list="[5,10,All]"
-               data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-fullscreen="true"
-               data-show-columns="true"
-               data-show-export="true"
-               data-show-footer="false"
-               data-minimum-count-columns="2"
-               data-silent="true"
-               data-uniqueld="UserName"
-               data-height="460"
-               data-query-params="queryParams">
-            <thead>
-                <tr>
-                    <th data-field="UtId" data-align="center">统测号</th>
-                    <th data-field="RealUserName">姓名</th>
-                    <th data-field="UserName" data-sortable="true">学号</th>
-                    <th data-field="EndTime" data-formatter="changeDateFormat" data-sortable="true">提交时间</th>
-                    <th data-field="Score" data-formatter="scoreFormatter" data-sortable="true" data-align="center">得分</th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-    <script>
-        function queryParams(params) {
-            var temp = {
-                limit: params.limit,   //页面大小
-                offset: params.offset,  //页码
-                Id: 3,
-                keyword: params.search,//搜索
-                sortOrder: params.order,//排序
-                sortName: params.sort//排序字段
-            };
-            return temp;
-        };
+    <script src="~/Scripts/BTTable/bootstrap-table-export.js"></script>*@
 
-        //分数
-        function scoreFormatter(value) {
-            var a = "";
-            if (value < 60) {
-                var a = '<span style="color:#c12e2a">' + value + '</span>';
-            } else if (value >= 60) {
-                var a = '<span style="color:#3e8f3e">' + value + '</span>';
+<div id="UtableHide" class="bg-white no-margin-top ">
+    <table id="TopicTable"></table>
+</div>
+<script>
+    $(function () {
+        $("#TopicTable").bootstrapTable({
+            method: "post",
+            striped: true,                      //是否显示行间隔色
+            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true,                   //是否显示分页（*）
+            sortable: false,                     //是否启用排序
+            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1,                       //初始化加载第一页，默认第一页
+            pageSize: 10,                       //每页的记录行数（*）
+            pageList: [5, 10, 25],        //可供选择的每页的行数（*）
+            search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+            strictSearch: true,
+            showColumns: true,                  //是否显示所有的列
+            showRefresh: true,                  //是否显示刷新按钮
+            minimumCountColumns: 2,             //最少允许的列数
+            clickToSelect: true,                //是否启用点击选中行
+            height: 525,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            uniqueId: "TopicID",                     //每一行的唯一标识，一般为主键列
+            showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
+            cardView: false,                    //是否显示详细视图
+            detailView: false,
+        
+            offset: 0,
+            sortOrder: "asc",                   //排序方式
+            sortName: "TopicID",
+            queryParams: function queryParams(params) {
+                var temp = {
+                    limit: params.limit,   //页面大小
+                    offset: params.offset,  //页码
+                    keyword: params.search,//搜索
+                    sortOrder: params.order,//排序
+                    sortName: params.sort//排序字段
+                };
+                return temp;
+            },
+            url: "../SysManage/GetTopic",
+            columns: [{
+                field: "TopicID",
+                title: "题号",
+            }, {
+
+                field: "Title",
+                title: "标题",
+                editable: {
+                    type: 'text',
+                    title: '标题',
+                    validate: function (v) {
+                        if (!v) return '不能为空';
+                    }
+                }
+            }, {
+                field: "AnswerA",
+                title: "",
+                editable: {
+                    type: 'text',
+                    title: 'A',
+                    validate: function (v) {
+                        if (!v) return '不能为空';
+                    }
+                }
+            },
+            {
+                field: "AnswerB",
+                title: "B",
+                editable: {
+                    type: 'text',
+                    title: 'B',
+                    validate: function (v) {
+                        if (!v) return '不能为空';
+                    }
+                }
+            },
+            {
+                field: "AnswerC",
+                title: "C",
+                editable: {
+                    type: 'text',
+                    title: 'C',
+                    validate: function (v) {
+                        if (!v) return '不能为空';
+                    }
+                }
+            },
+            {
+                field: "AnswerD",
+                title: "D",
+                editable: {
+                    type: 'text',
+                    title: 'D',
+                    validate: function (v) {
+                        if (!v) return '不能为空';
+                    }
+                }
+            },
+            {
+                field: "Answer",
+                title: "答案",
+                editable: {
+                    type: 'text',
+                    title: '答案',
+                    validate: function (v) {
+                        if (!v) return '不能为空';
+                    }
+                }
+            },
+            {
+                field: "CourseID",
+                title: "分类",
+                editable: {
+                    type: 'text',
+                    title: '分类',
+                    validate: function (v) {
+                        if (!v) return '不能为空';
+                    }
+                }
+            }],
+            onEditableSave: function (field, row, oldValue, $el) {
+                $.ajax({
+                    type: "post",
+                    url: "../Home/Edit",
+                    data: row,
+                    dataType: 'JSON',
+                    success: function (data, state) {
+                        if (state == "success") {
+                            console.log(state);
+                        }
+                    },
+                    error: function () {
+                        alert('编辑失败');
+                    },
+                    complete: function () {
+
+                    }
+                });
             }
-            return a;
-
-        }
-
-        //时间
-        function changeDateFormat(cellval) {
-            if (cellval != null) {
-                var date = new Date(parseInt(cellval.replace("/Date(", "").replace(")/", ""), 10));
-                var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-                var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-                var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-                var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-                var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
-                var milliseconds = date.getMilliseconds() < 100 ? "0" + date.getMilliseconds() : date.getMilliseconds();
-                return date.getFullYear() + "-" + month + "-" + currentDate + " " + hours + ":" + minutes + ":" + seconds + "." + milliseconds;
-            }
-        }
-        var $table = $('#table');
-        var $button = $('#button');
-        $(function () {
-            $("#select").on("change", function () {
-                $("#UtId").val($('#select option:selected').val());
-                $table.bootstrapTable('refresh');
-            });
         });
-    </script>
-</section>
+    });
+
+
+</script>

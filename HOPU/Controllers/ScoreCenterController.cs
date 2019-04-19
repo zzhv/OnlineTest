@@ -61,12 +61,7 @@ namespace HOPU.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        /// <summary>
-        /// 根据条件生成sql语句
-        /// </summary>
-        /// <param name="keyword">搜索关键词</param>
-        /// <param name="sortName">排序的列名</param>
-        /// <param name="sortOrder">排序的方式</param>
+
         /// <returns>返回要查询的sql语句</returns>
         public static string AdminGetSql(int Id, string keyword, string sortName, string sortOrder)
         {
