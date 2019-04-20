@@ -35,13 +35,7 @@ namespace HOPU.Models
     partial void DeleteAspNetUsers(AspNetUsers instance);
     partial void InsertUserClaims(UserClaims instance);
     partial void UpdateUserClaims(UserClaims instance);
-
-        internal object ExecuteQuery<T1, T2>(T2 sql)
-        {
-            throw new NotImplementedException();
-        }
-
-        partial void DeleteUserClaims(UserClaims instance);
+    partial void DeleteUserClaims(UserClaims instance);
     partial void InsertUniteTestInfo(UniteTestInfo instance);
     partial void UpdateUniteTestInfo(UniteTestInfo instance);
     partial void DeleteUniteTestInfo(UniteTestInfo instance);
@@ -60,6 +54,9 @@ namespace HOPU.Models
     partial void InsertSelfTestScore(SelfTestScore instance);
     partial void UpdateSelfTestScore(SelfTestScore instance);
     partial void DeleteSelfTestScore(SelfTestScore instance);
+    partial void InsertTopic(Topic instance);
+    partial void UpdateTopic(Topic instance);
+    partial void DeleteTopic(Topic instance);
     #endregion
 		
 		public HopuDBDataContext() : 
@@ -97,14 +94,6 @@ namespace HOPU.Models
 			get
 			{
 				return this.GetTable<Course>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Topic> Topic
-		{
-			get
-			{
-				return this.GetTable<Topic>();
 			}
 		}
 		
@@ -179,6 +168,14 @@ namespace HOPU.Models
 				return this.GetTable<SelfTestScore>();
 			}
 		}
+		
+		public System.Data.Linq.Table<Topic> Topic
+		{
+			get
+			{
+				return this.GetTable<Topic>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Course")]
@@ -239,159 +236,6 @@ namespace HOPU.Models
 				if ((this._TID != value))
 				{
 					this._TID = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Topic")]
-	public partial class Topic
-	{
-		
-		private System.Nullable<double> _TopicID;
-		
-		private string _Title;
-		
-		private string _AnswerA;
-		
-		private string _AnswerB;
-		
-		private string _AnswerC;
-		
-		private string _AnswerD;
-		
-		private string _Answer;
-		
-		private System.Nullable<double> _CourseID;
-		
-		public Topic()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TopicID", DbType="Float")]
-		public System.Nullable<double> TopicID
-		{
-			get
-			{
-				return this._TopicID;
-			}
-			set
-			{
-				if ((this._TopicID != value))
-				{
-					this._TopicID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="NVarChar(MAX)")]
-		public string Title
-		{
-			get
-			{
-				return this._Title;
-			}
-			set
-			{
-				if ((this._Title != value))
-				{
-					this._Title = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerA", DbType="NVarChar(MAX)")]
-		public string AnswerA
-		{
-			get
-			{
-				return this._AnswerA;
-			}
-			set
-			{
-				if ((this._AnswerA != value))
-				{
-					this._AnswerA = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerB", DbType="NVarChar(MAX)")]
-		public string AnswerB
-		{
-			get
-			{
-				return this._AnswerB;
-			}
-			set
-			{
-				if ((this._AnswerB != value))
-				{
-					this._AnswerB = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerC", DbType="NVarChar(MAX)")]
-		public string AnswerC
-		{
-			get
-			{
-				return this._AnswerC;
-			}
-			set
-			{
-				if ((this._AnswerC != value))
-				{
-					this._AnswerC = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerD", DbType="NVarChar(MAX)")]
-		public string AnswerD
-		{
-			get
-			{
-				return this._AnswerD;
-			}
-			set
-			{
-				if ((this._AnswerD != value))
-				{
-					this._AnswerD = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Answer", DbType="NVarChar(MAX)")]
-		public string Answer
-		{
-			get
-			{
-				return this._Answer;
-			}
-			set
-			{
-				if ((this._Answer != value))
-				{
-					this._Answer = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseID", DbType="Float")]
-		public System.Nullable<double> CourseID
-		{
-			get
-			{
-				return this._CourseID;
-			}
-			set
-			{
-				if ((this._CourseID != value))
-				{
-					this._CourseID = value;
 				}
 			}
 		}
@@ -2578,6 +2422,236 @@ namespace HOPU.Models
 						this._StId = default(long);
 					}
 					this.SendPropertyChanged("SelfTest");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Topic")]
+	public partial class Topic : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private double _TopicID;
+		
+		private string _Title;
+		
+		private string _AnswerA;
+		
+		private string _AnswerB;
+		
+		private string _AnswerC;
+		
+		private string _AnswerD;
+		
+		private string _Answer;
+		
+		private System.Nullable<double> _CourseID;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnTopicIDChanging(double value);
+    partial void OnTopicIDChanged();
+    partial void OnTitleChanging(string value);
+    partial void OnTitleChanged();
+    partial void OnAnswerAChanging(string value);
+    partial void OnAnswerAChanged();
+    partial void OnAnswerBChanging(string value);
+    partial void OnAnswerBChanged();
+    partial void OnAnswerCChanging(string value);
+    partial void OnAnswerCChanged();
+    partial void OnAnswerDChanging(string value);
+    partial void OnAnswerDChanged();
+    partial void OnAnswerChanging(string value);
+    partial void OnAnswerChanged();
+    partial void OnCourseIDChanging(System.Nullable<double> value);
+    partial void OnCourseIDChanged();
+    #endregion
+		
+		public Topic()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TopicID", DbType="Float NOT NULL", IsPrimaryKey=true)]
+		public double TopicID
+		{
+			get
+			{
+				return this._TopicID;
+			}
+			set
+			{
+				if ((this._TopicID != value))
+				{
+					this.OnTopicIDChanging(value);
+					this.SendPropertyChanging();
+					this._TopicID = value;
+					this.SendPropertyChanged("TopicID");
+					this.OnTopicIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="NVarChar(MAX)")]
+		public string Title
+		{
+			get
+			{
+				return this._Title;
+			}
+			set
+			{
+				if ((this._Title != value))
+				{
+					this.OnTitleChanging(value);
+					this.SendPropertyChanging();
+					this._Title = value;
+					this.SendPropertyChanged("Title");
+					this.OnTitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerA", DbType="NVarChar(MAX)")]
+		public string AnswerA
+		{
+			get
+			{
+				return this._AnswerA;
+			}
+			set
+			{
+				if ((this._AnswerA != value))
+				{
+					this.OnAnswerAChanging(value);
+					this.SendPropertyChanging();
+					this._AnswerA = value;
+					this.SendPropertyChanged("AnswerA");
+					this.OnAnswerAChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerB", DbType="NVarChar(MAX)")]
+		public string AnswerB
+		{
+			get
+			{
+				return this._AnswerB;
+			}
+			set
+			{
+				if ((this._AnswerB != value))
+				{
+					this.OnAnswerBChanging(value);
+					this.SendPropertyChanging();
+					this._AnswerB = value;
+					this.SendPropertyChanged("AnswerB");
+					this.OnAnswerBChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerC", DbType="NVarChar(MAX)")]
+		public string AnswerC
+		{
+			get
+			{
+				return this._AnswerC;
+			}
+			set
+			{
+				if ((this._AnswerC != value))
+				{
+					this.OnAnswerCChanging(value);
+					this.SendPropertyChanging();
+					this._AnswerC = value;
+					this.SendPropertyChanged("AnswerC");
+					this.OnAnswerCChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerD", DbType="NVarChar(MAX)")]
+		public string AnswerD
+		{
+			get
+			{
+				return this._AnswerD;
+			}
+			set
+			{
+				if ((this._AnswerD != value))
+				{
+					this.OnAnswerDChanging(value);
+					this.SendPropertyChanging();
+					this._AnswerD = value;
+					this.SendPropertyChanged("AnswerD");
+					this.OnAnswerDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Answer", DbType="NVarChar(MAX)")]
+		public string Answer
+		{
+			get
+			{
+				return this._Answer;
+			}
+			set
+			{
+				if ((this._Answer != value))
+				{
+					this.OnAnswerChanging(value);
+					this.SendPropertyChanging();
+					this._Answer = value;
+					this.SendPropertyChanged("Answer");
+					this.OnAnswerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseID", DbType="Float")]
+		public System.Nullable<double> CourseID
+		{
+			get
+			{
+				return this._CourseID;
+			}
+			set
+			{
+				if ((this._CourseID != value))
+				{
+					this.OnCourseIDChanging(value);
+					this.SendPropertyChanging();
+					this._CourseID = value;
+					this.SendPropertyChanged("CourseID");
+					this.OnCourseIDChanged();
 				}
 			}
 		}

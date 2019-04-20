@@ -76,7 +76,27 @@
                             </div>
                             <div style="margin-top:20px;min-height:320px;">
                                 <ul id="answerUl">
-                                    @if (item.Answer.Length < 2)
+                                    @if (item.Answer.Length >= 2)
+                                    {
+
+                                        <li>
+                                            <input onclick="liBorder(@j)" type='checkbox' value='A' name='answerIteam-@j' id='answer1-@j'>
+                                            <label for="answer1-@j" id="labelanswerA-@j" name="labelanswer">A：@item.AnswerA</label>
+                                        </li>
+                                        <li>
+                                            <input onclick="liBorder(@j)" type='checkbox' value='B' name='answerIteam-@j' id='answer2-@j'>
+                                            <label for="answer2-@j" id="labelanswerB-@j" name="labelanswer">B： @item.AnswerB</label>
+                                        </li>
+                                        <li>
+                                            <input onclick="liBorder(@j)" type='checkbox' value='C' name='answerIteam-@j' id='answer3-@j'>
+                                            <label for="answer3-@j" id="labelanswerC-@j" name="labelanswer">C：@item.AnswerC</label>
+                                        </li>
+                                        <li>
+                                            <input onclick="liBorder(@j)" type='checkbox' value='D' name='answerIteam-@j' id='answer4-@j'>
+                                            <label for="answer4-@j" id="labelanswerD-@j" name="labelanswer">D：@item.AnswerD</label>
+                                        </li>
+                                    }
+                                    else
                                     {
                                         <li>
                                             <div class="radio-custom radio-primary">
@@ -109,25 +129,6 @@
                                                     D：@item.AnswerD
                                                 </label>
                                             </div>
-                                        </li>
-                                    }
-                                    else
-                                    {
-                                        <li>
-                                            <input onclick="liBorder(@j)" type='checkbox' value='A' name='answerIteam-@j' id='answer1-@j'>
-                                            <label for="answer1-@j" id="labelanswerA-@j" name="labelanswer">A：@item.AnswerA</label>
-                                        </li>
-                                        <li>
-                                            <input onclick="liBorder(@j)" type='checkbox' value='B' name='answerIteam-@j' id='answer2-@j'>
-                                            <label for="answer2-@j" id="labelanswerB-@j" name="labelanswer">B： @item.AnswerB</label>
-                                        </li>
-                                        <li>
-                                            <input onclick="liBorder(@j)" type='checkbox' value='C' name='answerIteam-@j' id='answer3-@j'>
-                                            <label for="answer3-@j" id="labelanswerC-@j" name="labelanswer">C：@item.AnswerC</label>
-                                        </li>
-                                        <li>
-                                            <input onclick="liBorder(@j)" type='checkbox' value='D' name='answerIteam-@j' id='answer4-@j'>
-                                            <label for="answer4-@j" id="labelanswerD-@j" name="labelanswer">D：@item.AnswerD</label>
                                         </li>
                                     }
                                 </ul>

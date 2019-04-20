@@ -3,16 +3,30 @@
     ViewBag.Title = ViewBag.SingleTitle = "题目管理";
     Layout = "~/Views/Shared/_SysManage.cshtml";
 }
-@*此处应改为min*@
-<link href="~/Content/bootstrap.css" rel="stylesheet" />
-<link href="~/Content/all.css" rel="stylesheet" />
-<link href="~/Content/bootstrap-editable.css" rel="stylesheet" />
-<link href="~/Content/bootstrap-table.css" rel="stylesheet" />
-<script src="~/Scripts/bootstrap.min.js"></script>
-<script src="~/Scripts/bootstrap-editable.min.js"></script>
-<script src="~/Scripts/BTTable/bootstrap-table.js"></script>
-<script src="~/Scripts/BTTable/bootstrap-table-zh-CN.js"></script>
-<script src="~/Scripts/BTTable/bootstrap-table-editable.js"></script>
+@section Header
+{
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/all.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-editable.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-table.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-editable.min.js"></script>
+    <script src="~/Scripts/BTTable/bootstrap-table.js"></script>
+    <script src="~/Scripts/BTTable/bootstrap-table-zh-CN.js"></script>
+    <script src="~/Scripts/BTTable/bootstrap-table-editable.js"></script>
+    <style>
+        .editable-cancel {
+            width: 50px;
+            color: #fff;
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .editable-submit {
+            width: 50px;
+        }
+    </style>
+}
 @*
     <script src="~/Scripts/bootstrap-datepicker.js"></script>
     <script src="~/Scripts/bootstrap-datepicker.zh-CN.js"></script>
@@ -129,8 +143,8 @@
                     type: 'text',
                     mode: "inline",
                     title: '答案',
-                    validate: function (v) {
-                        if (!v) return '不能为空';
+                    validate: function (a) {
+                        if (!a) return '不能为空';
                     }
                 }
             },
@@ -149,12 +163,12 @@
             onEditableSave: function (field, row, oldValue, $el) {
                 $.ajax({
                     type: "post",
-                    url: "../Home/Edit",
+                    url: "../SysManage/EditTopic",
                     data: row,
                     dataType: 'JSON',
-                    success: function (data, state) {
+                    success: function (state) {
                         if (state == "success") {
-                            console.log(state);
+                            //console.log(state);
                         }
                     },
                     error: function () {

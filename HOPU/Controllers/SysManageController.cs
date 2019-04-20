@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Configuration;
+using System.Linq;
 using System.Web.Mvc;
 using HOPU.Models;
 
@@ -60,5 +62,36 @@ namespace HOPU.Controllers
             return sql;
         }
         #endregion
+
+
+        [HttpPost]
+        public JsonResult EditTopic(Topic topic)
+        {
+            char[] Answer =topic.Answer.ToUpper().ToCharArray();
+            Array.Sort(Answer);
+            topic.Answer = string.Join("", Answer);
+            HopuDBDataContext db = new HopuDBDataContext();
+            var Edit = db.Topic.Where(x => x.TopicID == topic.TopicID).Select(a => a);
+            foreach (var i in Edit)
+            {
+                i.TopicID = topic.TopicID;
+                i.Title = topic.Title;
+                i.AnswerA = topic.AnswerA;
+                i.AnswerB = topic.AnswerB;
+                i.AnswerC = topic.AnswerC;
+                i.AnswerD = topic.AnswerD;
+                i.Answer = topic.Answer;
+                i.CourseID = topic.CourseID;
+            }
+            db.SubmitChanges();
+            if (topic.TopicID > 0)
+            {
+                return Json("success");
+            }
+            else
+            {
+                return Json(false);
+            }
+        }
     }
 }

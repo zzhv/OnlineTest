@@ -7,18 +7,6 @@
       <Column Name="TID" Type="System.Double" DbType="Float" CanBeNull="true" />
     </Type>
   </Table>
-  <Table Name="dbo.Topic" Member="Topic">
-    <Type Name="Topic">
-      <Column Name="TopicID" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Title" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="AnswerA" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="AnswerB" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="AnswerC" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="AnswerD" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="Answer" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="CourseID" Type="System.Double" DbType="Float" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.AspNetUsers" Member="AspNetUsers">
     <Type Name="AspNetUsers">
       <Column Name="Id" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -128,6 +116,18 @@
       <Column Name="EndTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="Score" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="SelfTest_SelfTestScore" Member="SelfTest" ThisKey="StId" OtherKey="StId" Type="SelfTest" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Topic" Member="Topic">
+    <Type Name="Topic">
+      <Column Name="TopicID" Type="System.Double" DbType="Float NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AnswerA" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AnswerB" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AnswerC" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AnswerD" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Answer" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CourseID" Type="System.Double" DbType="Float" CanBeNull="true" />
     </Type>
   </Table>
 </Database>
