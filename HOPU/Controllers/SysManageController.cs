@@ -63,11 +63,11 @@ namespace HOPU.Controllers
         }
         #endregion
 
-
+        //单项编辑
         [HttpPost]
         public JsonResult EditTopic(Topic topic)
         {
-            char[] Answer =topic.Answer.ToUpper().ToCharArray();
+            char[] Answer = topic.Answer.ToUpper().ToCharArray();
             Array.Sort(Answer);
             topic.Answer = string.Join("", Answer);
             HopuDBDataContext db = new HopuDBDataContext();
@@ -83,6 +83,24 @@ namespace HOPU.Controllers
                 i.Answer = topic.Answer;
                 i.CourseID = topic.CourseID;
             }
+            db.SubmitChanges();
+            if (topic.TopicID > 0)
+            {
+                return Json("success");
+            }
+            else
+            {
+                return Json(false);
+            }
+        }
+
+        //单项删除
+        [HttpPost]
+        public JsonResult DeleteTopic(Topic topic)
+        {
+            HopuDBDataContext db = new HopuDBDataContext();
+            var delete = db.Topic.Where(z => z.TopicID == topic.TopicID).SingleOrDefault();
+            db.Topic.DeleteOnSubmit(delete);
             db.SubmitChanges();
             if (topic.TopicID > 0)
             {

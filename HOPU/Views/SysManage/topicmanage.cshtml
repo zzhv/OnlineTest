@@ -34,52 +34,66 @@
         <script src="~/Scripts/BTTable/bootstrap-table-export.js"></script>*@
 
 <div id="UtableHide" class="bg-white no-margin-top ">
+    <div id="toolbar">
+        <button id="AllDelete" class="btn btn-danger">删除选中</button>
+    </div>
     <table id="TopicTable"></table>
 </div>
 <script>
     $(function () {
         $("#TopicTable").bootstrapTable({
             method: "post",
-            striped: true,                      //是否显示行间隔色
-            cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
-            pagination: true,                   //是否显示分页（*）
-            sortable: false,                     //是否启用排序
-            sidePagination: "server",           //分页方式：client客户端分页，server服务端分页（*）
-            pageNumber: 1,                       //初始化加载第一页，默认第一页
-            pageSize: 10,                       //每页的记录行数（*）
-            pageList: [5, 10, 25],        //可供选择的每页的行数（*）
-            search: true,                       //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+            toolbar: '#toolbar',
+            clickToSelect: true,
+            striped: true, //是否显示行间隔色
+            cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true, //是否显示分页（*）
+            sortable: false, //是否启用排序
+            sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1, //初始化加载第一页，默认第一页
+            pageSize: 10, //每页的记录行数（*）
+            pageList: [5, 10, 25], //可供选择的每页的行数（*）
+            search: true, //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
             strictSearch: true,
-            showColumns: true,                  //是否显示所有的列
-            showRefresh: true,                  //是否显示刷新按钮
-            minimumCountColumns: 2,             //最少允许的列数
-            clickToSelect: true,                //是否启用点击选中行
-            height: 525,                        //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
-            uniqueId: "TopicID",                     //每一行的唯一标识，一般为主键列
-            showToggle: true,                    //是否显示详细视图和列表视图的切换按钮
-            cardView: false,                    //是否显示详细视图
+            showColumns: true, //是否显示所有的列
+            showRefresh: true, //是否显示刷新按钮
+            minimumCountColumns: 2, //最少允许的列数
+            clickToSelect: true, //是否启用点击选中行
+            height: 525, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            uniqueId: "TopicID", //每一行的唯一标识，一般为主键列
+            showToggle: true, //是否显示详细视图和列表视图的切换按钮
+            cardView: false, //是否显示详细视图
             detailView: false,
             offset: 0,
-            sortOrder: "asc",                   //排序方式
+            sortOrder: "asc", //排序方式
             sortName: "TopicID",
+            sortable: true,
             queryParams: function queryParams(params) {
                 var temp = {
-                    limit: params.limit,   //页面大小
-                    offset: params.offset,  //页码
-                    keyword: params.search,//搜索
-                    sortOrder: params.order,//排序
-                    sortName: params.sort//排序字段
+                    limit: params.limit, //页面大小
+                    offset: params.offset, //页码
+                    keyword: params.search, //搜索
+                    sortOrder: params.order, //排序
+                    sortName: params.sort //排序字段
                 };
                 return temp;
             },
             url: "../SysManage/GetTopic",
             columns: [{
+                field: 'state',
+                checkbox: true,
+                align: 'center',
+
+            },
+            {
                 field: "TopicID",
                 title: "题号",
+                sortable: true,
+                align: 'center',
             }, {
-
                 field: "Title",
                 title: "标题",
+                sortable: true,
                 editable: {
                     type: 'textarea',
                     mode: "inline",
@@ -91,6 +105,7 @@
             }, {
                 field: "AnswerA",
                 title: "A",
+                sortable: true,
                 editable: {
                     type: 'text',
                     mode: "inline",
@@ -103,6 +118,7 @@
             {
                 field: "AnswerB",
                 title: "B",
+                sortable: true,
                 editable: {
                     type: 'text',
                     mode: "inline",
@@ -115,6 +131,7 @@
             {
                 field: "AnswerC",
                 title: "C",
+                sortable: true,
                 editable: {
                     type: 'text',
                     mode: "inline",
@@ -127,6 +144,7 @@
             {
                 field: "AnswerD",
                 title: "D",
+                sortable: true,
                 editable: {
                     type: 'text',
                     mode: "inline",
@@ -139,6 +157,7 @@
             {
                 field: "Answer",
                 title: "答案",
+                sortable: true,
                 editable: {
                     type: 'text',
                     mode: "inline",
@@ -151,6 +170,7 @@
             {
                 field: "CourseID",
                 title: "分类",
+                sortable: true,
                 editable: {
                     type: 'text',
                     mode: "inline",
@@ -159,6 +179,11 @@
                         if (!v) return '不能为空';
                     }
                 }
+            }, {
+                field: "Option",
+                title: "选项",
+                events: operateEvents,//注册事件
+                formatter: DeleteButton,
             }],
             onEditableSave: function (field, row, oldValue, $el) {
                 $.ajax({
@@ -178,9 +203,59 @@
 
                     }
                 });
-            }
+            },
         });
     });
 
+    //单项删除
+    function DeleteButton(row) {
+        return ['<button id="Delete" type="button" class="btn btn-sm btn-outline-danger" >删除</button>']
+    }
 
+    window.operateEvents = {
+        "click #Delete": function (e, value, row, index) {
+            var statu = confirm("你确定要删除题号为\"" + row.TopicID + "\"的题目吗？");
+            if (!statu) {
+                return false;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '../SysManage/DeleteTopic',
+                data: row,
+                success: function (msg) {
+                    if (msg == 'success') {
+                        //alert('Delete Successful!');
+                        //location.reload();
+                        $("#TopicTable").bootstrapTable('refresh');
+                    } else {
+                        alert('删除失败!');
+                    }
+                },
+                error: function () {
+                    alert('删除失败!');
+                }
+            });
+        }
+    }
+    //多选删除
+    var $table = $('#TopicTable');
+    var $button = $('#AllDelete');
+    var TopicStr = "";
+    $(function () {
+        $button.click(function () {
+            var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+                TopicStr = TopicStr + ',' + row.TopicID;
+                return row
+            })
+            console.log(ids);
+            var statu = confirm("你确定要一次性删除\"" + TopicStr + "\"这些题目吗？");
+            if (!statu) {
+                return false;
+            }
+            //$table.bootstrapTable('remove', {
+            //    field: 'TopicID',
+            //    values: ids.TopicID
+            //})
+        })
+    })
 </script>
