@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using HOPU.Models;
+using Microsoft.Ajax.Utilities;
+using WebGrease.Css.Extensions;
 
 namespace HOPU.Controllers
 {
@@ -37,7 +41,7 @@ namespace HOPU.Controllers
                 rows = rowsq
             }, JsonRequestBehavior.AllowGet);
         }
-
+        //动态生成Sql
         private static string GetSql(int limit, int offset, string keyword, string sortOrder, string sortName)
         {
             string sql = @"SELECT * FROM Topic";
@@ -110,6 +114,19 @@ namespace HOPU.Controllers
             {
                 return Json(false);
             }
+        }
+
+        [HttpPost]
+        public JsonResult DeleteAllTopic(double[] topics)
+        {
+            HopuDBDataContext db = new HopuDBDataContext();
+            for (int i = 0; i < topics.Length; i++)
+            {
+                db.Topic.DeleteOnSubmit(db.Topic.Where(x => x.TopicID == topics[i]).SingleOrDefault());
+                db.SubmitChanges();
+            }
+            return Json(true);
+
         }
     }
 }

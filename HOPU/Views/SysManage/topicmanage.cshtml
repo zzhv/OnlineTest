@@ -68,6 +68,7 @@
             sortOrder: "asc", //排序方式
             sortName: "TopicID",
             sortable: true,
+            escape: true,
             queryParams: function queryParams(params) {
                 var temp = {
                     limit: params.limit, //页面大小
@@ -211,7 +212,6 @@
     function DeleteButton(row) {
         return ['<button id="Delete" type="button" class="btn btn-sm btn-outline-danger" >删除</button>']
     }
-
     window.operateEvents = {
         "click #Delete": function (e, value, row, index) {
             var statu = confirm("你确定要删除题号为\"" + row.TopicID + "\"的题目吗？");
@@ -222,6 +222,7 @@
                 type: 'POST',
                 url: '../SysManage/DeleteTopic',
                 data: row,
+                dataType: 'JSON',
                 success: function (msg) {
                     if (msg == 'success') {
                         //alert('Delete Successful!');
@@ -240,22 +241,43 @@
     //多选删除
     var $table = $('#TopicTable');
     var $button = $('#AllDelete');
-    var TopicStr = "";
     $(function () {
         $button.click(function () {
-            var ids = $.map($table.bootstrapTable('getSelections'), function (row) {
+            var TopicStr = "";
+            var TopicArr = [];
+            $.map($table.bootstrapTable('getSelections'), function (row) {
+
                 TopicStr = TopicStr + ',' + row.TopicID;
-                return row
+                TopicArr.push(row.TopicID);
             })
-            console.log(ids);
-            var statu = confirm("你确定要一次性删除\"" + TopicStr + "\"这些题目吗？");
-            if (!statu) {
+            if (TopicArr.length == 0) {
+                return alert("没有选中任何行！");
+            }
+            var state = confirm("你确定要一次性删除\"" + TopicStr + "\"这些题目吗？");
+            if (!state) {
                 return false;
             }
-            //$table.bootstrapTable('remove', {
-            //    field: 'TopicID',
-            //    values: ids.TopicID
-            //})
+            $.ajax({
+                url: "../SysManage/DeleteAllTopic",
+                data: {
+                    topics: TopicArr
+                },
+                type: 'POST',
+                datatype: 'json',
+                success: function (msg) {
+                    TopicArr = [];
+                    TopicStr = "";
+                    //$("#TopicTable").bootstrapTable('refresh');
+                    //console.log(msg);
+                },
+                error: function () {
+                    alert('删除失败!');
+                }
+            })
+            $table.bootstrapTable('remove', {
+                field: 'TopicID',
+                values: TopicArr
+            })
         })
     })
 </script>
