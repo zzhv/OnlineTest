@@ -210,14 +210,15 @@
     <script src="~/vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="~/Scripts/js/charts-home.js"></script>
     <script src="~/Scripts/js/front.js"></script>
-    <script>
-        $(function () {
-            var fatherBro = $("#@actionName").parent("ul").prev("a")
-            fatherBro.attr("aria-expanded", "true");
-            fatherBro.attr("class", "");
+<script>
+    $(function () {
+        var fatherBro = $("#@actionName").parent("ul").prev("a")
+        fatherBro.attr("aria-expanded", "true");
+        fatherBro.attr("class", "");
         $("#@actionName").parent("ul").addClass("show");
         $("#@actionName").addClass("active");
     });
-    </script>
+</script>
+@RenderSection("footer", false)
 </body>
 </html>

@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = ViewBag.SingleTitle = "题目管理";
     Layout = "~/Views/Shared/_SysManage.cshtml";
 }
@@ -25,6 +24,35 @@
         .editable-submit {
             width: 50px;
         }
+
+        .file {
+            position: relative;
+            display: inline-block;
+            background: #D0EEFF;
+            border: 1px solid #99D3F5;
+            border-radius: 4px;
+            padding: 4px 12px;
+            overflow: hidden;
+            color: #1E88C7;
+            text-decoration: none;
+            text-indent: 0;
+            line-height: 20px;
+        }
+
+            .file input {
+                position: absolute;
+                font-size: 100px;
+                right: 0;
+                top: 0;
+                opacity: 0;
+            }
+
+            .file:hover {
+                background: #AADFFD;
+                border-color: #78C3F3;
+                color: #004974;
+                text-decoration: none;
+            }
     </style>
 }
 @*
@@ -34,8 +62,35 @@
         <script src="~/Scripts/BTTable/bootstrap-table-export.js"></script>*@
 
 <div id="UtableHide" class="bg-white no-margin-top ">
-    <div id="toolbar">
-        <button id="AllDelete" class="btn btn-danger">删除选中</button>
+    <div id="toolbar" class="d-flex flex-row bg-secondary mb-3 no-margin-bottom">
+        <div class="p-2 bg-white">
+            <button id="AllDelete" class="btn btn-danger">删除选中</button>
+        </div>
+        <div class="p-2 bg-white">
+            @Html.DropDownList("BrickType", Model as IEnumerable<SelectListItem>, new { id = "select", @class = "form-control" })
+        </div>
+        <div class="p-2 bg-white">
+            @*<a href="javascript:;" class="file">
+                    从Excel文档导入
+                    <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel " name="" id="">
+                </a>*@
+            <div class="input-group ">
+                @*文件路径的文本框*@
+                <input id="txt_Path" type="text" class="form-control">
+
+                @*浏览本地文件按钮*@
+                <span id="btn_Browse" style="cursor:pointer;" onclick="$('input[id=fileUpload]').click();" class="input-group-addon">
+                    <i class="glyphicon glyphicon-folder-open"></i>&nbsp;&nbsp;&nbsp;浏览文件
+                </span>
+                @using (Html.BeginForm("UploadFile", "SysManage",
+                    FormMethod.Post, new { enctype = "multipart/form-data   ", id = "form_Upload" }))
+                {
+                    @Html.AntiForgeryToken()
+                    //防止跨站请求伪造(CSRF:Cross-site request forgery)攻击
+                    <input id="fileUpload" type="file" name="file" style="display:none">//把fileUpload隐藏,原因它太难看了
+                }
+            </div>
+        </div>
     </div>
     <table id="TopicTable"></table>
 </div>
@@ -280,4 +335,12 @@
             })
         })
     })
+
 </script>
+@section footer
+{
+    <script>
+
+    </script>
+
+}

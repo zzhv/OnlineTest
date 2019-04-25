@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Web;
 using System.Web.Helpers;
 using System.Web.Mvc;
 using HOPU.Models;
@@ -21,7 +22,13 @@ namespace HOPU.Controllers
 
         public ActionResult topicmanage()
         {
-            return View();
+            HopuDBDataContext db = new HopuDBDataContext();
+            var courseType = db.Course.Select(a => new SelectListItem
+            {
+                Text = a.CourseName,
+                Value = a.CourseID.ToString()
+            });
+            return View(courseType);
         }
 
         #region GetTopic
@@ -116,6 +123,7 @@ namespace HOPU.Controllers
             }
         }
 
+        //多选删除
         [HttpPost]
         public JsonResult DeleteAllTopic(double[] topics)
         {
@@ -126,6 +134,10 @@ namespace HOPU.Controllers
                 db.SubmitChanges();
             }
             return Json(true);
+        }
+
+        public ActionResult UploadFile(HttpPostedFileBase file)
+        {
 
         }
     }
