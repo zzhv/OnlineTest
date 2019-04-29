@@ -833,6 +833,7 @@
     <Content Include="Views\Shared\_SysManage.cshtml" />
     <Content Include="Views\ScoreCenter\Score_S.cshtml" />
     <Content Include="Views\SysManage\TopicManage.cshtml" />
+    <Content Include="Views\SysManage\CourseTypeManage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

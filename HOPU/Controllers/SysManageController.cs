@@ -136,9 +136,14 @@ namespace HOPU.Controllers
             return Json(true);
         }
 
-        public ActionResult UploadFile(HttpPostedFileBase file)
-        {
+        //public ActionResult UploadFile(HttpPostedFileBase file)
+        //{
 
+        //}
+
+        public ActionResult CourseTypeManage()
+        {
+            return View();
         }
     }
 }

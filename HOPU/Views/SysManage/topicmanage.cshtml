@@ -5,7 +5,6 @@
 @section Header
 {
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/all.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-editable.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-table.css" rel="stylesheet" />
     <script src="~/Scripts/bootstrap.min.js"></script>
@@ -55,42 +54,63 @@
             }
     </style>
 }
-@*
-    <script src="~/Scripts/bootstrap-datepicker.js"></script>
-    <script src="~/Scripts/bootstrap-datepicker.zh-CN.js"></script>
-        <script src="~/Scripts/BTTable/tableExport.min.js"></script>
-        <script src="~/Scripts/BTTable/bootstrap-table-export.js"></script>*@
-
-<div id="UtableHide" class="bg-white no-margin-top ">
+<div id="UtableHide" class="bg-white no-margin-top">
     <div id="toolbar" class="d-flex flex-row bg-secondary mb-3 no-margin-bottom">
         <div class="p-2 bg-white">
             <button id="AllDelete" class="btn btn-danger">删除选中</button>
         </div>
         <div class="p-2 bg-white">
-            @Html.DropDownList("BrickType", Model as IEnumerable<SelectListItem>, new { id = "select", @class = "form-control" })
-        </div>
-        <div class="p-2 bg-white">
-            @*<a href="javascript:;" class="file">
-                    从Excel文档导入
-                    <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel " name="" id="">
-                </a>*@
-            <div class="input-group ">
-                @*文件路径的文本框*@
-                <input id="txt_Path" type="text" class="form-control">
+            <!-- 按钮：用于打开模态框 -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">导入题目</button>
+            <div class="modal fade" id="myModal">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
 
-                @*浏览本地文件按钮*@
-                <span id="btn_Browse" style="cursor:pointer;" onclick="$('input[id=fileUpload]').click();" class="input-group-addon">
-                    <i class="glyphicon glyphicon-folder-open"></i>&nbsp;&nbsp;&nbsp;浏览文件
-                </span>
-                @using (Html.BeginForm("UploadFile", "SysManage",
-                    FormMethod.Post, new { enctype = "multipart/form-data   ", id = "form_Upload" }))
-                {
-                    @Html.AntiForgeryToken()
-                    //防止跨站请求伪造(CSRF:Cross-site request forgery)攻击
-                    <input id="fileUpload" type="file" name="file" style="display:none">//把fileUpload隐藏,原因它太难看了
-                }
+                        <!-- 模态框头部 -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">模态框头部</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- 模态框主体 -->
+                        <div class="modal-body">
+                            <div class="p-2 bg-white">
+                                @*<a href="javascript:;" class="file">
+                                        从Excel文档导入
+                                        <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel " name="" id="">
+                                    </a>*@
+                                <div class="input-group ">
+                                    @*文件路径的文本框*@
+                                    <input id="txt_Path" type="text" class="form-control">
+
+                                    @*浏览本地文件按钮*@
+                                    <span id="btn_Browse" style="cursor:pointer;" onclick="$('input[id=fileUpload]').click();" class="input-group-addon">
+                                        <i class="glyphicon glyphicon-folder-open"></i>&nbsp;&nbsp;&nbsp;浏览文件
+                                    </span>
+                                    @using (Html.BeginForm("UploadFile", "SysManage",
+                                        FormMethod.Post, new { enctype = "multipart/form-data   ", id = "form_Upload" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        //防止跨站请求伪造(CSRF:Cross-site request forgery)攻击
+                                        <input id="fileUpload" type="file" name="file" style="display:none">//把fileUpload隐藏,原因它太难看了
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 模态框底部 -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="p-2 bg-white">
+            @Html.DropDownList("BrickType", Model as IEnumerable<SelectListItem>, new { id = "select", @class = "form-control" })
+        </div>
+
     </div>
     <table id="TopicTable"></table>
 </div>
@@ -337,10 +357,4 @@
     })
 
 </script>
-@section footer
-{
-    <script>
-
-    </script>
-
-}
+<!-- 模态框 -->
