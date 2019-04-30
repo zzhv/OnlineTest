@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var actionName = ViewContext.RouteData.Values["action"].ToString().ToLower() + "css";
+}
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -7,65 +10,109 @@
     <title>@ViewBag.Title - 厚溥题库</title>
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/pop")
     @Scripts.Render("~/bundles/zjxd")
-    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/aaaa")
+    @RenderSection("Header", false)
 </head>
 <body id="body">
-    <div class="navbar navbar-default " style="margin-top:-50px">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+    <nav class="navbar navbar-expand-sm bg-white navbar-dark border-bottom" style="top: -50px;">
+        @if (Request.IsAuthenticated)
+        {
+            <img src="~/Content/image/ad.jpg" style="width: 25px;margin-left:10%;" />
+            @Html.ActionLink("首页", "Home", "SysHome", new { area = "" }, new { @class = "nav-link  ", id = "Home", style = "font-size:20px;" })
+        }
+        else
+        {
+            <img src="~/Content/image/ad.jpg" style="width: 25px;margin-left:10%;" />
+            @Html.ActionLink("题库", "AdminLogin", "SysAdmin", new { area = "" }, new { @class = "nav-link", style = "font-size:20px;" })
+        }
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon btn-info">
+            </span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <ul class="nav nav-pills">
                 @if (Request.IsAuthenticated)
                 {
-                    @Html.ActionLink("题库", "Home", "SysHome", new { area = "" }, new { @class = "navbar-brand" })
+
+                    <li class="nav-item">
+                        @Html.ActionLink("统一测试", "UnifiedTestType", "UifiedTestCenter", null, new { @class = "nav-link", id = "unifiedtesttypecss" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("自我测试", "SelfTestType", "SelfTestCenter", null, new { @class = "nav-link", id = "selftesttypecss" })
+                    </li>
+
+                    <li class="nav-item">
+                        @Html.ActionLink("成绩中心", "Score", "ScoreCenter", null, new { @class = "nav-link", id = "scorecss" })
+                    </li>
+
+                    <li class="nav-item">
+                        @Html.ActionLink("顺序浏览", "Allbrowse", "BrowseCenter", null, new { @class = "nav-link", id = "allbrowsecss" })
+                    </li>
+
+                    <li class="nav-item">
+                        @Html.ActionLink("分类浏览", "ClassifieTypedBrowse", "BrowseCenter", null, new { @class = "nav-link", id = "classifietypedbrowsecss" })
+
+                    </li>
+
+                    <li class="nav-item">
+                        @Html.ActionLink("关于我们", "About", "Syshome", null, new { @class = "nav-link", id = "aboutcss" })
+                    </li>
                 }
-                else
-                {
-                    @Html.ActionLink("题库", "AdminLogin", "SysAdmin", new { area = "" }, new { @class = "navbar-brand" })
-                }
-            </div>
-            <div class="navbar-collapse collapse">
-                @if (Request.IsAuthenticated)
-                {
-                    <ul class="nav navbar-nav">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">测试中心<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("统一测试", "UnifiedTestType", "Syshome")</li>
-                                <li>@Html.ActionLink("自我测试", "#", "Syshome")</li>
-                            </ul>
-                        </li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">浏览中心<span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li>@Html.ActionLink("顺序浏览", "Allbrowse", "Syshome")</li>
-                                <li>@Html.ActionLink("分类浏览", "ClassifieTypedBrowse", "Syshome")</li>
-                            </ul>
-                        </li>
-                        <li>@Html.ActionLink("关于我们", "About", "Syshome")</li>
-                       
-                    </ul>
-                }
-                @Html.Partial("_LoginPartial")
-            </div>
+            </ul>
+            @Html.Partial("_LoginPartial")
         </div>
-    </div>
+    </nav>
     <div class="container body-content">
         @RenderBody()
-        <footer style="margin-top:60px; color:gray">
-            <p class="text-center">
-                Copyright &copy; @DateTime.Now.Year XXX.All Rights Reserved.
-            </p>
-            <p class="text-center">
-                <span>@*黔ICP备16006898号-1*@</span>
-            </p>
+        <footer class="pt-4 my-md-5 pt-md-5 border-top">
+            <div class="row">
+                <div class="col-12 col-md">
+                    <img class="mb-2" src="~/Content/image/ad.jpg" alt="" width="24" height="24">
+                    <small>黔ICP备16006898号-1</small>
+                    <small class="d-block mb-3 text-muted">&copy;2017 - @DateTime.Now.Year XXX.All Rights Reserved.</small>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>关于本站</h5>
+                    <ul class="list-unstyled text-muted">
+                        <li><p class="text-muted" href="#">做做题罢了</p></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>支持浏览器</h5>
+                    <ul class="list-unstyled text-sm-left">
+                        <li>
+                            <img src="~/Content/image/download.png" style="height:25px;" />
+                        </li>
+                        <li><small class="text-muted" href="#">以上皆为最新版本</small></li>
+                        <li><small class="text-muted" href="#">不支持移动设备</small></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md">
+                    <h5>其他</h5>
+                    <ul class="list-unstyled text-small">
+                        <li><a class="text-muted" href="#">开发者</a></li>
+                        <li><a class="text-muted" href="#">博客</a></li>
+                        <li><a class="text-muted" href="#">地址</a></li>
+                        <li><a class="text-muted" href="#">联系方式</a></li>
+                    </ul>
+                </div>
+            </div>
         </footer>
     </div>
     @RenderSection("scripts", required: false)
+    @RenderSection("footer", required: false)
+    <script>
+        $(function () {
+            var action ="@actionName";
+            if (action.toString() === "score_scss") {
+                $("#scorecss").addClass("active");
+                return;
+            }
+            $("#@actionName").addClass("active");
+    });
+    </script>
 </body>
 </html>

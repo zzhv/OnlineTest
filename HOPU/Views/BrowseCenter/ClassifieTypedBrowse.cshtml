@@ -1,0 +1,47 @@
+﻿@model HOPU.Models.CourseNameListViewModel
+@{
+    ViewBag.Title = "分类列表";
+    Layout = "~/views/shared/_Layout.cshtml";
+}
+<nav class="breadcrumb">
+    <a class="breadcrumb-item" href="../SysHome/Home">首页</a>
+    <span class="breadcrumb-item active">测试中心</span>
+    <span class="breadcrumb-item active">@ViewBag.Title</span>
+</nav>
+<div class="container">
+    <div id="accordion">
+        @{
+            int j = 0;
+            foreach (var i in Model.TypeName)
+            {
+                <div class="card">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#collapse_@j">
+                            <span class="badge badge-pill badge-danger">@(j + 1)</span> @i.TypeName
+                        </a>
+                    </div>
+                    <div id="collapse_@j" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            @foreach (var k in Model.CourseName)
+                            {
+                                if (k.TId != null && Equals(k.TId, i.TID))
+                                {
+                                    @Html.ActionLink(k.CourseName, "ClassifieBrowse", new {k.CourseId, k.CourseName }, new { @class = "text-primary", @style = "margin-left:15px;flex-left" })
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+                j++;
+            }
+        }
+    </div>
+</div>
+@section footer
+{
+    <script>
+        $(function () {
+            $("#collapse_0").addClass("show");
+        })
+    </script>
+}

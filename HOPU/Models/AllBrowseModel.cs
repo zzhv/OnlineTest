@@ -1,14 +1,5 @@
-﻿using System.Web.Mvc;
-using HOPU.Models;
-using System.Data.SqlClient;
-using System.Data;
-using System.Collections.Generic;
-using X.PagedList;
-using Microsoft.AspNet.Identity;
-using System.Linq;
-using static Microsoft.ApplicationInsights.MetricDimensionNames.TelemetryContext;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel;
+﻿using System.Linq;
+using System;
 
 namespace HOPU.Models
 {
@@ -46,7 +37,7 @@ namespace HOPU.Models
         {
             string userType = "";
             HopuDBDataContext db = new HopuDBDataContext();
-            var result = db.UserClaims.Where(a => a.UserId == id).Select(a=>a.ClaimType).ToArray();
+            var result = db.UserClaims.Where(a => a.UserId == id).Select(a => a.ClaimType).ToArray();
             if (result.Count() >= 1)
             {
                 userType = result[0];
@@ -58,6 +49,16 @@ namespace HOPU.Models
                 default:
                     return false;
             }
+        }
+
+        internal static bool GetUserTypeInfo(object p)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static bool GetUserTypeInfo(object p1, object p2)
+        {
+            throw new NotImplementedException();
         }
 
         //[DisplayName("时长")]

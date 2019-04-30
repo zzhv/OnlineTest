@@ -1,0 +1,360 @@
+﻿@{
+    ViewBag.Title = ViewBag.SingleTitle = "题目管理";
+    Layout = "~/Views/Shared/_SysManage.cshtml";
+}
+@section Header
+{
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-editable.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-table.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-editable.min.js"></script>
+    <script src="~/Scripts/BTTable/bootstrap-table.js"></script>
+    <script src="~/Scripts/BTTable/bootstrap-table-zh-CN.js"></script>
+    <script src="~/Scripts/BTTable/bootstrap-table-editable.js"></script>
+    <style>
+        .editable-cancel {
+            width: 50px;
+            color: #fff;
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .editable-submit {
+            width: 50px;
+        }
+
+        .file {
+            position: relative;
+            display: inline-block;
+            background: #D0EEFF;
+            border: 1px solid #99D3F5;
+            border-radius: 4px;
+            padding: 4px 12px;
+            overflow: hidden;
+            color: #1E88C7;
+            text-decoration: none;
+            text-indent: 0;
+            line-height: 20px;
+        }
+
+            .file input {
+                position: absolute;
+                font-size: 100px;
+                right: 0;
+                top: 0;
+                opacity: 0;
+            }
+
+            .file:hover {
+                background: #AADFFD;
+                border-color: #78C3F3;
+                color: #004974;
+                text-decoration: none;
+            }
+    </style>
+}
+<div id="UtableHide" class="bg-white no-margin-top">
+    <div id="toolbar" class="d-flex flex-row bg-secondary mb-3 no-margin-bottom">
+        <div class="p-2 bg-white">
+            <button id="AllDelete" class="btn btn-danger">删除选中</button>
+        </div>
+        <div class="p-2 bg-white">
+            <!-- 按钮：用于打开模态框 -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">导入题目</button>
+            <div class="modal fade" id="myModal">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+
+                        <!-- 模态框头部 -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">模态框头部</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- 模态框主体 -->
+                        <div class="modal-body">
+                            <div class="p-2 bg-white">
+                                @*<a href="javascript:;" class="file">
+                                        从Excel文档导入
+                                        <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel " name="" id="">
+                                    </a>*@
+                                <div class="input-group ">
+                                    @*文件路径的文本框*@
+                                    <input id="txt_Path" type="text" class="form-control">
+
+                                    @*浏览本地文件按钮*@
+                                    <span id="btn_Browse" style="cursor:pointer;" onclick="$('input[id=fileUpload]').click();" class="input-group-addon">
+                                        <i class="glyphicon glyphicon-folder-open"></i>&nbsp;&nbsp;&nbsp;浏览文件
+                                    </span>
+                                    @using (Html.BeginForm("UploadFile", "SysManage",
+                                        FormMethod.Post, new { enctype = "multipart/form-data   ", id = "form_Upload" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        //防止跨站请求伪造(CSRF:Cross-site request forgery)攻击
+                                        <input id="fileUpload" type="file" name="file" style="display:none">//把fileUpload隐藏,原因它太难看了
+                                    }
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 模态框底部 -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-2 bg-white">
+            @Html.DropDownList("BrickType", Model as IEnumerable<SelectListItem>, new { id = "select", @class = "form-control" })
+        </div>
+
+    </div>
+    <table id="TopicTable"></table>
+</div>
+<script>
+    $(function () {
+        $("#TopicTable").bootstrapTable({
+            method: "post",
+            toolbar: '#toolbar',
+            clickToSelect: true,
+            striped: true, //是否显示行间隔色
+            cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+            pagination: true, //是否显示分页（*）
+            sortable: false, //是否启用排序
+            sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+            pageNumber: 1, //初始化加载第一页，默认第一页
+            pageSize: 10, //每页的记录行数（*）
+            pageList: [5, 10, 25], //可供选择的每页的行数（*）
+            search: true, //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+            strictSearch: true,
+            showColumns: true, //是否显示所有的列
+            showRefresh: true, //是否显示刷新按钮
+            minimumCountColumns: 2, //最少允许的列数
+            clickToSelect: true, //是否启用点击选中行
+            height: 525, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            uniqueId: "TopicID", //每一行的唯一标识，一般为主键列
+            showToggle: true, //是否显示详细视图和列表视图的切换按钮
+            cardView: false, //是否显示详细视图
+            detailView: false,
+            offset: 0,
+            sortOrder: "asc", //排序方式
+            sortName: "TopicID",
+            sortable: true,
+            escape: true,
+            queryParams: function queryParams(params) {
+                var temp = {
+                    limit: params.limit, //页面大小
+                    offset: params.offset, //页码
+                    keyword: params.search, //搜索
+                    sortOrder: params.order, //排序
+                    sortName: params.sort //排序字段
+                };
+                return temp;
+            },
+            url: "../SysManage/GetTopic",
+            columns: [{
+                field: 'state',
+                checkbox: true,
+                align: 'center',
+
+            },
+            {
+                field: "TopicID",
+                title: "题号",
+                sortable: true,
+                align: 'center',
+            }, {
+                field: "Title",
+                title: "标题",
+                sortable: true,
+                editable: {
+                    type: 'textarea',
+                    mode: "inline",
+                    title: '标题',
+                    validate: function (v) {
+                        if (!v) return '不能为空';
+                    }
+                }
+            }, {
+                field: "AnswerA",
+                title: "A",
+                sortable: true,
+                editable: {
+                    type: 'text',
+                    mode: "inline",
+                    title: 'A',
+                    validate: function (v) {
+                        if (!v) return '不能为空';
+                    }
+                }
+            },
+            {
+                field: "AnswerB",
+                title: "B",
+                sortable: true,
+                editable: {
+                    type: 'text',
+                    mode: "inline",
+                    title: 'B',
+                    validate: function (v) {
+                        if (!v) return '不能为空';
+                    }
+                }
+            },
+            {
+                field: "AnswerC",
+                title: "C",
+                sortable: true,
+                editable: {
+                    type: 'text',
+                    mode: "inline",
+                    title: 'C',
+                    validate: function (v) {
+                        if (!v) return '不能为空';
+                    }
+                }
+            },
+            {
+                field: "AnswerD",
+                title: "D",
+                sortable: true,
+                editable: {
+                    type: 'text',
+                    mode: "inline",
+                    title: 'D',
+                    validate: function (v) {
+                        if (!v) return '不能为空';
+                    }
+                }
+            },
+            {
+                field: "Answer",
+                title: "答案",
+                sortable: true,
+                editable: {
+                    type: 'text',
+                    mode: "inline",
+                    title: '答案',
+                    validate: function (a) {
+                        if (!a) return '不能为空';
+                    }
+                }
+            },
+            {
+                field: "CourseID",
+                title: "分类",
+                sortable: true,
+                editable: {
+                    type: 'text',
+                    mode: "inline",
+                    title: '分类',
+                    validate: function (v) {
+                        if (!v) return '不能为空';
+                    }
+                }
+            }, {
+                field: "Option",
+                title: "选项",
+                events: operateEvents,//注册事件
+                formatter: DeleteButton,
+            }],
+            onEditableSave: function (field, row, oldValue, $el) {
+                $.ajax({
+                    type: "post",
+                    url: "../SysManage/EditTopic",
+                    data: row,
+                    dataType: 'JSON',
+                    success: function (state) {
+                        if (state == "success") {
+                            //console.log(state);
+                        }
+                    },
+                    error: function () {
+                        alert('编辑失败');
+                    },
+                    complete: function () {
+
+                    }
+                });
+            },
+        });
+    });
+
+    //单项删除
+    function DeleteButton(row) {
+        return ['<button id="Delete" type="button" class="btn btn-sm btn-outline-danger" >删除</button>']
+    }
+    window.operateEvents = {
+        "click #Delete": function (e, value, row, index) {
+            var statu = confirm("你确定要删除题号为\"" + row.TopicID + "\"的题目吗？");
+            if (!statu) {
+                return false;
+            }
+            $.ajax({
+                type: 'POST',
+                url: '../SysManage/DeleteTopic',
+                data: row,
+                dataType: 'JSON',
+                success: function (msg) {
+                    if (msg == 'success') {
+                        //alert('Delete Successful!');
+                        //location.reload();
+                        $("#TopicTable").bootstrapTable('refresh');
+                    } else {
+                        alert('删除失败!');
+                    }
+                },
+                error: function () {
+                    alert('删除失败!');
+                }
+            });
+        }
+    }
+    //多选删除
+    var $table = $('#TopicTable');
+    var $button = $('#AllDelete');
+    $(function () {
+        $button.click(function () {
+            var TopicStr = "";
+            var TopicArr = [];
+            $.map($table.bootstrapTable('getSelections'), function (row) {
+
+                TopicStr = TopicStr + ',' + row.TopicID;
+                TopicArr.push(row.TopicID);
+            })
+            if (TopicArr.length == 0) {
+                return alert("没有选中任何行！");
+            }
+            var state = confirm("你确定要一次性删除\"" + TopicStr + "\"这些题目吗？");
+            if (!state) {
+                return false;
+            }
+            $.ajax({
+                url: "../SysManage/DeleteAllTopic",
+                data: {
+                    topics: TopicArr
+                },
+                type: 'POST',
+                datatype: 'json',
+                success: function (msg) {
+                    TopicArr = [];
+                    TopicStr = "";
+                    //$("#TopicTable").bootstrapTable('refresh');
+                    //console.log(msg);
+                },
+                error: function () {
+                    alert('删除失败!');
+                }
+            })
+            $table.bootstrapTable('remove', {
+                field: 'TopicID',
+                values: TopicArr
+            })
+        })
+    })
+
+</script>
+<!-- 模态框 -->

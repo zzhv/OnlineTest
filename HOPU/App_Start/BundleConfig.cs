@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace HOPU
 {
@@ -22,15 +21,25 @@ namespace HOPU
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/pop").Include(
+                        "~/Scripts/umd/popper.js"
+                        ));
+
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
+                      "~/Scripts/bootstrap.js"
+                      //"~/Scripts/bootstrap-*"
+                      ));
 
             bundles.Add(new ScriptBundle("~/bundles/zjxd").Include(
-                      "~/Scripts/my.js"));
+                      "~/Scripts/jquery.scrollUp.js",
+                       "~/Scripts/OpenScrollup.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
-                        "~/Content/bootstrap.css",
-                        "~/Content/site.css"));
+            bundles.Add(new StyleBundle("~/Content/aaaa").Include(
+                        "~/Content/bootstrap.min.css",
+                        "~/Content/site.css",
+                        "~/Content/image.css"
+                        // "~/Content/open-iconic-bootstrap.css"
+                        ));
         }
     }
 }

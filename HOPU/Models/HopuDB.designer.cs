@@ -42,6 +42,21 @@ namespace HOPU.Models
     partial void InsertUniteTest(UniteTest instance);
     partial void UpdateUniteTest(UniteTest instance);
     partial void DeleteUniteTest(UniteTest instance);
+    partial void InsertUniteTestScore(UniteTestScore instance);
+    partial void UpdateUniteTestScore(UniteTestScore instance);
+    partial void DeleteUniteTestScore(UniteTestScore instance);
+    partial void InsertSelfTest(SelfTest instance);
+    partial void UpdateSelfTest(SelfTest instance);
+    partial void DeleteSelfTest(SelfTest instance);
+    partial void InsertSelfTestInfo(SelfTestInfo instance);
+    partial void UpdateSelfTestInfo(SelfTestInfo instance);
+    partial void DeleteSelfTestInfo(SelfTestInfo instance);
+    partial void InsertSelfTestScore(SelfTestScore instance);
+    partial void UpdateSelfTestScore(SelfTestScore instance);
+    partial void DeleteSelfTestScore(SelfTestScore instance);
+    partial void InsertTopic(Topic instance);
+    partial void UpdateTopic(Topic instance);
+    partial void DeleteTopic(Topic instance);
     #endregion
 		
 		public HopuDBDataContext() : 
@@ -79,14 +94,6 @@ namespace HOPU.Models
 			get
 			{
 				return this.GetTable<Course>();
-			}
-		}
-		
-		public System.Data.Linq.Table<Topic> Topic
-		{
-			get
-			{
-				return this.GetTable<Topic>();
 			}
 		}
 		
@@ -129,6 +136,46 @@ namespace HOPU.Models
 				return this.GetTable<UniteTest>();
 			}
 		}
+		
+		public System.Data.Linq.Table<UniteTestScore> UniteTestScore
+		{
+			get
+			{
+				return this.GetTable<UniteTestScore>();
+			}
+		}
+		
+		public System.Data.Linq.Table<SelfTest> SelfTest
+		{
+			get
+			{
+				return this.GetTable<SelfTest>();
+			}
+		}
+		
+		public System.Data.Linq.Table<SelfTestInfo> SelfTestInfo
+		{
+			get
+			{
+				return this.GetTable<SelfTestInfo>();
+			}
+		}
+		
+		public System.Data.Linq.Table<SelfTestScore> SelfTestScore
+		{
+			get
+			{
+				return this.GetTable<SelfTestScore>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Topic> Topic
+		{
+			get
+			{
+				return this.GetTable<Topic>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Course")]
@@ -137,7 +184,7 @@ namespace HOPU.Models
 		
 		private System.Nullable<double> _CourseID;
 		
-		private string _CourseName;
+		private string _courseName;
 		
 		private System.Nullable<double> _TID;
 		
@@ -161,18 +208,18 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseName", DbType="NVarChar(255)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="courseName", Storage="_courseName", DbType="NVarChar(255)")]
 		public string CourseName
 		{
 			get
 			{
-				return this._CourseName;
+				return this._courseName;
 			}
 			set
 			{
-				if ((this._CourseName != value))
+				if ((this._courseName != value))
 				{
-					this._CourseName = value;
+					this._courseName = value;
 				}
 			}
 		}
@@ -189,159 +236,6 @@ namespace HOPU.Models
 				if ((this._TID != value))
 				{
 					this._TID = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Topic")]
-	public partial class Topic
-	{
-		
-		private System.Nullable<double> _TopicID;
-		
-		private string _Title;
-		
-		private string _AnswerA;
-		
-		private string _AnswerB;
-		
-		private string _AnswerC;
-		
-		private string _AnswerD;
-		
-		private string _Answer;
-		
-		private System.Nullable<double> _CourseID;
-		
-		public Topic()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TopicID", DbType="Float")]
-		public System.Nullable<double> TopicID
-		{
-			get
-			{
-				return this._TopicID;
-			}
-			set
-			{
-				if ((this._TopicID != value))
-				{
-					this._TopicID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="NVarChar(MAX)")]
-		public string Title
-		{
-			get
-			{
-				return this._Title;
-			}
-			set
-			{
-				if ((this._Title != value))
-				{
-					this._Title = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerA", DbType="NVarChar(MAX)")]
-		public string AnswerA
-		{
-			get
-			{
-				return this._AnswerA;
-			}
-			set
-			{
-				if ((this._AnswerA != value))
-				{
-					this._AnswerA = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerB", DbType="NVarChar(MAX)")]
-		public string AnswerB
-		{
-			get
-			{
-				return this._AnswerB;
-			}
-			set
-			{
-				if ((this._AnswerB != value))
-				{
-					this._AnswerB = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerC", DbType="NVarChar(MAX)")]
-		public string AnswerC
-		{
-			get
-			{
-				return this._AnswerC;
-			}
-			set
-			{
-				if ((this._AnswerC != value))
-				{
-					this._AnswerC = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerD", DbType="NVarChar(MAX)")]
-		public string AnswerD
-		{
-			get
-			{
-				return this._AnswerD;
-			}
-			set
-			{
-				if ((this._AnswerD != value))
-				{
-					this._AnswerD = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Answer", DbType="NVarChar(MAX)")]
-		public string Answer
-		{
-			get
-			{
-				return this._Answer;
-			}
-			set
-			{
-				if ((this._Answer != value))
-				{
-					this._Answer = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseID", DbType="Float")]
-		public System.Nullable<double> CourseID
-		{
-			get
-			{
-				return this._CourseID;
-			}
-			set
-			{
-				if ((this._CourseID != value))
-				{
-					this._CourseID = value;
 				}
 			}
 		}
@@ -1278,11 +1172,13 @@ namespace HOPU.Models
 		
 		private int _TopicCount;
 		
-		private string _CourseId;
+		private string _courseId;
 		
-		private string _CourseName;
+		private string _courseName;
 		
 		private EntitySet<UniteTestInfo> _UniteTestInfo;
+		
+		private EntitySet<UniteTestScore> _UniteTestScore;
 		
     #region 可扩展性方法定义
     partial void OnLoaded();
@@ -1305,6 +1201,7 @@ namespace HOPU.Models
 		public UniteTest()
 		{
 			this._UniteTestInfo = new EntitySet<UniteTestInfo>(new Action<UniteTestInfo>(this.attach_UniteTestInfo), new Action<UniteTestInfo>(this.detach_UniteTestInfo));
+			this._UniteTestScore = new EntitySet<UniteTestScore>(new Action<UniteTestScore>(this.attach_UniteTestScore), new Action<UniteTestScore>(this.detach_UniteTestScore));
 			OnCreated();
 		}
 		
@@ -1388,40 +1285,40 @@ namespace HOPU.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseId", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="courseId", Storage="_courseId", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
 		public string CourseId
 		{
 			get
 			{
-				return this._CourseId;
+				return this._courseId;
 			}
 			set
 			{
-				if ((this._CourseId != value))
+				if ((this._courseId != value))
 				{
 					this.OnCourseIdChanging(value);
 					this.SendPropertyChanging();
-					this._CourseId = value;
+					this._courseId = value;
 					this.SendPropertyChanged("CourseId");
 					this.OnCourseIdChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseName", DbType="VarChar(MAX)")]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="courseName", Storage="_courseName", DbType="VarChar(MAX)")]
 		public string CourseName
 		{
 			get
 			{
-				return this._CourseName;
+				return this._courseName;
 			}
 			set
 			{
-				if ((this._CourseName != value))
+				if ((this._courseName != value))
 				{
 					this.OnCourseNameChanging(value);
 					this.SendPropertyChanging();
-					this._CourseName = value;
+					this._courseName = value;
 					this.SendPropertyChanged("CourseName");
 					this.OnCourseNameChanged();
 				}
@@ -1438,6 +1335,19 @@ namespace HOPU.Models
 			set
 			{
 				this._UniteTestInfo.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UniteTest_UniteTestScore", Storage="_UniteTestScore", ThisKey="UtId", OtherKey="UtId")]
+		public EntitySet<UniteTestScore> UniteTestScore
+		{
+			get
+			{
+				return this._UniteTestScore;
+			}
+			set
+			{
+				this._UniteTestScore.Assign(value);
 			}
 		}
 		
@@ -1471,6 +1381,1299 @@ namespace HOPU.Models
 		{
 			this.SendPropertyChanging();
 			entity.UniteTest = null;
+		}
+		
+		private void attach_UniteTestScore(UniteTestScore entity)
+		{
+			this.SendPropertyChanging();
+			entity.UniteTest = this;
+		}
+		
+		private void detach_UniteTestScore(UniteTestScore entity)
+		{
+			this.SendPropertyChanging();
+			entity.UniteTest = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.UniteTestScore")]
+	public partial class UniteTestScore : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private int _UtId;
+		
+		private string _RealUserName;
+		
+		private string _UserName;
+		
+		private System.DateTime _EndTime;
+		
+		private int _Score;
+		
+		private EntityRef<UniteTest> _UniteTest;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnUtIdChanging(int value);
+    partial void OnUtIdChanged();
+    partial void OnRealUserNameChanging(string value);
+    partial void OnRealUserNameChanged();
+    partial void OnUserNameChanging(string value);
+    partial void OnUserNameChanged();
+    partial void OnEndTimeChanging(System.DateTime value);
+    partial void OnEndTimeChanged();
+    partial void OnScoreChanging(int value);
+    partial void OnScoreChanged();
+    #endregion
+		
+		public UniteTestScore()
+		{
+			this._UniteTest = default(EntityRef<UniteTest>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UtId", DbType="Int NOT NULL")]
+		public int UtId
+		{
+			get
+			{
+				return this._UtId;
+			}
+			set
+			{
+				if ((this._UtId != value))
+				{
+					if (this._UniteTest.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnUtIdChanging(value);
+					this.SendPropertyChanging();
+					this._UtId = value;
+					this.SendPropertyChanged("UtId");
+					this.OnUtIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RealUserName", DbType="VarChar(50) NOT NULL", CanBeNull=false)]
+		public string RealUserName
+		{
+			get
+			{
+				return this._RealUserName;
+			}
+			set
+			{
+				if ((this._RealUserName != value))
+				{
+					this.OnRealUserNameChanging(value);
+					this.SendPropertyChanging();
+					this._RealUserName = value;
+					this.SendPropertyChanged("RealUserName");
+					this.OnRealUserNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string UserName
+		{
+			get
+			{
+				return this._UserName;
+			}
+			set
+			{
+				if ((this._UserName != value))
+				{
+					this.OnUserNameChanging(value);
+					this.SendPropertyChanging();
+					this._UserName = value;
+					this.SendPropertyChanged("UserName");
+					this.OnUserNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndTime", DbType="DateTime NOT NULL")]
+		public System.DateTime EndTime
+		{
+			get
+			{
+				return this._EndTime;
+			}
+			set
+			{
+				if ((this._EndTime != value))
+				{
+					this.OnEndTimeChanging(value);
+					this.SendPropertyChanging();
+					this._EndTime = value;
+					this.SendPropertyChanged("EndTime");
+					this.OnEndTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Score", DbType="Int NOT NULL")]
+		public int Score
+		{
+			get
+			{
+				return this._Score;
+			}
+			set
+			{
+				if ((this._Score != value))
+				{
+					this.OnScoreChanging(value);
+					this.SendPropertyChanging();
+					this._Score = value;
+					this.SendPropertyChanged("Score");
+					this.OnScoreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="UniteTest_UniteTestScore", Storage="_UniteTest", ThisKey="UtId", OtherKey="UtId", IsForeignKey=true)]
+		public UniteTest UniteTest
+		{
+			get
+			{
+				return this._UniteTest.Entity;
+			}
+			set
+			{
+				UniteTest previousValue = this._UniteTest.Entity;
+				if (((previousValue != value) 
+							|| (this._UniteTest.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._UniteTest.Entity = null;
+						previousValue.UniteTestScore.Remove(this);
+					}
+					this._UniteTest.Entity = value;
+					if ((value != null))
+					{
+						value.UniteTestScore.Add(this);
+						this._UtId = value.UtId;
+					}
+					else
+					{
+						this._UtId = default(int);
+					}
+					this.SendPropertyChanged("UniteTest");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SelfTest")]
+	public partial class SelfTest : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private long _StId;
+		
+		private string _UserName;
+		
+		private System.DateTime _StartTime;
+		
+		private int _TimeLenth;
+		
+		private int _TopicCount;
+		
+		private string _CourseId;
+		
+		private string _CourseName;
+		
+		private EntitySet<SelfTestInfo> _SelfTestInfo;
+		
+		private EntitySet<SelfTestScore> _SelfTestScore;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnStIdChanging(long value);
+    partial void OnStIdChanged();
+    partial void OnUserNameChanging(string value);
+    partial void OnUserNameChanged();
+    partial void OnStartTimeChanging(System.DateTime value);
+    partial void OnStartTimeChanged();
+    partial void OnTimeLenthChanging(int value);
+    partial void OnTimeLenthChanged();
+    partial void OnTopicCountChanging(int value);
+    partial void OnTopicCountChanged();
+    partial void OnCourseIdChanging(string value);
+    partial void OnCourseIdChanged();
+    partial void OnCourseNameChanging(string value);
+    partial void OnCourseNameChanged();
+    #endregion
+		
+		public SelfTest()
+		{
+			this._SelfTestInfo = new EntitySet<SelfTestInfo>(new Action<SelfTestInfo>(this.attach_SelfTestInfo), new Action<SelfTestInfo>(this.detach_SelfTestInfo));
+			this._SelfTestScore = new EntitySet<SelfTestScore>(new Action<SelfTestScore>(this.attach_SelfTestScore), new Action<SelfTestScore>(this.detach_SelfTestScore));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StId", DbType="BigInt NOT NULL", IsPrimaryKey=true)]
+		public long StId
+		{
+			get
+			{
+				return this._StId;
+			}
+			set
+			{
+				if ((this._StId != value))
+				{
+					this.OnStIdChanging(value);
+					this.SendPropertyChanging();
+					this._StId = value;
+					this.SendPropertyChanged("StId");
+					this.OnStIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string UserName
+		{
+			get
+			{
+				return this._UserName;
+			}
+			set
+			{
+				if ((this._UserName != value))
+				{
+					this.OnUserNameChanging(value);
+					this.SendPropertyChanging();
+					this._UserName = value;
+					this.SendPropertyChanged("UserName");
+					this.OnUserNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StartTime", DbType="DateTime NOT NULL")]
+		public System.DateTime StartTime
+		{
+			get
+			{
+				return this._StartTime;
+			}
+			set
+			{
+				if ((this._StartTime != value))
+				{
+					this.OnStartTimeChanging(value);
+					this.SendPropertyChanging();
+					this._StartTime = value;
+					this.SendPropertyChanged("StartTime");
+					this.OnStartTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TimeLenth", DbType="Int NOT NULL")]
+		public int TimeLenth
+		{
+			get
+			{
+				return this._TimeLenth;
+			}
+			set
+			{
+				if ((this._TimeLenth != value))
+				{
+					this.OnTimeLenthChanging(value);
+					this.SendPropertyChanging();
+					this._TimeLenth = value;
+					this.SendPropertyChanged("TimeLenth");
+					this.OnTimeLenthChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TopicCount", DbType="Int NOT NULL")]
+		public int TopicCount
+		{
+			get
+			{
+				return this._TopicCount;
+			}
+			set
+			{
+				if ((this._TopicCount != value))
+				{
+					this.OnTopicCountChanging(value);
+					this.SendPropertyChanging();
+					this._TopicCount = value;
+					this.SendPropertyChanged("TopicCount");
+					this.OnTopicCountChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseId", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string CourseId
+		{
+			get
+			{
+				return this._CourseId;
+			}
+			set
+			{
+				if ((this._CourseId != value))
+				{
+					this.OnCourseIdChanging(value);
+					this.SendPropertyChanging();
+					this._CourseId = value;
+					this.SendPropertyChanged("CourseId");
+					this.OnCourseIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseName", DbType="NVarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string CourseName
+		{
+			get
+			{
+				return this._CourseName;
+			}
+			set
+			{
+				if ((this._CourseName != value))
+				{
+					this.OnCourseNameChanging(value);
+					this.SendPropertyChanging();
+					this._CourseName = value;
+					this.SendPropertyChanged("CourseName");
+					this.OnCourseNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SelfTest_SelfTestInfo", Storage="_SelfTestInfo", ThisKey="StId", OtherKey="StId")]
+		public EntitySet<SelfTestInfo> SelfTestInfo
+		{
+			get
+			{
+				return this._SelfTestInfo;
+			}
+			set
+			{
+				this._SelfTestInfo.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SelfTest_SelfTestScore", Storage="_SelfTestScore", ThisKey="StId", OtherKey="StId")]
+		public EntitySet<SelfTestScore> SelfTestScore
+		{
+			get
+			{
+				return this._SelfTestScore;
+			}
+			set
+			{
+				this._SelfTestScore.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_SelfTestInfo(SelfTestInfo entity)
+		{
+			this.SendPropertyChanging();
+			entity.SelfTest = this;
+		}
+		
+		private void detach_SelfTestInfo(SelfTestInfo entity)
+		{
+			this.SendPropertyChanging();
+			entity.SelfTest = null;
+		}
+		
+		private void attach_SelfTestScore(SelfTestScore entity)
+		{
+			this.SendPropertyChanging();
+			entity.SelfTest = this;
+		}
+		
+		private void detach_SelfTestScore(SelfTestScore entity)
+		{
+			this.SendPropertyChanging();
+			entity.SelfTest = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SelfTestInfo")]
+	public partial class SelfTestInfo : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private long _StId;
+		
+		private string _UserName;
+		
+		private int _TopicID;
+		
+		private string _Title;
+		
+		private string _AnswerA;
+		
+		private string _AnswerB;
+		
+		private string _AnswerC;
+		
+		private string _AnswerD;
+		
+		private string _Answer;
+		
+		private string _CourseID;
+		
+		private EntityRef<SelfTest> _SelfTest;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnStIdChanging(long value);
+    partial void OnStIdChanged();
+    partial void OnUserNameChanging(string value);
+    partial void OnUserNameChanged();
+    partial void OnTopicIDChanging(int value);
+    partial void OnTopicIDChanged();
+    partial void OnTitleChanging(string value);
+    partial void OnTitleChanged();
+    partial void OnAnswerAChanging(string value);
+    partial void OnAnswerAChanged();
+    partial void OnAnswerBChanging(string value);
+    partial void OnAnswerBChanged();
+    partial void OnAnswerCChanging(string value);
+    partial void OnAnswerCChanged();
+    partial void OnAnswerDChanging(string value);
+    partial void OnAnswerDChanged();
+    partial void OnAnswerChanging(string value);
+    partial void OnAnswerChanged();
+    partial void OnCourseIDChanging(string value);
+    partial void OnCourseIDChanged();
+    #endregion
+		
+		public SelfTestInfo()
+		{
+			this._SelfTest = default(EntityRef<SelfTest>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StId", DbType="BigInt NOT NULL")]
+		public long StId
+		{
+			get
+			{
+				return this._StId;
+			}
+			set
+			{
+				if ((this._StId != value))
+				{
+					if (this._SelfTest.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnStIdChanging(value);
+					this.SendPropertyChanging();
+					this._StId = value;
+					this.SendPropertyChanged("StId");
+					this.OnStIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string UserName
+		{
+			get
+			{
+				return this._UserName;
+			}
+			set
+			{
+				if ((this._UserName != value))
+				{
+					this.OnUserNameChanging(value);
+					this.SendPropertyChanging();
+					this._UserName = value;
+					this.SendPropertyChanged("UserName");
+					this.OnUserNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TopicID", DbType="Int NOT NULL")]
+		public int TopicID
+		{
+			get
+			{
+				return this._TopicID;
+			}
+			set
+			{
+				if ((this._TopicID != value))
+				{
+					this.OnTopicIDChanging(value);
+					this.SendPropertyChanging();
+					this._TopicID = value;
+					this.SendPropertyChanged("TopicID");
+					this.OnTopicIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Title
+		{
+			get
+			{
+				return this._Title;
+			}
+			set
+			{
+				if ((this._Title != value))
+				{
+					this.OnTitleChanging(value);
+					this.SendPropertyChanging();
+					this._Title = value;
+					this.SendPropertyChanged("Title");
+					this.OnTitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerA", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string AnswerA
+		{
+			get
+			{
+				return this._AnswerA;
+			}
+			set
+			{
+				if ((this._AnswerA != value))
+				{
+					this.OnAnswerAChanging(value);
+					this.SendPropertyChanging();
+					this._AnswerA = value;
+					this.SendPropertyChanged("AnswerA");
+					this.OnAnswerAChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerB", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string AnswerB
+		{
+			get
+			{
+				return this._AnswerB;
+			}
+			set
+			{
+				if ((this._AnswerB != value))
+				{
+					this.OnAnswerBChanging(value);
+					this.SendPropertyChanging();
+					this._AnswerB = value;
+					this.SendPropertyChanged("AnswerB");
+					this.OnAnswerBChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerC", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string AnswerC
+		{
+			get
+			{
+				return this._AnswerC;
+			}
+			set
+			{
+				if ((this._AnswerC != value))
+				{
+					this.OnAnswerCChanging(value);
+					this.SendPropertyChanging();
+					this._AnswerC = value;
+					this.SendPropertyChanged("AnswerC");
+					this.OnAnswerCChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerD", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string AnswerD
+		{
+			get
+			{
+				return this._AnswerD;
+			}
+			set
+			{
+				if ((this._AnswerD != value))
+				{
+					this.OnAnswerDChanging(value);
+					this.SendPropertyChanging();
+					this._AnswerD = value;
+					this.SendPropertyChanged("AnswerD");
+					this.OnAnswerDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Answer", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Answer
+		{
+			get
+			{
+				return this._Answer;
+			}
+			set
+			{
+				if ((this._Answer != value))
+				{
+					this.OnAnswerChanging(value);
+					this.SendPropertyChanging();
+					this._Answer = value;
+					this.SendPropertyChanged("Answer");
+					this.OnAnswerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseID", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string CourseID
+		{
+			get
+			{
+				return this._CourseID;
+			}
+			set
+			{
+				if ((this._CourseID != value))
+				{
+					this.OnCourseIDChanging(value);
+					this.SendPropertyChanging();
+					this._CourseID = value;
+					this.SendPropertyChanged("CourseID");
+					this.OnCourseIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SelfTest_SelfTestInfo", Storage="_SelfTest", ThisKey="StId", OtherKey="StId", IsForeignKey=true)]
+		public SelfTest SelfTest
+		{
+			get
+			{
+				return this._SelfTest.Entity;
+			}
+			set
+			{
+				SelfTest previousValue = this._SelfTest.Entity;
+				if (((previousValue != value) 
+							|| (this._SelfTest.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._SelfTest.Entity = null;
+						previousValue.SelfTestInfo.Remove(this);
+					}
+					this._SelfTest.Entity = value;
+					if ((value != null))
+					{
+						value.SelfTestInfo.Add(this);
+						this._StId = value.StId;
+					}
+					else
+					{
+						this._StId = default(long);
+					}
+					this.SendPropertyChanged("SelfTest");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.SelfTestScore")]
+	public partial class SelfTestScore : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private long _StId;
+		
+		private string _UserName;
+		
+		private string _RealUserName;
+		
+		private System.DateTime _EndTime;
+		
+		private int _Score;
+		
+		private EntityRef<SelfTest> _SelfTest;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnStIdChanging(long value);
+    partial void OnStIdChanged();
+    partial void OnUserNameChanging(string value);
+    partial void OnUserNameChanged();
+    partial void OnRealUserNameChanging(string value);
+    partial void OnRealUserNameChanged();
+    partial void OnEndTimeChanging(System.DateTime value);
+    partial void OnEndTimeChanged();
+    partial void OnScoreChanging(int value);
+    partial void OnScoreChanged();
+    #endregion
+		
+		public SelfTestScore()
+		{
+			this._SelfTest = default(EntityRef<SelfTest>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_StId", DbType="BigInt NOT NULL")]
+		public long StId
+		{
+			get
+			{
+				return this._StId;
+			}
+			set
+			{
+				if ((this._StId != value))
+				{
+					if (this._SelfTest.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnStIdChanging(value);
+					this.SendPropertyChanging();
+					this._StId = value;
+					this.SendPropertyChanged("StId");
+					this.OnStIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UserName", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string UserName
+		{
+			get
+			{
+				return this._UserName;
+			}
+			set
+			{
+				if ((this._UserName != value))
+				{
+					this.OnUserNameChanging(value);
+					this.SendPropertyChanging();
+					this._UserName = value;
+					this.SendPropertyChanged("UserName");
+					this.OnUserNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RealUserName", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string RealUserName
+		{
+			get
+			{
+				return this._RealUserName;
+			}
+			set
+			{
+				if ((this._RealUserName != value))
+				{
+					this.OnRealUserNameChanging(value);
+					this.SendPropertyChanging();
+					this._RealUserName = value;
+					this.SendPropertyChanged("RealUserName");
+					this.OnRealUserNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EndTime", DbType="DateTime NOT NULL")]
+		public System.DateTime EndTime
+		{
+			get
+			{
+				return this._EndTime;
+			}
+			set
+			{
+				if ((this._EndTime != value))
+				{
+					this.OnEndTimeChanging(value);
+					this.SendPropertyChanging();
+					this._EndTime = value;
+					this.SendPropertyChanged("EndTime");
+					this.OnEndTimeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Score", DbType="Int NOT NULL")]
+		public int Score
+		{
+			get
+			{
+				return this._Score;
+			}
+			set
+			{
+				if ((this._Score != value))
+				{
+					this.OnScoreChanging(value);
+					this.SendPropertyChanging();
+					this._Score = value;
+					this.SendPropertyChanged("Score");
+					this.OnScoreChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="SelfTest_SelfTestScore", Storage="_SelfTest", ThisKey="StId", OtherKey="StId", IsForeignKey=true)]
+		public SelfTest SelfTest
+		{
+			get
+			{
+				return this._SelfTest.Entity;
+			}
+			set
+			{
+				SelfTest previousValue = this._SelfTest.Entity;
+				if (((previousValue != value) 
+							|| (this._SelfTest.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._SelfTest.Entity = null;
+						previousValue.SelfTestScore.Remove(this);
+					}
+					this._SelfTest.Entity = value;
+					if ((value != null))
+					{
+						value.SelfTestScore.Add(this);
+						this._StId = value.StId;
+					}
+					else
+					{
+						this._StId = default(long);
+					}
+					this.SendPropertyChanged("SelfTest");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Topic")]
+	public partial class Topic : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private double _TopicID;
+		
+		private string _Title;
+		
+		private string _AnswerA;
+		
+		private string _AnswerB;
+		
+		private string _AnswerC;
+		
+		private string _AnswerD;
+		
+		private string _Answer;
+		
+		private System.Nullable<double> _CourseID;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnTopicIDChanging(double value);
+    partial void OnTopicIDChanged();
+    partial void OnTitleChanging(string value);
+    partial void OnTitleChanged();
+    partial void OnAnswerAChanging(string value);
+    partial void OnAnswerAChanged();
+    partial void OnAnswerBChanging(string value);
+    partial void OnAnswerBChanged();
+    partial void OnAnswerCChanging(string value);
+    partial void OnAnswerCChanged();
+    partial void OnAnswerDChanging(string value);
+    partial void OnAnswerDChanged();
+    partial void OnAnswerChanging(string value);
+    partial void OnAnswerChanged();
+    partial void OnCourseIDChanging(System.Nullable<double> value);
+    partial void OnCourseIDChanged();
+    #endregion
+		
+		public Topic()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TopicID", DbType="Float NOT NULL", IsPrimaryKey=true)]
+		public double TopicID
+		{
+			get
+			{
+				return this._TopicID;
+			}
+			set
+			{
+				if ((this._TopicID != value))
+				{
+					this.OnTopicIDChanging(value);
+					this.SendPropertyChanging();
+					this._TopicID = value;
+					this.SendPropertyChanged("TopicID");
+					this.OnTopicIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Title", DbType="NVarChar(MAX)")]
+		public string Title
+		{
+			get
+			{
+				return this._Title;
+			}
+			set
+			{
+				if ((this._Title != value))
+				{
+					this.OnTitleChanging(value);
+					this.SendPropertyChanging();
+					this._Title = value;
+					this.SendPropertyChanged("Title");
+					this.OnTitleChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerA", DbType="NVarChar(MAX)")]
+		public string AnswerA
+		{
+			get
+			{
+				return this._AnswerA;
+			}
+			set
+			{
+				if ((this._AnswerA != value))
+				{
+					this.OnAnswerAChanging(value);
+					this.SendPropertyChanging();
+					this._AnswerA = value;
+					this.SendPropertyChanged("AnswerA");
+					this.OnAnswerAChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerB", DbType="NVarChar(MAX)")]
+		public string AnswerB
+		{
+			get
+			{
+				return this._AnswerB;
+			}
+			set
+			{
+				if ((this._AnswerB != value))
+				{
+					this.OnAnswerBChanging(value);
+					this.SendPropertyChanging();
+					this._AnswerB = value;
+					this.SendPropertyChanged("AnswerB");
+					this.OnAnswerBChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerC", DbType="NVarChar(MAX)")]
+		public string AnswerC
+		{
+			get
+			{
+				return this._AnswerC;
+			}
+			set
+			{
+				if ((this._AnswerC != value))
+				{
+					this.OnAnswerCChanging(value);
+					this.SendPropertyChanging();
+					this._AnswerC = value;
+					this.SendPropertyChanged("AnswerC");
+					this.OnAnswerCChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AnswerD", DbType="NVarChar(MAX)")]
+		public string AnswerD
+		{
+			get
+			{
+				return this._AnswerD;
+			}
+			set
+			{
+				if ((this._AnswerD != value))
+				{
+					this.OnAnswerDChanging(value);
+					this.SendPropertyChanging();
+					this._AnswerD = value;
+					this.SendPropertyChanged("AnswerD");
+					this.OnAnswerDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Answer", DbType="NVarChar(MAX)")]
+		public string Answer
+		{
+			get
+			{
+				return this._Answer;
+			}
+			set
+			{
+				if ((this._Answer != value))
+				{
+					this.OnAnswerChanging(value);
+					this.SendPropertyChanging();
+					this._Answer = value;
+					this.SendPropertyChanged("Answer");
+					this.OnAnswerChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseID", DbType="Float")]
+		public System.Nullable<double> CourseID
+		{
+			get
+			{
+				return this._CourseID;
+			}
+			set
+			{
+				if ((this._CourseID != value))
+				{
+					this.OnCourseIDChanging(value);
+					this.SendPropertyChanging();
+					this._CourseID = value;
+					this.SendPropertyChanged("CourseID");
+					this.OnCourseIDChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

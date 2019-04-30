@@ -1,0 +1,219 @@
+﻿@{
+    ViewBag.Title = "成绩中心";
+    Layout = "~/views/shared/_Layout.cshtml";
+}
+@using Microsoft.AspNet.Identity;
+@using HOPU.Models
+@section header{
+    <link href="~/Content/all.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-editable.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-table.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap-editable.min.js"></script>
+    <script src="~/Scripts/BTTable/bootstrap-table.js"></script>
+    <script src="~/Scripts/BTTable/bootstrap-table-zh-CN.js"></script>
+    <script src="~/Scripts/BTTable/bootstrap-table-editable.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.zh-CN.js"></script>
+    <script src="~/Scripts/BTTable/tableExport.min.js"></script>
+    <script src="~/Scripts/BTTable/bootstrap-table-export.js"></script>
+}
+<nav class="breadcrumb">
+    <a class="breadcrumb-item" href="~/SysHome/Home">首页</a>
+    <span class="breadcrumb-item active">测试中心</span>
+    <a class="breadcrumb-item" href="~/SelfTestCenter/SelfTestType">独测列表</a>
+    <span class="breadcrumb-item active">成绩中心</span>
+</nav>
+@if (GetUserType.GetUserTypeInfo(User.Identity.GetUserId()))//如果是admin
+{
+    <div>
+        <input type="hidden" id="UtId" value="@ViewBag.UtId" />
+    </div>
+    <div>
+        <div id="toolbar">
+            <div class="d-flex">
+                @*<div class="p-2 ">
+                        @{
+                            var selectListItems = Model;
+                        }
+                        @Html.DropDownList("BrickType", selectListItems as IEnumerable<SelectListItem>, new { id = "select", @class = "form-control" })
+                    </div>*@
+                <div class="p-2 ">
+
+                    @Html.ActionLink("独/统切换", "Score", "ScoreCenter", new { id = 1 }, new { @class = "btn btn-primary" })
+                </div>
+            </div>
+        </div>
+        <div id="Utable">
+            <table id="table"
+                   data-toggle="table"
+                   data-toolbar="#toolbar"
+                   data-url="@Url.Action("AdminGetSelfScore", "ScoreCenter")"
+                   data-method="post"
+                   data-offset="1"
+                   data-page-size="10"
+                   data-pagination="true"
+                   data-page-number="1"
+                   data-side-pagination="server"
+                   data-flat="true"
+                   data-sort-name="EndTime"
+                   data-sort-order="desc"
+                   data-search="true"
+                   data-page-list="[5,10,All]"
+                   data-show-refresh="true"
+                   data-show-toggle="true"
+                   data-show-fullscreen="true"
+                   data-show-columns="true"
+                   data-show-export="true"
+                   data-show-footer="false"
+                   data-minimum-count-columns="2"
+                   data-silent="true"
+                   data-uniqueld="StId"
+                   data-height="460"
+                   data-query-params="queryParams">
+                <thead>
+                    <tr>
+                        <th data-field="StId" data-align="center" data-sortable="true">独测号</th>
+                        <th data-field="RealUserName">姓名</th>
+                        <th data-field="UserName" data-sortable="true">学号</th>
+                        <th data-field="EndTime" data-formatter="changeDateFormat" data-sortable="true">提交时间</th>
+                        <th data-field="Score" data-formatter="scoreFormatter" data-sortable="true" data-align="center">得分</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function queryParams(params) {
+            var temp = {
+                limit: params.limit,   //页面大小
+                offset: params.offset,  //页码
+                //Id: $("#StId").val(),
+                keyword: params.search,//搜索
+                sortOrder: params.order,//排序
+                sortName: params.sort//排序字段
+            };
+            return temp;
+        };
+
+        //分数
+        function scoreFormatter(value) {
+            var a = "";
+            if (value < 60) {
+                var a = '<span style="color:#c12e2a;"><i class="fa fa-times-circle-o" aria-hidden="true"></i>' + value + '</span>';
+            } else if (value >= 60) {
+                var a = '<span style="color:#3e8f3e"><i class="fa fa-check-circle-o" aria-hidden="true"></i>' + value + '</span>';
+            }
+            return a;
+
+        }
+
+        //时间
+        function changeDateFormat(cellval) {
+            if (cellval != null) {
+                var date = new Date(parseInt(cellval.replace("/Date(", "").replace(")/", ""), 10));
+                var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+                var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+                var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+                var milliseconds = date.getMilliseconds() < 100 ? "0" + date.getMilliseconds() : date.getMilliseconds();
+                return date.getFullYear() + "-" + month + "-" + currentDate + " " + hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+            }
+        }
+
+        var $table = $('#table');
+        var $button = $('#button');
+        $(function () {
+            $("#select").on("change", function () {
+                $("#StId").val($('#select option:selected').val());
+                $table.bootstrapTable('refresh');
+            });
+        });
+    </script>
+}
+else
+{
+    //如果不是admin权限
+    <div id="toolbar">
+        <div class="p-2 ">
+            @Html.ActionLink("独/统切换", "Score", "ScoreCenter", new { id = 1 }, new { @class = "btn btn-primary" })
+        </div>
+    </div>
+    <table id="ScoreTable"
+           data-toggle="table"
+           data-toolbar="#toolbar"
+           data-url="@Url.Action("GetSelfScore","ScoreCenter")"
+           data-method="get"
+           data-Type="json"
+           data-offset="0"
+           data-page-size="10"
+           data-pagination="true"
+           data-page-number="1"
+           data-side-pagination="server"
+           data-flat="true"
+           data-sort-name="EndTime"
+           data-sort-order="desc"
+           data-search="true"
+           data-page-list="[5,10,All]"
+           data-show-refresh="true"
+           data-show-toggle="true"
+           data-show-fullscreen="true"
+           data-show-columns="true"
+           data-show-export="true"
+           data-minimum-count-columns="2"
+           data-silent="true"
+           data-uniqueld="UserName"
+           data-height="455"
+           data-query-params="queryParams">
+        <thead>
+            <tr>
+                <th data-field="StId" data-align="center" data-sortable="true">独测号</th>
+                <th data-field="RealUserName">姓名</th>
+                <th data-field="UserName" data-sortable="false">学号</th>
+                <th data-field="EndTime" data-formatter="changeDateFormat" data-sortable="true">提交时间</th>
+                <th data-field="Score" data-formatter="scoreFormatter" data-sortable="true" data-align="center">得分</th>
+            </tr>
+        </thead>
+    </table>
+
+    <script>
+
+        function queryParams(params) {
+            var temp = {
+                limit: params.limit,   //页面大小
+                offset: params.offset,  //页码
+                keyword: params.search,//搜索
+                sortOrder: params.order,//排序
+                sortName: params.sort//排序字段
+            };
+            return temp;
+        };
+
+        //分数
+        function scoreFormatter(value) {
+            var a = "";
+            if (value < 60) {
+                var a = '<span style="color:#c12e2a;"><i class="fa fa-times-circle-o" aria-hidden="true"></i>' + value + '</span>';
+            } else if (value >= 60) {
+                var a = '<span style="color:#3e8f3e"><i class="fa fa-check-circle-o" aria-hidden="true"></i>' + value + '</span>';
+            }
+            return a;
+        }
+
+        //时间
+        function changeDateFormat(cellval) {
+            if (cellval != null) {
+                var date = new Date(parseInt(cellval.replace("/Date(", "").replace(")/", ""), 10));
+                var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+                var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+                var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+                var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+                var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+                var milliseconds = date.getMilliseconds() < 100 ? "0" + date.getMilliseconds() : date.getMilliseconds();
+                return date.getFullYear() + "-" + month + "-" + currentDate + " " + hours + ":" + minutes + ":" + seconds + "." + milliseconds;
+            }
+        };
+    </script>
+
+}

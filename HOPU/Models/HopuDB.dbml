@@ -3,20 +3,8 @@
   <Table Name="dbo.Course" Member="Course">
     <Type Name="Course">
       <Column Name="CourseID" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="CourseName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="courseName" Member="CourseName" Storage="_courseName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
       <Column Name="TID" Type="System.Double" DbType="Float" CanBeNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.Topic" Member="Topic">
-    <Type Name="Topic">
-      <Column Name="TopicID" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="Title" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="AnswerA" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="AnswerB" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="AnswerC" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="AnswerD" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="Answer" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
-      <Column Name="CourseID" Type="System.Double" DbType="Float" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.AspNetUsers" Member="AspNetUsers">
@@ -73,9 +61,73 @@
       <Column Name="StartTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="TimeLenth" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="TopicCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="CourseId" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
-      <Column Name="CourseName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="courseId" Member="CourseId" Storage="_courseId" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="courseName" Member="CourseName" Storage="_courseName" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
       <Association Name="UniteTest_UniteTestInfo" Member="UniteTestInfo" ThisKey="UtId" OtherKey="UtId" Type="UniteTestInfo" />
+      <Association Name="UniteTest_UniteTestScore" Member="UniteTestScore" ThisKey="UtId" OtherKey="UtId" Type="UniteTestScore" />
+    </Type>
+  </Table>
+  <Table Name="dbo.UniteTestScore" Member="UniteTestScore">
+    <Type Name="UniteTestScore">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="UtId" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="RealUserName" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="EndTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Score" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="UniteTest_UniteTestScore" Member="UniteTest" ThisKey="UtId" OtherKey="UtId" Type="UniteTest" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SelfTest" Member="SelfTest">
+    <Type Name="SelfTest">
+      <Column Name="StId" Type="System.Int64" DbType="BigInt NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="StartTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="TimeLenth" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="TopicCount" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="CourseId" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="CourseName" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="SelfTest_SelfTestInfo" Member="SelfTestInfo" ThisKey="StId" OtherKey="StId" Type="SelfTestInfo" />
+      <Association Name="SelfTest_SelfTestScore" Member="SelfTestScore" ThisKey="StId" OtherKey="StId" Type="SelfTestScore" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SelfTestInfo" Member="SelfTestInfo">
+    <Type Name="SelfTestInfo">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="StId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="TopicID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="AnswerA" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="AnswerB" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="AnswerC" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="AnswerD" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="Answer" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="CourseID" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="SelfTest_SelfTestInfo" Member="SelfTest" ThisKey="StId" OtherKey="StId" Type="SelfTest" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.SelfTestScore" Member="SelfTestScore">
+    <Type Name="SelfTestScore">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="StId" Type="System.Int64" DbType="BigInt NOT NULL" CanBeNull="false" />
+      <Column Name="UserName" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="RealUserName" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="EndTime" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Score" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="SelfTest_SelfTestScore" Member="SelfTest" ThisKey="StId" OtherKey="StId" Type="SelfTest" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Topic" Member="Topic">
+    <Type Name="Topic">
+      <Column Name="TopicID" Type="System.Double" DbType="Float NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Title" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AnswerA" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AnswerB" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AnswerC" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="AnswerD" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="Answer" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
+      <Column Name="CourseID" Type="System.Double" DbType="Float" CanBeNull="true" />
     </Type>
   </Table>
 </Database>
