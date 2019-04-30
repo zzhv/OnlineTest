@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
+﻿using HOPU.Models;
+using System;
 using System.Linq;
-using System.Web;
-using System.Web.Helpers;
 using System.Web.Mvc;
-using HOPU.Models;
-using Microsoft.Ajax.Utilities;
-using WebGrease.Css.Extensions;
 
 namespace HOPU.Controllers
 {
