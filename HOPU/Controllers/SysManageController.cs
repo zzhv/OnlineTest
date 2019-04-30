@@ -137,6 +137,7 @@ namespace HOPU.Controllers
 
         public ActionResult CourseTypeManage()
         {
+
             return View();
         }
     }
