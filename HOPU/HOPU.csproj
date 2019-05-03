@@ -271,6 +271,7 @@
     <Content Include="Content\image\homeLunbo\img_mountains_wide.jpg" />
     <Content Include="Content\image\homeLunbo\img_nature_wide.jpg" />
     <Content Include="Content\image\icons_1.png" />
+    <Content Include="Content\image\TableHead.PNG" />
     <Content Include="Content\image\top.png" />
     <Content Include="Content\open-iconic-bootstrap.css" />
     <Content Include="Content\Pre.css" />
@@ -837,6 +838,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Uploads\" />
     <Folder Include="vendor\font-awesome\less\" />
     <Folder Include="vendor\font-awesome\scss\" />
   </ItemGroup>
