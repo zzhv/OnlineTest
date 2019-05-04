@@ -294,9 +294,17 @@ namespace HOPU.Controllers
                 CourseId = strCourseId,
                 CourseName = courseName
             };
-            db.UniteTest.InsertOnSubmit(newTest);
-            db.UniteTestInfo.InsertAllOnSubmit(uniteTestInfos);
-            db.SubmitChanges();
+            try
+            {
+                db.UniteTest.InsertOnSubmit(newTest);
+                db.UniteTestInfo.InsertAllOnSubmit(uniteTestInfos);
+                db.SubmitChanges();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
             return Json(new { Success = true });
         }
         #endregion

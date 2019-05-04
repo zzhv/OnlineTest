@@ -27,13 +27,10 @@ namespace HOPU.Controllers
         }
 
         [HttpPost]
-        protected static IQueryable<Topic> GetTopicInfomation(int topicid)
+        protected static IEnumerable<Topic> GetTopicInfomation(int topicid)
         {
             HopuDBDataContext c = new HopuDBDataContext();
-            var result = from p in c.Topic
-                         where p.TopicID == topicid
-                         select p;
-            return result;
+            return c.Topic.Where(x => x.TopicID == topicid).Select(x => x);
         }
 
         #endregion

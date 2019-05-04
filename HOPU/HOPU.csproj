@@ -76,6 +76,7 @@
       <HintPath>..\packages\Newtonsoft.Json.12.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Activities" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
@@ -244,8 +245,10 @@
     <Compile Include="Repository\InServerRepository.cs" />
     <Compile Include="Repository\IServerRepository.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Tools\DataSetToList.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-table.min.css" />
     <Content Include="Content\css\custom.css" />
     <Content Include="Content\css\fontastic.css" />
     <Content Include="Content\css\style.blue.css" />
@@ -256,6 +259,8 @@
     <Content Include="Content\css\style.sea.css" />
     <Content Include="Content\css\style.violet.css" />
     <Content Include="Content\fonts\dashboard.svg" />
+    <Content Include="Content\fonts\font-awesome.css" />
+    <Content Include="Content\fonts\font-awesome.min.css" />
     <Content Include="Content\image\ad.jpg" />
     <Content Include="Content\all.css" />
     <Content Include="Content\bootstrap-editable.css" />
@@ -266,6 +271,7 @@
     <Content Include="Content\bootstrap-table.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\image\download.gif" />
     <Content Include="Content\image\download.png" />
     <Content Include="Content\image\homeLunbo\img_fjords_wide.jpg" />
     <Content Include="Content\image\homeLunbo\img_mountains_wide.jpg" />
@@ -281,6 +287,7 @@
     <Content Include="Content\UnifiedTest.css" />
     <Content Include="Content\vs.css" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="fonts\open-iconic.svg" />
     <Content Include="Global.asax" />
@@ -612,6 +619,11 @@
     <Content Include="Content\fonts\dashboard.eot" />
     <Content Include="Content\fonts\dashboard.ttf" />
     <Content Include="Content\fonts\dashboard.woff" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Models\HopuDB.dbml.layout">
       <DependentUpon>HopuDB.dbml</DependentUpon>
     </None>
@@ -625,15 +637,19 @@
     <Content Include="Scripts\bootstrap-datepicker.zh-CN.js" />
     <Content Include="Scripts\bootstrap-editable.js" />
     <Content Include="Scripts\bootstrap-editable.min.js" />
+    <Content Include="Scripts\BTTable\bootstrap-table-editable.min.js" />
     <Content Include="Scripts\BTTable\bootstrap-table-export.js" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\BTTable\bootstrap-table-editable.js" />
+    <Content Include="Scripts\BTTable\bootstrap-table-export.min.js" />
     <Content Include="Scripts\BTTable\bootstrap-table-zh-CN.js" />
     <Content Include="Scripts\BTTable\bootstrap-table.js" />
+    <Content Include="Scripts\BTTable\bootstrap-table.min.js" />
     <Content Include="Scripts\BTTable\tableExport.min.js" />
+    <Content Include="Scripts\BTTable\xlsx.core.min.js" />
     <Content Include="Scripts\ClassifieBrowse.js" />
     <Content Include="Scripts\bootstrap.bundle.js.map" />
     <Content Include="Scripts\bootstrap.bundle.min.js.map" />
@@ -835,6 +851,7 @@
     <Content Include="Views\ScoreCenter\Score_S.cshtml" />
     <Content Include="Views\SysManage\TopicManage.cshtml" />
     <Content Include="Views\SysManage\CourseTypeManage.cshtml" />
+    <Content Include="vendor\font-awesome\fonts\fa-solid-900.woff2" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -861,6 +878,14 @@
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\</OutputPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />

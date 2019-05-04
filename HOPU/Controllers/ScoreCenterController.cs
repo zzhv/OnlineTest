@@ -189,10 +189,6 @@ namespace HOPU.Controllers
 
         #endregion
 
-
-
-
-
         #region AdminGetSelfScore
 
         [HttpPost]

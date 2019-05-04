@@ -17,7 +17,6 @@
     <script src="~/Scripts/bootstrap-datepicker.zh-CN.js"></script>
     <script src="~/Scripts/BTTable/tableExport.min.js"></script>
     <script src="~/Scripts/BTTable/bootstrap-table-export.js"></script>
-
 }
 <nav class="breadcrumb">
     <a class="breadcrumb-item" href="~/SysHome/Home">首页</a>
@@ -37,7 +36,8 @@
                     @Html.DropDownList("BrickType", Model as IEnumerable<SelectListItem>, new { id = "select", @class = "form-control" })
                 </div>
                 <div class="p-2 ">
-                    @Html.ActionLink("独/统切换", "Score_S", "ScoreCenter", new { area = "" }, new { @class = "btn btn-primary" })
+                    @* @Html.ActionLink("独/统切换", "Score_S", "ScoreCenter", new { area = "" }, new { @class = "btn btn-primary" })*@
+                    <a href="../ScoreCenter/Score_S" class="btn btn-primary"><i class="fa fa-toggle-on" aria-hidden="true"></i> 独/统切换</a>
                     <script>
                         var UFCBtn = $("#UFChange");
                         var Table = $("#tableHide");

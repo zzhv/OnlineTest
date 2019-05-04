@@ -5,14 +5,18 @@
 }
 @section Header
 {
-    <link href="~/Content/bootstrap.css" rel="stylesheet" />
-    <link href="~/Content/bootstrap-editable.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-table.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-editable.css" rel="stylesheet" />
+    <link href="~/Content/fonts/font-awesome.css" rel="stylesheet" />
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="~/Scripts/bootstrap-editable.min.js"></script>
-    <script src="~/Scripts/BTTable/bootstrap-table.js"></script>
+    <script src="~/Scripts/BTTable/bootstrap-table.min.js"></script>
     <script src="~/Scripts/BTTable/bootstrap-table-zh-CN.js"></script>
+    <script src="~/Scripts/BTTable/tableExport.min.js"></script>
+    <script src="~/Scripts/BTTable/bootstrap-table-export.js"></script>
     <script src="~/Scripts/BTTable/bootstrap-table-editable.js"></script>
+    <script src="~/Scripts/BTTable/xlsx.core.min.js"></script>
     <style>
         .editable-cancel {
             width: 50px;
@@ -25,44 +29,26 @@
             width: 50px;
         }
 
-        .file {
-            position: relative;
-            display: inline-block;
-            background: #D0EEFF;
-            border: 1px solid #99D3F5;
-            border-radius: 4px;
-            padding: 4px 12px;
-            overflow: hidden;
-            color: #1E88C7;
-            text-decoration: none;
-            text-indent: 0;
-            line-height: 20px;
+      
+        .fa-sync:before {
+            content: "\f021";
         }
-
-            .file input {
-                position: absolute;
-                font-size: 100px;
-                right: 0;
-                top: 0;
-                opacity: 0;
-            }
-
-            .file:hover {
-                background: #AADFFD;
-                border-color: #78C3F3;
-                color: #004974;
-                text-decoration: none;
-            }
     </style>
 }
 <div id="UtableHide" class="bg-white no-margin-top">
     <div id="toolbar" class="d-flex flex-row bg-secondary mb-3 no-margin-bottom">
         <div class="p-2 bg-white">
-            <button id="AllDelete" class="btn btn-danger">删除选中</button>
+            @*@Html.DropDownList("BrickType", Model as IEnumerable<SelectListItem>, new { id = "select", @class = "form-control" })*@
+        </div>
+        <div class="p-2 bg-white">
+            <button id="AllDelete" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>删除选中</button>
+        </div>
+        <div class="p-2 bg-white">
+            <button type="button" id="download"  class="btn btn-primary" onClick="$('#TopicTable').tableExport({ type: 'excel', escape: 'false' })"><i class="fa fa-download" aria-hidden="true"></i>导出本页</button>
         </div>
         <div class="p-2 bg-white">
             <!-- 按钮：用于打开模态框 -->
-            <button type="button" class="btn btn-primary" id="mtBtn" data-toggle="modal" data-target="#myModal">导入题目</button>
+            <button type="button" class="btn btn-primary" id="mtBtn" data-toggle="modal" data-target="#myModal"><i class="fa fa-cloud-upload" aria-hidden="true"></i> 导入题目</button>
             <div class="modal fade" id="myModal">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -78,9 +64,9 @@
                             <div>
                                 @using (Html.BeginForm("TopicManage", "SysManage", FormMethod.Post, new { enctype = "multipart/form-data" }))
                                 {
+                                    @Html.AntiForgeryToken()
                                     <div>
-                                        <input name="files" id="files" type="file" accept="application/vnd.ms-excel,
-                                               application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" class="btn btn-primary" />
+                                        <input name="files" id="files" type="file" accept="application/vnd.ms-excel" class="btn btn-outline-primary" />
                                         <label id="lbError" class="alert-danger">@ViewBag.ErrorMessage</label>
                                         <input type="submit" name="submit" value="提交" class="btn btn-success" />
                                     </div>
@@ -88,7 +74,7 @@
                             </div>
                             @if (ViewBag.data != null)
                             {
-                                <P class="text-success">提交成功，以下为部分预览</P>
+                                <P class="text-success">提交成功，以下为部分内容预览</P>
                                 <table class="table">
                                     <thead>
                                         <tr>
@@ -121,7 +107,7 @@
                             }
                             else
                             {
-                                <hr/>
+                                <hr />
                                 <P class="text-info">文件要求如下：</P>
                                 <ul class="list-group">
                                     <li class="list-group-item">
@@ -142,9 +128,7 @@
                 </div>
             </div>
         </div>
-        <div class="p-2 bg-white">
-            @*@Html.DropDownList("BrickType", Model as IEnumerable<SelectListItem>, new { id = "select", @class = "form-control" })*@
-        </div>
+
 
     </div>
     <table id="TopicTable"></table>
@@ -162,23 +146,34 @@
             sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
             pageNumber: 1, //初始化加载第一页，默认第一页
             pageSize: 10, //每页的记录行数（*）
-            pageList: [5, 10, 25], //可供选择的每页的行数（*）
+            pageList: [5, 10, 25, "all"], //可供选择的每页的行数（*）
             search: true, //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
             strictSearch: true,
             showColumns: true, //是否显示所有的列
             showRefresh: true, //是否显示刷新按钮
             minimumCountColumns: 2, //最少允许的列数
             clickToSelect: true, //是否启用点击选中行
-            height: 525, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+            height: 666, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
             uniqueId: "TopicID", //每一行的唯一标识，一般为主键列
             showToggle: true, //是否显示详细视图和列表视图的切换按钮
             cardView: false, //是否显示详细视图
+            showExport: true,
             detailView: false,
             offset: 0,
             sortOrder: "asc", //排序方式
             sortName: "TopicID",
             sortable: true,
             escape: true,
+            showFullscreen: true,
+            //icons: {
+            //    refresh: 'glyphicon glyphicon-refresh',
+            //    toggleOff: 'fa-toggle-off',
+            //    toggleOn: 'fa-toggle-on',
+            //    columns: 'fa-th-list',
+            //    fullscreen: 'fa-arrows-alt',
+            //    Export: 'fa-arrows-alt'
+
+            //},
             queryParams: function queryParams(params) {
                 var temp = {
                     limit: params.limit, //页面大小
@@ -315,6 +310,19 @@
                     }
                 });
             },
+            //导出excel表格设置<<<<<<<<
+            showExport: true,
+            exportDataType: "basic",              //basic', 'all', 'selected'.
+            exportTypes: ['excel', 'xlsx', 'json', 'xml', 'csv', 'txt', 'sql'],	    //导出类型
+            //exportButton: $('#btn_export'),     //为按钮btn_export  绑定导出事件  自定义导出按钮(可以不用)
+            exportOptions: {
+                ignoreColumn: [8, 0],            //忽略某一列的索引
+                fileName: '数据导出',              //文件名称设置
+                worksheetName: 'Sheet1',          //表格工作区名称
+                tableName: '题目数据表',
+                //excelstyles: ['background-color', 'color', 'font-size', 'font-weight'],
+                //onMsoNumberFormat: DoOnMsoNumberFormat
+            }
         });
     });
 
@@ -392,11 +400,62 @@
     })
 
 </script>
+@*<script>
+        var $table = $('#TopicTable')
+        $(function () {
+            $('#toolbar').find('select').change(function () {
+                $table.bootstrapTable('destroy').bootstrapTable({
+                    exportDataType: $(this).val(),
+                    exportTypes: ['json', 'xml', 'csv', 'txt', 'sql', 'excel', 'pdf'],
+                    columns: [
+                        {
+                            field: 'state',
+                            checkbox: true,
+                            align: 'center',
+
+                        },
+                        {
+                            field: "TopicID",
+                            title: "题号",
+                        }, {
+                            field: "Title",
+                            title: "标题",
+                        }, {
+                            field: "AnswerA",
+                            title: "A",
+                        },
+                        {
+                            field: "AnswerB",
+                            title: "B",
+                        },
+                        {
+                            field: "AnswerC",
+                            title: "C",
+                        },
+                        {
+                            field: "AnswerD",
+                            title: "D",
+                        },
+                        {
+                            field: "Answer",
+                            title: "答案",
+                        },
+                        {
+                            field: "CourseID",
+                            title: "分类",
+                        }, {
+                            field: "Option",
+                            title: "选项",
+                        }
+                    ]
+                })
+            }).trigger('change')
+        })
+    </script>*@
 <!-- 模态框 -->
 @section footer
 {
     <script>
         @Html.Raw(ViewBag.MtClick)
-
     </script>
 }

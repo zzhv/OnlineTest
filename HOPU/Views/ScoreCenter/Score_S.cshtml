@@ -38,8 +38,8 @@
                         @Html.DropDownList("BrickType", selectListItems as IEnumerable<SelectListItem>, new { id = "select", @class = "form-control" })
                     </div>*@
                 <div class="p-2 ">
-
-                    @Html.ActionLink("独/统切换", "Score", "ScoreCenter", new { id = 1 }, new { @class = "btn btn-primary" })
+                    <a href="../ScoreCenter/Score" class="btn btn-primary"><i class="fa fa-toggle-off" aria-hidden="true"></i> 独/统切换</a>
+                    @*  @Html.ActionLink("独/统切换", "Score", "ScoreCenter", new { id = 1 }, new { @class = "btn btn-primary" })*@
                 </div>
             </div>
         </div>

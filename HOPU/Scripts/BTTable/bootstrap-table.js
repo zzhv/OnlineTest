@@ -88,7 +88,7 @@
             icons: {
                 paginationSwitchDown: 'fa-caret-square-down',
                 paginationSwitchUp: 'fa-caret-square-up',
-                refresh: 'fa-sync',
+                refresh: 'fa-sync fa-spin',
                 //只能手动替换图标 start
                 //refresh: 'glyphicon-refresh icon-refresh',
                 toggleOff: 'fa-toggle-off',
