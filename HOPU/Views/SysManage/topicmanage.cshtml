@@ -1,4 +1,6 @@
-﻿@using HOPU.Models
+﻿@using System.Collections
+@using HOPU.Models
+@using Microsoft.Ajax.Utilities
 @{
     ViewBag.Title = ViewBag.SingleTitle = "题目管理";
     Layout = "~/Views/Shared/_SysManage.cshtml";
@@ -29,7 +31,7 @@
             width: 50px;
         }
 
-      
+
         .fa-sync:before {
             content: "\f021";
         }
@@ -39,12 +41,15 @@
     <div id="toolbar" class="d-flex flex-row bg-secondary mb-3 no-margin-bottom">
         <div class="p-2 bg-white">
             @*@Html.DropDownList("BrickType", Model as IEnumerable<SelectListItem>, new { id = "select", @class = "form-control" })*@
+
+            @*@Html.Raw(ViewBag.CourseTypeJson)*@
+
         </div>
         <div class="p-2 bg-white">
             <button id="AllDelete" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>删除选中</button>
         </div>
         <div class="p-2 bg-white">
-            <button type="button" id="download"  class="btn btn-primary" onClick="$('#TopicTable').tableExport({ type: 'excel', escape: 'false' })"><i class="fa fa-download" aria-hidden="true"></i>导出本页</button>
+            <button type="button" id="download" class="btn btn-primary" onClick="$('#TopicTable').tableExport({ type: 'excel', escape: 'false' })"><i class="fa fa-download" aria-hidden="true"></i>导出本页</button>
         </div>
         <div class="p-2 bg-white">
             <!-- 按钮：用于打开模态框 -->
@@ -165,15 +170,6 @@
             sortable: true,
             escape: true,
             showFullscreen: true,
-            //icons: {
-            //    refresh: 'glyphicon glyphicon-refresh',
-            //    toggleOff: 'fa-toggle-off',
-            //    toggleOn: 'fa-toggle-on',
-            //    columns: 'fa-th-list',
-            //    fullscreen: 'fa-arrows-alt',
-            //    Export: 'fa-arrows-alt'
-
-            //},
             queryParams: function queryParams(params) {
                 var temp = {
                     limit: params.limit, //页面大小
@@ -186,111 +182,125 @@
             },
             url: "../SysManage/GetTopic",
             columns: [{
-                field: 'state',
-                checkbox: true,
-                align: 'center',
+                    field: 'state',
+                    checkbox: true,
+                    align: 'center',
 
-            },
-            {
-                field: "TopicID",
-                title: "题号",
-                sortable: true,
-                align: 'center',
-            }, {
-                field: "Title",
-                title: "标题",
-                sortable: true,
-                editable: {
-                    type: 'textarea',
-                    mode: "inline",
-                    title: '标题',
-                    validate: function (v) {
-                        if (!v) return '不能为空';
+                },
+                {
+                    field: "TopicID",
+                    title: "题号",
+                    sortable: true,
+                    align: 'center',
+                }, {
+                    field: "Title",
+                    title: "标题",
+                    sortable: true,
+                    editable: {
+                        type: 'textarea',
+                        mode: "inline",
+                        title: '标题',
+                        validate: function(v) {
+                            if (!v) return '不能为空';
+                        }
                     }
-                }
-            }, {
-                field: "AnswerA",
-                title: "A",
-                sortable: true,
-                editable: {
-                    type: 'text',
-                    mode: "inline",
-                    title: 'A',
-                    validate: function (v) {
-                        if (!v) return '不能为空';
+                }, {
+                    field: "AnswerA",
+                    title: "A",
+                    sortable: true,
+                    editable: {
+                        type: 'text',
+                        mode: "inline",
+                        title: 'A',
+                        validate: function(v) {
+                            if (!v) return '不能为空';
+                        }
                     }
-                }
-            },
-            {
-                field: "AnswerB",
-                title: "B",
-                sortable: true,
-                editable: {
-                    type: 'text',
-                    mode: "inline",
-                    title: 'B',
-                    validate: function (v) {
-                        if (!v) return '不能为空';
+                },
+                {
+                    field: "AnswerB",
+                    title: "B",
+                    sortable: true,
+                    editable: {
+                        type: 'text',
+                        mode: "inline",
+                        title: 'B',
+                        validate: function(v) {
+                            if (!v) return '不能为空';
+                        }
                     }
-                }
-            },
-            {
-                field: "AnswerC",
-                title: "C",
-                sortable: true,
-                editable: {
-                    type: 'text',
-                    mode: "inline",
-                    title: 'C',
-                    validate: function (v) {
-                        if (!v) return '不能为空';
+                },
+                {
+                    field: "AnswerC",
+                    title: "C",
+                    sortable: true,
+                    editable: {
+                        type: 'text',
+                        mode: "inline",
+                        title: 'C',
+                        validate: function(v) {
+                            if (!v) return '不能为空';
+                        }
                     }
-                }
-            },
-            {
-                field: "AnswerD",
-                title: "D",
-                sortable: true,
-                editable: {
-                    type: 'text',
-                    mode: "inline",
-                    title: 'D',
-                    validate: function (v) {
-                        if (!v) return '不能为空';
+                },
+                {
+                    field: "AnswerD",
+                    title: "D",
+                    sortable: true,
+                    editable: {
+                        type: 'text',
+                        mode: "inline",
+                        title: 'D',
+                        validate: function(v) {
+                            if (!v) return '不能为空';
+                        }
                     }
-                }
-            },
-            {
-                field: "Answer",
-                title: "答案",
-                sortable: true,
-                editable: {
-                    type: 'text',
-                    mode: "inline",
-                    title: '答案',
-                    validate: function (a) {
-                        if (!a) return '不能为空';
+                },
+                {
+                    field: "Answer",
+                    title: "答案",
+                    sortable: true,
+                    editable: {
+                        type: 'text',
+                        mode: "inline",
+                        title: '答案',
+                        validate: function(a) {
+                            if (!a) return '不能为空';
+                        }
                     }
-                }
-            },
-            {
-                field: "CourseID",
-                title: "分类",
-                sortable: true,
-                editable: {
-                    type: 'text',
-                    mode: "inline",
-                    title: '分类',
-                    validate: function (v) {
-                        if (!v) return '不能为空';
+                },
+                {
+                    field: "CourseID",
+                    title: "分类",
+                    sortable: true,
+                    editable: {
+                        type: 'select',
+                        mode: "inline",
+                        title: '部门',
+                        source: function onFoamaf() {
+                            var a = '@Html.Raw(ViewBag.CourseTypeJson)';
+                            var reg = /"([A-Za-z0-9_-]{1,})":/g;
+                            var Result = a.replace(reg, '$1:');
+                            return Result;
+                        },
+                        validate: function (v) {
+                                    if (!v) return '不能为空';
+                                }
                     }
-                }
-            }, {
-                field: "Option",
-                title: "选项",
-                events: operateEvents,//注册事件
-                formatter: DeleteButton,
-            }],
+                    //editable: {
+                    //    type: 'text',
+                    //    mode: "inline",
+                    //    title: '分类',
+                    //    validate: function (v) {
+                    //        if (!v) return '不能为空';
+                    //    }
+                    //}
+                }, {
+                    field: "Option",
+                    title: "选项",
+                    events: operateEvents,//注册事件
+                    formatter: DeleteButton,
+                }],
             onEditableSave: function (field, row, oldValue, $el) {
                 $.ajax({
                     type: "post",

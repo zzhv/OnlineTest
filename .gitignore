@@ -259,3 +259,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/HOPU/Uploads/0c0a66b0-b411-4311-ac4f-985539e37d67.xls
+/HOPU/Uploads/adb72304-d5b9-4ac9-90c2-e278a69411b1.xls

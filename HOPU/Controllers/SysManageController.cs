@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 
 namespace HOPU.Controllers
 {
@@ -19,15 +20,16 @@ namespace HOPU.Controllers
             return View();
         }
 
-        public ActionResult topicmanage()
+        public ActionResult TopicManage()
         {
             HopuDBDataContext db = new HopuDBDataContext();
-            var courseType = db.Course.Select(a => new SelectListItem
+            var courseType = db.Course.Select(a => new
             {
-                Text = a.CourseName,
-                Value = a.CourseID.ToString()
+                value = Convert.ToInt32(a.CourseID),
+                text = a.CourseName
             });
-            return View(courseType);
+            ViewBag.CourseTypeJson = JsonConvert.SerializeObject(courseType);
+            return View();
         }
 
         #region GetTopic
