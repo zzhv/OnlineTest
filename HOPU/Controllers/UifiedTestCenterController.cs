@@ -222,8 +222,6 @@ namespace HOPU.Controllers
         public ActionResult AddTest(string[] submitCheckbox, int topicCount, int timeLenth)
         {
             HopuDBDataContext db = new HopuDBDataContext();
-
-            //if (!IsAdmin())//如果不是admin权限
             if (!IsAdmin())//如果不是admin权限
             {
                 return HttpNotFound();

@@ -213,6 +213,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Implement\ImpGetMaxTopicID.cs" />
+    <Compile Include="Implement\ImpGetSelectListItemOfCourseType.cs" />
+    <Compile Include="InterFace\ICourse.cs" />
+    <Compile Include="InterFace\ITopic.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ClassifiedBrowseModel.cs" />
     <Compile Include="Models\AllBrowseModel.cs" />
@@ -283,6 +287,8 @@
     <Content Include="Content\Pre.css" />
     <Content Include="Content\prettify.css" />
     <Content Include="Content\image.css" />
+    <Content Include="Content\select2.css" />
+    <Content Include="Content\select2.min.css" />
     <Content Include="Content\timeline.css" />
     <Content Include="Content\UnifiedTest.css" />
     <Content Include="Content\vs.css" />
@@ -645,9 +651,12 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\BTTable\bootstrap-table-editable.js" />
     <Content Include="Scripts\BTTable\bootstrap-table-export.min.js" />
+    <Content Include="Scripts\BTTable\bootstrap-table-select2-filter.min.js" />
     <Content Include="Scripts\BTTable\bootstrap-table-zh-CN.js" />
     <Content Include="Scripts\BTTable\bootstrap-table.js" />
     <Content Include="Scripts\BTTable\bootstrap-table.min.js" />
+    <Content Include="Scripts\BTTable\select2.js" />
+    <Content Include="Scripts\BTTable\select2.min.js" />
     <Content Include="Scripts\BTTable\tableExport.min.js" />
     <Content Include="Scripts\BTTable\xlsx.core.min.js" />
     <Content Include="Scripts\ClassifieBrowse.js" />
@@ -698,6 +707,7 @@
     <Content Include="Scripts\UnifiedTesr.js" />
     <Content Include="Scripts\SelfTestType.js" />
     <Content Include="Scripts\UnifiedTestType.js" />
+    <Content Include="select2.css" />
     <Content Include="vendor\bootstrap\css\bootstrap-grid.css" />
     <Content Include="vendor\bootstrap\css\bootstrap-grid.min.css" />
     <Content Include="vendor\bootstrap\css\bootstrap-reboot.css" />

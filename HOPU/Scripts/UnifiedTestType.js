@@ -21,6 +21,6 @@ function deleteTest(result) {
     if (result.Success) {
         location.reload();
     } else {
-    alert(result);
+        alert(result);
     }
 }
