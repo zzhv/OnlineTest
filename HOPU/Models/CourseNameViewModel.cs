@@ -7,9 +7,9 @@ namespace HOPU.Models
     /// </summary>
     public class CourseNameViewModel
     {
-        public double? TId { get; set; }
+        public double? TID { get; set; }
         public string TypeName { get; set; }
-        public double? CourseId { get; set; }
+        public double? CourseID { get; set; }
         public string CourseName { get; set; }
     }
 

@@ -1,4 +1,5 @@
 ﻿using HOPU.Models;
+using HOPU.Services;
 using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
 
@@ -6,6 +7,7 @@ namespace HOPU.Controllers
 {
     public class Authorize : Controller
     {
+
         protected override void OnActionExecuted(ActionExecutedContext filterContext)//protected 只能被子类访问  
         {
             base.OnActionExecuted(filterContext);

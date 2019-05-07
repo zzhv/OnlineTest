@@ -1,11 +1,11 @@
-﻿using HOPU.InterFace;
+﻿using HOPU.Services;
 using HOPU.Models;
 using System;
 using System.Linq;
 
 namespace HOPU.Implement
 {
-    public class ImpGetMaxTopicID : ITopic
+    public class ImpTopic : ITopic
     {
         private HopuDBDataContext db = new HopuDBDataContext();
         /// <summary>

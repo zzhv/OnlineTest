@@ -1,5 +1,7 @@
-﻿using Microsoft.Owin;
+﻿using HOPU.Services;
+using Microsoft.Owin;
 using Owin;
+using System.Web.Services.Description;
 
 [assembly: OwinStartupAttribute(typeof(HOPU.Startup))]
 namespace HOPU

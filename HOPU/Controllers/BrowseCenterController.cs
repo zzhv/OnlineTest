@@ -55,9 +55,9 @@ namespace HOPU.Controllers
                          orderby p.TID
                          select new CourseNameViewModel
                          {
-                             TId = p.TID,
+                             TID = p.TID,
                              TypeName = p.TypeName,
-                             CourseId = c.CourseID,
+                             CourseID = c.CourseID,
                              CourseName = c.CourseName
                          };
             return result;
@@ -89,9 +89,9 @@ namespace HOPU.Controllers
                          orderby p.TID
                          select new CourseNameViewModel
                          {
-                             TId = p.TID,
+                             TID = p.TID,
                              TypeName = p.TypeName,
-                             CourseId = c.CourseID,
+                             CourseID = c.CourseID,
                              CourseName = c.CourseName
                          };
             return result;

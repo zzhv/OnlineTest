@@ -1,4 +1,5 @@
 ﻿using HOPU.Models;
+using HOPU.Services;
 using Microsoft.AspNet.Identity;
 using System;
 using System.Collections.Generic;
@@ -12,29 +13,32 @@ namespace HOPU.Controllers
     [Authorize]
     public class UifiedTestCenterController : Controller
     {
+        private HopuDBDataContext db = new HopuDBDataContext();
+        private readonly ICourse _course;
+        private readonly IUniteTest _uniteTest;
+        private readonly IUniteTestScore _uniteTestScore;
+        private readonly IUniteTestInfo _uniteTestInfo;
+
+        public UifiedTestCenterController(
+            ICourse course,
+            IUniteTest uniteTest,
+            IUniteTestScore uniteTestScore,
+            IUniteTestInfo uniteTestInfo
+            )
+        {
+            _course = course;
+            _uniteTest = uniteTest;
+            _uniteTestScore = uniteTestScore;
+            _uniteTestInfo = uniteTestInfo;
+        }
+
         #region 统测列表 UnifiedTestType
         public ActionResult UnifiedTestType(int? page)
         {
-            var products = GetTestInfo().ToList();
+            var products = _uniteTest.GetUniteTestInfo();
             var pageNumber = page ?? 1;
-            var onePage = products.ToPagedList(pageNumber, 5);
-            var list = GetCourseInfo().ToList();
-            var vms = list.Select(x => new CourseNameViewModel
-            {
-                CourseId = x.CourseId,
-                CourseName = x.CourseName,
-                TypeName = x.TypeName,
-                TId = x.TId
-            });
-            var vmu = onePage.Select(x => new UniteTest
-            {
-                UtId = x.UtId,
-                StartTime = x.StartTime,
-                TimeLenth = x.TimeLenth,
-                TopicCount = x.TopicCount,
-                CourseName = x.CourseName,
-                CourseId = x.CourseName
-            });
+            var vms = _course.GetListOfCourseAndTypeInfo();
+            var vmu = products.ToPagedList(pageNumber, 5);
             var vm = new UnifiedTestTypeViewModel
             {
                 CourseNames = vms,
@@ -42,38 +46,23 @@ namespace HOPU.Controllers
             };
             return View(vm);
         }
-
-        protected static IEnumerable<UniteTest> GetTestInfo()
-        {
-
-            HopuDBDataContext db = new HopuDBDataContext();
-            var result = db.UniteTest.Select(a => a).OrderByDescending(a => a.UtId);
-            return result;
-        }
-
         #endregion
 
         #region 统测 UnifiedTest
         public ActionResult UnifiedTest(int? Id)
         {
-            HopuDBDataContext db = new HopuDBDataContext();
             int? UtId = Id;
+            string UserName = User.Identity.GetUserName();
             ViewBag.Title = UtId;
-            bool joinUniteTest;
             if (UtId == null)
             {
                 return PartialView("Error");
             }
-            var vmt = db.UniteTest.Where(a => a.UtId == UtId).ToList().Select(x => new UniteTest
-            {
-                UtId = x.UtId,
-                StartTime = x.StartTime,
-                TimeLenth = x.TimeLenth,
-                TopicCount = x.TopicCount,
-            });
+            var vmt = _uniteTest.GetUniteTestInfo(UtId);
             //以下综合判断能否进入考试 有一项不符合就直接拒绝
             if (!vmt.Any())
             {
+                //如果统测号不存在
                 return HttpNotFound();
             }
             foreach (var item in vmt)
@@ -85,9 +74,10 @@ namespace HOPU.Controllers
                 }
                 return RedirectToAction("Score", "ScoreCenter", new { Id });
             }
-            //如果是第一次提交答案
-            var UniteTestScoreInfo = db.UniteTestScore.Where(a => a.UtId == UtId && a.UserName == User.Identity.GetUserName()).FirstOrDefault();
-            if (UniteTestScoreInfo == null)
+            //如果没有提交过答案
+            bool joinUniteTest;
+            var UniteTestScoreInfo = _uniteTestScore.GetUniteTestScore(UtId, UserName);
+            if (!UniteTestScoreInfo.Any())
             {
                 joinUniteTest = true;
             }
@@ -95,27 +85,12 @@ namespace HOPU.Controllers
             {
                 return RedirectToAction("Score", "ScoreCenter", new { Id });
             }
-            //以上验证完成，如果能加入统测
+            //以上验证完成，就能能加入统测
             if (joinUniteTest)
             {
-                //据UtId获取题目列表
-                string UserName = User.Identity.GetUserName();
-                var TopicInfo = db.UniteTestInfo.Where(a => a.UtId == UtId).ToList().Select(c =>
-                    new UnifiedTestNewTopicIdViewModel
-                    {
-                        UtId = c.UtId,
-                        Title = c.Title,
-                        AnswerA = c.AnswerA,
-                        AnswerB = c.AnswerB,
-                        AnswerC = c.AnswerC,
-                        AnswerD = c.AnswerD,
-                        Answer = c.Answer,
-                        CourseID = c.CourseID,
-                        TopicID = ToHMACSHA1(c.TopicID.ToString(), UserName)
-                    });
                 var vm = new UnifiedTestViewModel
                 {
-                    TopicInfo = TopicInfo.OrderBy(x => x.TopicID),
+                    TopicInfo = _uniteTestInfo.GetUnifiedTestTopics(UtId, UserName).OrderBy(x => x.TopicID),
                     TimeInfo = vmt
                 };
                 return View(vm);
@@ -130,9 +105,10 @@ namespace HOPU.Controllers
         public JsonResult UifiedTest(string[] Answer, int UtId)
         {
             HopuDBDataContext db = new HopuDBDataContext();
-            //判断时间是否在考试时间段内
+            string UserName = User.Identity.GetUserName();
             bool commitAnswer = false;
-            var timeInfo = db.UniteTest.Where(a => a.UtId == UtId).Select(a => a);
+            //判断时间是否在考试时间段内
+            var timeInfo = _uniteTest.GetUniteTestInfo(UtId);
             foreach (var item in timeInfo)
             {
                 //如果结束时间大于当前时间，可以提交
@@ -145,22 +121,12 @@ namespace HOPU.Controllers
                 {
                     return Json(false);
                 }
-
             }
             if (commitAnswer)
             {
-                //据UtId获取答案
-                string UserName = User.Identity.GetUserName();
-                var topicListResult = db.UniteTestInfo.Where(a => a.UtId == UtId).ToList().Select(c =>
-                new UnifiedTestNewTopicIdViewModel
-                {
-                    TopicID = ToHMACSHA1(c.TopicID.ToString(), UserName),
-                    Answer = c.Answer,
-                });
-                //答案集合
-                List<UnifiedTestNewTopicIdViewModel> answerList = topicListResult.OrderBy(s => s.TopicID).ToList();
+                List<UnifiedTestNewTopicIdViewModel> answerList = _uniteTestInfo.GetUnifiedTestTopics(UtId, UserName).OrderBy(s => s.TopicID).ToList();
                 //开始校验答案
-                List<UnifiedTestQAViewModel> result = new List<UnifiedTestQAViewModel>();
+                List<UnifiedTestQAViewModel> results = new List<UnifiedTestQAViewModel>();//成绩信息
                 //先算出每题多少分 
                 double itemScore = 100F / answerList.Count;
                 double sumScore = 0;
@@ -175,7 +141,7 @@ namespace HOPU.Controllers
                             RealAnswer = answerList[i].Answer,
                             IsTrue = true
                         };
-                        result.Add(resultinfo);
+                        results.Add(resultinfo);
                         sumScore += itemScore;
                     }
                     else
@@ -186,15 +152,15 @@ namespace HOPU.Controllers
                             RealAnswer = answerList[i].Answer,
                             IsTrue = false
                         };
-                        result.Add(resultinfo);
+                        results.Add(resultinfo);
                     }
                 }
-                var UniteTestScoreInfo = db.UniteTestScore.Where(a => a.UtId == UtId && a.UserName == User.Identity.GetUserName()).FirstOrDefault();
                 //如果是第一次提交答案
-                if (UniteTestScoreInfo == null)
+                var UniteTestScoreInfo = _uniteTestScore.GetUniteTestScore(UtId, UserName);
+                if (!UniteTestScoreInfo.Any())
                 {
                     //将考试结果存入数据库
-                    var uniteTestScore = new UniteTestScore
+                    UniteTestScore uniteTestScoreInfo = new UniteTestScore
                     {
                         UtId = UtId,
                         RealUserName = GetRealUserName.GetRealName(User.Identity.GetUserId()),
@@ -202,14 +168,15 @@ namespace HOPU.Controllers
                         EndTime = DateTime.Now,
                         Score = Convert.ToInt32(Math.Round(sumScore, 0, MidpointRounding.AwayFromZero))
                     };
-                    db.UniteTestScore.InsertOnSubmit(uniteTestScore);
-                    db.SubmitChanges();
+                    if (_uniteTestScore.InsertScore(uniteTestScoreInfo))
+                    {
+                        return Json(results);
+                    }
                 }
                 else
                 {
                     return Json(false);
                 }
-                return Json(result);
             }
             return Json(false);
         }
@@ -352,9 +319,9 @@ namespace HOPU.Controllers
                          orderby p.TID
                          select new CourseNameViewModel
                          {
-                             TId = p.TID,
+                             TID = p.TID,
                              TypeName = p.TypeName,
-                             CourseId = c.CourseID,
+                             CourseID = c.CourseID,
                              CourseName = c.CourseName
                          };
             return result;
@@ -381,14 +348,6 @@ namespace HOPU.Controllers
         #endregion
 
 
-        public static string ToHMACSHA1(string encryptText, string encryptKey)
-        {
-            //HMACSHA1加密
-            HMACSHA1 hmacsha1 = new HMACSHA1();
-            hmacsha1.Key = System.Text.Encoding.UTF8.GetBytes(encryptKey);
-            byte[] dataBuffer = System.Text.Encoding.UTF8.GetBytes(encryptText);
-            byte[] hashBytes = hmacsha1.ComputeHash(dataBuffer);
-            return Convert.ToBase64String(hashBytes);
-        }
+
     }
 }

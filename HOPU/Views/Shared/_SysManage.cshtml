@@ -156,7 +156,7 @@
                         <a href="#tikuDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>题库管理 </a>
                         <ul id="tikuDropdown" class="collapse list-unstyled ">
                             <li id="topicmanage"><a href="~/SysManage/topicmanage">题目管理</a></li>
-                            <li id="coursetypemanage"><a href="CourseTypeManage">题目分类</a></li>
+                            <li id="coursetypemanage"><a href="CourseTypeManage">分类管理</a></li>
                         </ul>
                     </li>
                     <li>
@@ -210,7 +210,7 @@
     <script src="~/vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="~/Scripts/js/charts-home.js"></script>
     <script src="~/Scripts/js/front.js"></script>
-<script>
+    <script>
     $(function () {
         var fatherBro = $("#@actionName").parent("ul").prev("a")
         fatherBro.attr("aria-expanded", "true");
@@ -218,7 +218,7 @@
         $("#@actionName").parent("ul").addClass("show");
         $("#@actionName").addClass("active");
     });
-</script>
-@RenderSection("footer", false)
+    </script>
+    @RenderSection("footer", false)
 </body>
 </html>

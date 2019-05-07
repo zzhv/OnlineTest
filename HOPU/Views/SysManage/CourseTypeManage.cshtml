@@ -1,5 +1,248 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = ViewBag.SingleTitle = "题目分类";
     Layout = "~/Views/Shared/_SysManage.cshtml";
+}
+@section Header
+{
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-table.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-editable.css" rel="stylesheet" />
+    <link href="~/Content/fonts/font-awesome.css" rel="stylesheet" />
+    @*<link href="~/Content/select2.min.css" rel="stylesheet" />*@
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/bootstrap-editable.min.js"></script>
+    @*<script src="~/Scripts/BTTable/select2.js"></script>*@
+    <script src="~/Scripts/BTTable/bootstrap-table.min.js"></script>
+    @*<script src="~/Scripts/BTTable/bootstrap-table-select2-filter.min.js"></script>*@
+    <script src="~/Scripts/BTTable/bootstrap-table-zh-CN.js"></script>
+    <script src="~/Scripts/BTTable/tableExport.min.js"></script>
+    <script src="~/Scripts/BTTable/bootstrap-table-export.js"></script>
+    <script src="~/Scripts/BTTable/bootstrap-table-editable.js"></script>
+    <script src="~/Scripts/BTTable/xlsx.core.min.js"></script>
+    <style>
+        .editable-cancel {
+            color: #fff;
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .fa-sync:before {
+            content: "\f021";
+        }
+    </style>
+}
+<div id="UtableHide" class="bg-white no-margin-top">
+    <div id="toolbar" class="d-flex flex-row bg-secondary mb-3 no-margin-bottom">
+        <div class="p-2 bg-white">
+            <button type="button" id="download" class="btn btn-primary"><i class="fa fa-download" aria-hidden="true"></i> 添加一级</button>
+        </div>
+        <div class="p-2 bg-white">
+            <button type="button" id="download" class="btn btn-primary"><i class="fa fa-download" aria-hidden="true"></i> 添加二级</button>
+        </div>
+    </div>
+    <table id="CourseTable"></table>
+</div>
+
+
+@section footer{
+    <script>
+        $(function () {
+            $("#CourseTable").bootstrapTable({
+                method: "post",
+                toolbar: '#toolbar',
+                clickToSelect: true,
+                striped: true, //是否显示行间隔色
+                cache: false, //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+                pagination: true, //是否显示分页（*）
+                sortable: false, //是否启用排序
+                sidePagination: "server", //分页方式：client客户端分页，server服务端分页（*）
+                pageNumber: 1, //初始化加载第一页，默认第一页
+                pageSize: 10, //每页的记录行数（*）
+                pageList: [5, 10, 25, "all"], //可供选择的每页的行数（*）
+                search: true, //是否显示表格搜索，此搜索是客户端搜索，不会进服务端，所以，个人感觉意义不大
+                strictSearch: true,
+                showColumns: true, //是否显示所有的列
+                showRefresh: true, //是否显示刷新按钮
+                minimumCountColumns: 2, //最少允许的列数
+                clickToSelect: true, //是否启用点击选中行
+                height: 666, //行高，如果没有设置height属性，表格自动根据记录条数觉得表格高度
+                uniqueId: "CourseID", //每一行的唯一标识，一般为主键列
+                showToggle: true, //是否显示详细视图和列表视图的切换按钮
+                cardView: false, //是否显示详细视图
+                detailView: false,
+                offset: 0,
+                sortOrder: "asc", //排序方式
+                sortName: "TID",
+                sortable: true,
+                escape: true,
+                showFullscreen: true,
+                queryParams: function queryParams(params) {
+                    var temp = {
+                        limit: params.limit, //页面大小
+                        offset: params.offset, //页码
+                        keyword: params.search, //搜索
+                        sortOrder: params.order, //排序
+                        sortName: params.sort //排序字段
+                    };
+                    return temp;
+                },
+                url: "../SysManage/GetCourse",
+                columns: [
+                    {
+                        field: 'state',
+                        checkbox: true,
+                        align: 'center',
+                    },
+                    {
+                        field: "TID",
+                        title: "一级分类编号",
+                        sortable: true,
+                        align: 'center',
+                        editable: {
+                            type: 'number',
+                            mode: "inline",
+                            title: 'TID',
+                            validate: function (v) {
+                                if (!v) return '不能为空';
+                            }
+                        },
+                        filter: {
+                            type: 'input'
+                        }
+                    }, {
+                        field: "TypeName",
+                        title: "一级类名",
+                        sortable: true,
+                        editable: {
+                            type: 'textarea',
+                            mode: "inline",
+                            title: 'TypeName',
+                            validate: function (v) {
+                                if (!v) return '不能为空';
+                            }
+                        }
+                    }, {
+                        field: "CourseID",
+                        title: "二级分类编号",
+                        sortable: true,
+                        editable: {
+                            type: 'number',
+                            mode: "inline",
+                            title: 'CourseID',
+                            validate: function (v) {
+                                if (!v) return '不能为空';
+                            }
+                        }
+                    },
+                    {
+                        field: "CourseName",
+                        title: "二级类名",
+                        sortable: true,
+                        editable: {
+                            type: 'text',
+                            mode: "inline",
+                            title: 'CourseName',
+                            validate: function (v) {
+                                if (!v) return '不能为空';
+                            }
+                        }
+                    }, {
+                        field: "Option",
+                        title: "选项",
+                        events: operateEvents, //注册事件
+                        formatter: DeleteButton,
+                    }
+                ],
+                onEditableSave: function (field, row, oldValue, $el) {
+                    //if (row.TopicID == null) {
+                    //    alert(1111);
+                    //}
+                    var newRow = row;
+                    var _answer = newRow.Answer;
+                    if (_answer.length >= 2) {
+                        newRow.Answer = row.Answer.join('');
+                    }
+                    //console.log(newRow);
+                    $.ajax({
+                        type: "post",
+                        url: "../SysManage/EditTopic",
+                        data: newRow,
+                        dataType: 'JSON',
+                        success: function (state) {
+                            if (state == "success") {
+                                //console.log(state);
+                            }
+                        },
+                        error: function () {
+                            alert('编辑失败');
+                        },
+                        complete: function () {
+
+                        }
+                    });
+                },
+                //导出excel表格设置
+                showExport: true,
+                exportDataType: "basic", //basic', 'all', 'selected'.
+                exportTypes: ['excel', 'xlsx', 'json', 'xml', 'csv', 'txt', 'sql'], //导出类型
+                //exportButton: $('#btn_export'),     //为按钮btn_export  绑定导出事件  自定义导出按钮(可以不用)
+                exportOptions: {
+                    ignoreColumn: [8, 0], //忽略某一列的索引
+                    fileName: '数据导出', //文件名称设置
+                    worksheetName: 'Topic', //表格工作区名称
+                    tableName: '题目数据表',
+                    //excelstyles: ['background-color', 'color', 'font-size', 'font-weight'],
+                    //onMsoNumberFormat: DoOnMsoNumberFormat
+                },
+                //表头过滤器
+                //filter: false,
+                //filterTemplate: {
+                //    input: function (bootstrapTable, column, isVisible) {
+                //        return '<input type="text" class="form-control input-sm" data-filter-field="' + column.field + '" style="width: 100%; visibility:' + isVisible + '">'
+                //    }
+                //}
+            });
+        });
+
+        //生成单项删除按钮
+        function DeleteButton(value, row, index) {
+            return [
+                '<button id="Delete" type="button" class="btn btn-sm btn-outline-danger"><i class="fa fa-trash"></i></button>'
+            ].join('');
+        }
+
+        //单项删除
+        var $table = $('#CourseTable');
+        window.operateEvents = {
+            "click #Delete": function (e, value, row, index) {
+                var statu = confirm("你确定要删除题号为\"" + row.TopicID + "\"的题目吗？");
+                if (!statu) {
+                    return false;
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '../SysManage/DeleteTopic',
+                    data: row,
+                    dataType: 'JSON',
+                    success: function (msg) {
+                        if (msg == 'success') {
+                            //$("#TopicTable").bootstrapTable('refresh');
+                        } else {
+                            alert('删除失败!');
+                            return false;
+                        }
+                    },
+                    error: function () {
+                        alert('删除失败!');
+                    }
+                });
+                $table.bootstrapTable('remove',
+                    {
+                        field: 'TopicID',
+                        values: [row.TopicID]
+                    })
+            }
+        }
+    </script>
 }

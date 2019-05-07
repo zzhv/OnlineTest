@@ -23,10 +23,10 @@ namespace HOPU.Controllers
             var list = GetCourseInfo().ToList();
             var vms = list.Select(x => new CourseNameViewModel
             {
-                CourseId = x.CourseId,
+                CourseID = x.CourseID,
                 CourseName = x.CourseName,
                 TypeName = x.TypeName,
-                TId = x.TId
+                TID = x.TID
             });
             var vmu = onePage.Select(x => new SelfTest()
             {
@@ -59,9 +59,9 @@ namespace HOPU.Controllers
                          orderby p.TID
                          select new CourseNameViewModel
                          {
-                             TId = p.TID,
+                             TID = p.TID,
                              TypeName = p.TypeName,
-                             CourseId = c.CourseID,
+                             CourseID = c.CourseID,
                              CourseName = c.CourseName
                          };
             return result;

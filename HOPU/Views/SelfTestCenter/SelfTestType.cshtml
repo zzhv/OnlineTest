@@ -48,7 +48,7 @@
                             @foreach (var item in Model.CourseNames)
                             {
                                 <label class="checkbox-inline" name="submitlable" for="Checkbox_@i" style="width:160px;">
-                                    <input type="checkbox" title="@item.CourseName" id="Checkbox_@i" name="submitCheckbox" value="@item.CourseId">@item.CourseName
+                                    <input type="checkbox" title="@item.CourseName" id="Checkbox_@i" name="submitCheckbox" value="@item.CourseID">@item.CourseName
                                 </label>
                                 i++;
                             }
@@ -145,7 +145,7 @@
     </tbody>
 </table>
 <div style="margin-left:50%">
-    @Html.PagedListPager((IPagedList)Model.SelfTest, page => Url.Action("SelfTestType", new { page }), 
+    @Html.PagedListPager((IPagedList)Model.SelfTest, page => Url.Action("SelfTestType", new { page }),
         new PagedListRenderOptions {
             LiElementClasses = new string[] { "page-item" },
             PageClasses = new string[] { "page-link" }

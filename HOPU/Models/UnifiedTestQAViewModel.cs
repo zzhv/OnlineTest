@@ -1,7 +1,7 @@
 ﻿namespace HOPU.Models
 {
     /// <summary>
-    /// 统测考试时候的model
+    /// 统测考试的model
     /// </summary>
     public class UnifiedTestQAViewModel
     {

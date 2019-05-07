@@ -7,16 +7,27 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using HOPU.Implement;
 using Newtonsoft.Json;
+using HOPU.Services;
 
 namespace HOPU.Controllers
 {
-    [Authorize]
-    public class SysManageController : Authorize
+    [Authorize(Roles = "Admin")]
+    public class SysManageController : Controller
     {
-        private ImpGetSelectListItemOfCourseType impGetSelectListItemOfCourseType = new ImpGetSelectListItemOfCourseType();
         private HopuDBDataContext db = new HopuDBDataContext();
+        private readonly IBTTable _bTTableInfo;
+        private readonly ICourse _course;
+        private readonly ITopic _topic;
+        private readonly ITypeinfo _typeinfo;
+
+        public SysManageController(IBTTable bTTableInfo, ICourse course, ITopic topic, ITypeinfo typeinfo)
+        {
+            _bTTableInfo = bTTableInfo;
+            _course = course;
+            _topic = topic;
+            _typeinfo = typeinfo;
+        }
 
         public ActionResult SysManageIndex()
         {
@@ -25,7 +36,7 @@ namespace HOPU.Controllers
 
         public ActionResult TopicManage()
         {
-            IEnumerable<SelectListItem> CourseTypeList = impGetSelectListItemOfCourseType.GetSelectListItemOfCourseType();
+            IEnumerable<SelectListItem> CourseTypeList = _course.GetSelectListItemOfCourseType();
             //给Table中的CourseID列提供数据
             ViewBag.CourseTypeJson = JsonConvert.SerializeObject(CourseTypeList.Select(a => new
             {
@@ -48,8 +59,7 @@ namespace HOPU.Controllers
         [HttpPost]
         public JsonResult GetTopic(int limit, int offset, string keyword, string sortOrder, string sortName)
         {
-            string sql = GetSqlStr(limit, offset, keyword, sortOrder, sortName);
-            var result = db.ExecuteQuery<Topic>(sql).ToList();
+            var result = _bTTableInfo.GetTableInfo<Topic>(GetTopicSqlStr(limit, offset, keyword, sortOrder, sortName)).ToList();
             var totalq = result.Count;
             var rowsq = result.Skip(offset).Take(limit);
             return Json(new
@@ -60,7 +70,7 @@ namespace HOPU.Controllers
         }
 
         //给GetTopic()态生成Sql语句
-        private static string GetSqlStr(int limit, int offset, string keyword, string sortOrder, string sortName)
+        private static string GetTopicSqlStr(int limit, int offset, string keyword, string sortOrder, string sortName)
         {
             string sql = @"SELECT * FROM Topic";
             if (keyword != "")
@@ -140,7 +150,7 @@ namespace HOPU.Controllers
         /// <summary>
         /// 多选删除
         /// </summary>
-        /// <param name="topics">题目题号的数组</param>
+        /// <param name="topics">题目题号的数组</param>                               
         /// <returns></returns>
         [HttpPost]
         public JsonResult DeleteAllTopic(double[] topics)
@@ -190,7 +200,7 @@ namespace HOPU.Controllers
                 return View();
             }
             ViewBag.data = topics;
-            return View(impGetSelectListItemOfCourseType.GetSelectListItemOfCourseType());
+            return View(_course.GetSelectListItemOfCourseType());
         }
 
         /// <summary>
@@ -245,8 +255,7 @@ namespace HOPU.Controllers
         /// <returns></returns>
         public JsonResult GetMaxTopicID()
         {
-            ImpGetMaxTopicID impGetMaxTopicId = new ImpGetMaxTopicID();
-            return Json(impGetMaxTopicId.GetMaxTopicID(1));
+            return Json(_topic.GetMaxTopicID(1));
         }
 
 
@@ -254,5 +263,47 @@ namespace HOPU.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public JsonResult GetCourse(int limit, int offset, string keyword, string sortOrder, string sortName)
+        {
+            var result = _bTTableInfo.GetTableInfo<CourseNameViewModel>(GetCourseSqlStr(limit, offset, keyword, sortOrder, sortName)).ToList();
+            var totalq = result.Count;
+            var rowsq = result.Skip(offset).Take(limit);
+            return Json(new
+            {
+                total = totalq,
+                rows = rowsq
+            }, JsonRequestBehavior.AllowGet);
+        }
+
+        private static string GetCourseSqlStr(int limit, int offset, string keyword, string sortOrder, string sortName)
+        {
+            //select c.*,t.TypeName FROM TypeInfo t,Course c WHERE t.TID=c.TID 
+            string sql = @"SELECT c.*,t.TypeName FROM TypeInfo t,Course c";
+            if (keyword != "")
+            {
+                var keywordList = keyword.Split(new char[2] { ',', '，' });
+                //搜索条件
+                for (int i = 0; i < keywordList.Count(); i++)
+                {
+                    sql += i == 0 ? " WHERE t.TID = c.TID " : " AND ";
+                    sql += @" AND CONCAT(c.CourseID, c.CourseName, c.TID, t.TypeName) "
+                           + "LIKE '%" + keywordList[i] + "%'";
+                }
+            }
+            //排序
+            if (sortName != "")
+            {
+                //排序条件
+                if (keyword == "")
+                {
+                    sql += " WHERE t.TID = c.TID";
+                };
+                sql += @" ORDER BY '" + sortName + "' " + sortOrder;
+            }
+            return sql;
+        }
+
     }
 }

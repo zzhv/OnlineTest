@@ -17,6 +17,8 @@ namespace HOPU
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            //加载IOC容器-注册依赖
+            BootStrapper.Initialise();
         }
     }
 }
