@@ -2,12 +2,6 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="HopuDB">
   <DataContextMoniker Name="/HopuDBDataContext" />
   <nestedChildShapes>
-    <classShape Id="76c2a8de-808c-4005-a877-93f640848b24" absoluteBounds="0.5, 0.5, 2, 1.3525109863281251">
-      <DataClassMoniker Name="/HopuDBDataContext/Course" />
-      <nestedChildShapes>
-        <elementListCompartment Id="b54fda97-911e-453a-b0a2-6a71f6644ec9" absoluteBounds="0.515, 0.96, 1.9700000000000002, 0.792510986328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
     <classShape Id="c75b22b0-cbbf-442b-8837-db2d839449f1" absoluteBounds="0.5, 3.375, 2, 3.2004520670572916">
       <DataClassMoniker Name="/HopuDBDataContext/AspNetUsers" />
       <nestedChildShapes>
@@ -18,12 +12,6 @@
       <DataClassMoniker Name="/HopuDBDataContext/UserClaims" />
       <nestedChildShapes>
         <elementListCompartment Id="e98df3e2-87da-48a0-bab4-c0662f0bee98" absoluteBounds="2.6399999999999997, 3.46, 1.9700000000000002, 0.97730509440104174" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
-      </nestedChildShapes>
-    </classShape>
-    <classShape Id="68a2a44a-433c-4d4f-aa88-3fed84a2b78a" absoluteBounds="0.5, 2, 2, 1.1677168782552083">
-      <DataClassMoniker Name="/HopuDBDataContext/TypeInfo" />
-      <nestedChildShapes>
-        <elementListCompartment Id="f36557fa-31b8-4ee2-8e6f-b47e25d0115f" absoluteBounds="0.51500000000000057, 2.46, 1.9700000000000002, 0.60771687825520826" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <associationConnector edgePoints="[(2.5 : 3.95615254720052); (2.625 : 3.95615254720052)]" fixedFrom="Algorithm" fixedTo="Algorithm">
@@ -45,7 +33,7 @@
         <elementListCompartment Id="ee7b1775-2e92-4fea-b489-0088986d613f" absoluteBounds="4.765, 0.96, 1.9700000000000002, 1.346893310546875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(5.75 : 2.40689331054688); (5.75 : 2.625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(5.75 : 2.40689331054688); (5.75 : 2.625)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/HopuDBDataContext/UniteTest/UniteTest_UniteTestInfo" />
       <nodes>
         <classShapeMoniker Id="85f648c2-c930-4f75-8389-b063b1ceed98" />
@@ -90,7 +78,7 @@
         <classShapeMoniker Id="bef3522e-7c22-41a0-b596-b4a4303b59f8" />
       </nodes>
     </associationConnector>
-    <associationConnector edgePoints="[(7.875 : 4.75); (7.875 : 4.53189331054687)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(7.875 : 4.75); (7.875 : 4.53189331054687)]" fixedFrom="NotFixed" fixedTo="NotFixed">
       <AssociationMoniker Name="/HopuDBDataContext/SelfTest/SelfTest_SelfTestScore" />
       <nodes>
         <classShapeMoniker Id="e4e9a49c-e84b-4ce5-b096-1b6f56ea6717" />
@@ -101,6 +89,18 @@
       <DataClassMoniker Name="/HopuDBDataContext/Topic" />
       <nestedChildShapes>
         <elementListCompartment Id="8b5171f2-b46e-4e4f-b2e8-76a433c0749f" absoluteBounds="2.64, 0.96, 1.9700000000000002, 1.7164815266927085" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="36572935-c23c-4c1a-bbee-3ca71beda2b1" absoluteBounds="0.5, 1.875, 2, 1.3525109863281246">
+      <DataClassMoniker Name="/HopuDBDataContext/Course" />
+      <nestedChildShapes>
+        <elementListCompartment Id="4fb09f92-676d-428b-b64b-d493363559b7" absoluteBounds="0.51499999999999968, 2.3350000000000009, 1.9700000000000002, 0.792510986328125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1d8f01c0-cdc3-44e5-84d2-27ddefd43465" absoluteBounds="0.5, 0.5, 2, 1.1677168782552094">
+      <DataClassMoniker Name="/HopuDBDataContext/TypeInfo" />
+      <nestedChildShapes>
+        <elementListCompartment Id="3b14bda9-66df-4891-8d61-93efb7708496" absoluteBounds="0.51499999999999968, 0.96000000000000085, 1.9700000000000002, 0.60771687825520826" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
   </nestedChildShapes>

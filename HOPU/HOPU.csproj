@@ -273,6 +273,7 @@
     <Compile Include="Services\IUniteTest.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Tools\DataSetToList.cs" />
+    <Compile Include="Tools\ExcelToDS.cs" />
     <Compile Include="Tools\ToHMACSHA1.cs" />
   </ItemGroup>
   <ItemGroup>

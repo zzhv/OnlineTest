@@ -1,4 +1,5 @@
 ﻿using HOPU.Models;
+using HOPU.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Web.Mvc;
 
 namespace HOPU.Implement
 {
-    public class ImpTypeInfo : Services.ITypeinfo
+    public class ImpTypeInfo : ITypeinfo
     {
         private HopuDBDataContext db = new HopuDBDataContext();
 

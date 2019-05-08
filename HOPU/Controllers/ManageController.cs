@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using HOPU.Models;
+using Unity;
 
 namespace HOPU.Controllers
 {
@@ -14,7 +15,7 @@ namespace HOPU.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        [InjectionConstructor]
         public ManageController()
         {
         }

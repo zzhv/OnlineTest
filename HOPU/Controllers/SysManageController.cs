@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -103,27 +102,9 @@ namespace HOPU.Controllers
         [HttpPost]
         public JsonResult EditTopic(Topic topic)
         {
-            var Edit = db.Topic.Where(x => x.TopicID == topic.TopicID).Select(a => a);
-            foreach (var i in Edit)
-            {
-                i.TopicID = topic.TopicID;
-                i.Title = topic.Title;
-                i.AnswerA = topic.AnswerA;
-                i.AnswerB = topic.AnswerB;
-                i.AnswerC = topic.AnswerC;
-                i.AnswerD = topic.AnswerD;
-                i.Answer = topic.Answer;
-                i.CourseID = topic.CourseID;
-            }
-            db.SubmitChanges();
-            if (topic.TopicID > 0)
-            {
+            if (_topic.EditTopic(topic))
                 return Json("success");
-            }
-            else
-            {
-                return Json(false);
-            }
+            return Json(false);
         }
 
         /// <summary>
@@ -134,17 +115,9 @@ namespace HOPU.Controllers
         [HttpPost]
         public JsonResult DeleteTopic(Topic topic)
         {
-            var delete = db.Topic.Where(z => z.TopicID == topic.TopicID).SingleOrDefault();
-            db.Topic.DeleteOnSubmit(delete);
-            db.SubmitChanges();
-            if (topic.TopicID > 0)
-            {
+            if (_topic.DeleteTopic(topic))
                 return Json("success");
-            }
-            else
-            {
-                return Json(false);
-            }
+            return Json(false);
         }
 
         /// <summary>
@@ -155,12 +128,9 @@ namespace HOPU.Controllers
         [HttpPost]
         public JsonResult DeleteAllTopic(double[] topics)
         {
-            for (int i = 0; i < topics.Length; i++)
-            {
-                db.Topic.DeleteOnSubmit(db.Topic.Where(x => x.TopicID == topics[i]).SingleOrDefault());
-                db.SubmitChanges();
-            }
-            return Json(true);
+            if (_topic.DeleteAllTopic(topics))
+                return Json(true);
+            return Json(false);
         }
 
         /// <summary>
@@ -186,7 +156,7 @@ namespace HOPU.Controllers
                 filePath = AppDomain.CurrentDomain.BaseDirectory + "Uploads\\" + gid.ToString() + Path.GetExtension(file.FileName);
                 file.SaveAs(filePath);
             }
-            var topics = Tools.DataSetToList.DataSetToIList<Topic>(ExcelToDS(filePath), "Topics");
+            var topics = Tools.DataSetToList.DataSetToIList<Topic>(Tools.ExcelToDS.excelToDS(filePath), "Topics");
             //System.IO.File.Delete(filePath);
             try
             {
@@ -203,27 +173,6 @@ namespace HOPU.Controllers
             return View(_course.GetSelectListItemOfCourseType());
         }
 
-        /// <summary>
-        /// 将xls文件转换为dataset
-        /// </summary>
-        /// <param name="Path">xls文件的绝对路径</param>
-        /// <returns>dataset</returns>
-        public DataSet ExcelToDS(string Path)
-        {
-            string strConn = "Provider=Microsoft.Jet.OLEDB.4.0;" + "Data Source=" + Path + ";" + "Extended Properties=Excel 8.0;";
-            OleDbConnection conn = new OleDbConnection(strConn);
-            conn.Open();
-            DataTable schemaTable = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, null);
-            string tableName = schemaTable.Rows[0][2].ToString().Trim();
-            string strExcel = string.Empty;
-            OleDbDataAdapter myCommand = null;
-            DataSet ds = null;
-            strExcel = "select * from " + tableName;
-            myCommand = new OleDbDataAdapter(strExcel, strConn);
-            ds = new DataSet();
-            myCommand.Fill(ds, "Topics");
-            return ds;
-        }
 
         /// <summary>
         /// 添加单个题目
@@ -235,17 +184,8 @@ namespace HOPU.Controllers
         [ValidateAntiForgeryToken]
         public JsonResult InsertOneTopic(Topic topic, string[] Answer)
         {
-            string AnswerStr = string.Join("", Answer);
-            topic.Answer = AnswerStr;
-            try
-            {
-                db.Topic.InsertOnSubmit(topic);
-                db.SubmitChanges();
-            }
-            catch (Exception e)
-            {
-                return Json(new { Success = false, msg = e.Message });
-            }
+            if (_topic.InsertOneTopic(topic, Answer))
+                return Json(new { Success = false, msg = "错误代码：没有" });
             return Json(new { Success = true, topic });
         }
 
@@ -258,10 +198,10 @@ namespace HOPU.Controllers
             return Json(_topic.GetMaxTopicID(1));
         }
 
-
         public ActionResult CourseTypeManage()
         {
-            return View();
+            var Type = _course.GetSelectListItemOfTypeInfo();
+            return View(Type);
         }
 
         [HttpPost]
@@ -305,5 +245,59 @@ namespace HOPU.Controllers
             return sql;
         }
 
+        [HttpPost]
+        public JsonResult EditCourse(CourseNameViewModel course)
+        {
+            if (_course.EditCourseNameAndTypeName(course))
+            {
+                return Json(true);
+            }
+            return Json(false);
+
+        }
+
+        [HttpPost]
+        public JsonResult DeleteCourse(CourseNameViewModel course)
+        {
+            if (_course.DeleteCourse(course))
+            {
+                return Json(true);
+            }
+            return Json(false);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult AddTypeAndCourse(CourseNameViewModel course)
+        {
+            if (_course.AddTypeAndCourse(course))
+            {
+                return Json(new { row = course, flag = true });
+            }
+            return Json(new { msg = "错误代码：没有", flag = false });
+        }
+
+        [HttpPost]
+        public JsonResult GetMaxCourseId_TID()
+        {
+            return Json(new { MaxCourseID = _course.MaxCourseID() + 1, MaxTID = _course.MaxTID() + 1 });
+        }
+
+        [HttpPost]
+        public JsonResult GetMaxCourseId()
+        {
+            return Json(_course.MaxCourseID() + 1);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public JsonResult AddOneCourse(CourseNameViewModel course)
+        {
+            if (_course.AddOneCourse(course))
+            {
+                return Json(new { row = course, flag = true });
+            }
+            return Json(new { msg = "错误代码：没有", flag = false });
+        }
     }
 }

@@ -24,9 +24,9 @@
                         <div class="card-body">
                             @foreach (var k in Model.CourseName)
                             {
-                                if (k.TId != null && Equals(k.TId, i.TID))
+                                if (k.TID != null && Equals(k.TID, i.TID))
                                 {
-                                    @Html.ActionLink(k.CourseName, "ClassifieBrowse", new {k.CourseId, k.CourseName }, new { @class = "text-primary", @style = "margin-left:15px;flex-left" })
+                                    @Html.ActionLink(k.CourseName, "ClassifieBrowse", new { k.CourseID, k.CourseName }, new { @class = "text-primary", @style = "margin-left:15px;flex-left" })
                                 }
                             }
                         </div>

@@ -1,12 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="testDB" Class="HopuDBDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="AppSettings" ConnectionString="Data Source=.;Initial Catalog=testDB;Integrated Security=True;MultipleActiveResultSets=True;Application Name=EntityFramework" SettingsObjectName="HOPU.Properties.Settings" SettingsPropertyName="testDBConnectionString" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.Course" Member="Course">
-    <Type Name="Course">
-      <Column Name="CourseID" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="courseName" Member="CourseName" Storage="_courseName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
-      <Column Name="TID" Type="System.Double" DbType="Float" CanBeNull="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.AspNetUsers" Member="AspNetUsers">
     <Type Name="AspNetUsers">
       <Column Name="Id" Type="System.String" DbType="NVarChar(128) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -32,12 +25,6 @@
       <Column Name="ClaimType" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="ClaimValue" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Association Name="AspNetUsers_UserClaims" Member="AspNetUsers" ThisKey="UserId" OtherKey="Id" Type="AspNetUsers" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.TypeInfo" Member="TypeInfo">
-    <Type Name="TypeInfo">
-      <Column Name="TID" Type="System.Double" DbType="Float" CanBeNull="true" />
-      <Column Name="TypeName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
     </Type>
   </Table>
   <Table Name="dbo.UniteTestInfo" Member="UniteTestInfo">
@@ -128,6 +115,19 @@
       <Column Name="AnswerD" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="Answer" Type="System.String" DbType="NVarChar(MAX)" CanBeNull="true" />
       <Column Name="CourseID" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Course" Member="Course">
+    <Type Name="Course">
+      <Column Name="CourseID" Type="System.Double" DbType="Float NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CourseName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
+      <Column Name="TID" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TypeInfo" Member="TypeInfo">
+    <Type Name="TypeInfo">
+      <Column Name="TID" Type="System.Double" DbType="Float NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TypeName" Type="System.String" DbType="NVarChar(255)" CanBeNull="true" />
     </Type>
   </Table>
 </Database>

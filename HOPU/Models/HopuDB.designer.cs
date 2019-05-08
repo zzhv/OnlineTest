@@ -57,6 +57,12 @@ namespace HOPU.Models
     partial void InsertTopic(Topic instance);
     partial void UpdateTopic(Topic instance);
     partial void DeleteTopic(Topic instance);
+    partial void InsertCourse(Course instance);
+    partial void UpdateCourse(Course instance);
+    partial void DeleteCourse(Course instance);
+    partial void InsertTypeInfo(TypeInfo instance);
+    partial void UpdateTypeInfo(TypeInfo instance);
+    partial void DeleteTypeInfo(TypeInfo instance);
     #endregion
 		
 		public HopuDBDataContext() : 
@@ -89,14 +95,6 @@ namespace HOPU.Models
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<Course> Course
-		{
-			get
-			{
-				return this.GetTable<Course>();
-			}
-		}
-		
 		public System.Data.Linq.Table<AspNetUsers> AspNetUsers
 		{
 			get
@@ -110,14 +108,6 @@ namespace HOPU.Models
 			get
 			{
 				return this.GetTable<UserClaims>();
-			}
-		}
-		
-		public System.Data.Linq.Table<TypeInfo> TypeInfo
-		{
-			get
-			{
-				return this.GetTable<TypeInfo>();
 			}
 		}
 		
@@ -176,67 +166,20 @@ namespace HOPU.Models
 				return this.GetTable<Topic>();
 			}
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Course")]
-	public partial class Course
-	{
 		
-		private System.Nullable<double> _CourseID;
-		
-		private string _courseName;
-		
-		private System.Nullable<double> _TID;
-		
-		public Course()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseID", DbType="Float")]
-		public System.Nullable<double> CourseID
+		public System.Data.Linq.Table<Course> Course
 		{
 			get
 			{
-				return this._CourseID;
-			}
-			set
-			{
-				if ((this._CourseID != value))
-				{
-					this._CourseID = value;
-				}
+				return this.GetTable<Course>();
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="courseName", Storage="_courseName", DbType="NVarChar(255)")]
-		public string CourseName
+		public System.Data.Linq.Table<TypeInfo> TypeInfo
 		{
 			get
 			{
-				return this._courseName;
-			}
-			set
-			{
-				if ((this._courseName != value))
-				{
-					this._courseName = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TID", DbType="Float")]
-		public System.Nullable<double> TID
-		{
-			get
-			{
-				return this._TID;
-			}
-			set
-			{
-				if ((this._TID != value))
-				{
-					this._TID = value;
-				}
+				return this.GetTable<TypeInfo>();
 			}
 		}
 	}
@@ -790,51 +733,6 @@ namespace HOPU.Models
 			if ((this.PropertyChanged != null))
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TypeInfo")]
-	public partial class TypeInfo
-	{
-		
-		private System.Nullable<double> _TID;
-		
-		private string _TypeName;
-		
-		public TypeInfo()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TID", DbType="Float")]
-		public System.Nullable<double> TID
-		{
-			get
-			{
-				return this._TID;
-			}
-			set
-			{
-				if ((this._TID != value))
-				{
-					this._TID = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TypeName", DbType="NVarChar(255)")]
-		public string TypeName
-		{
-			get
-			{
-				return this._TypeName;
-			}
-			set
-			{
-				if ((this._TypeName != value))
-				{
-					this._TypeName = value;
-				}
 			}
 		}
 	}
@@ -2652,6 +2550,202 @@ namespace HOPU.Models
 					this._CourseID = value;
 					this.SendPropertyChanged("CourseID");
 					this.OnCourseIDChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Course")]
+	public partial class Course : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private double _CourseID;
+		
+		private string _CourseName;
+		
+		private System.Nullable<double> _TID;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnCourseIDChanging(double value);
+    partial void OnCourseIDChanged();
+    partial void OnCourseNameChanging(string value);
+    partial void OnCourseNameChanged();
+    partial void OnTIDChanging(System.Nullable<double> value);
+    partial void OnTIDChanged();
+    #endregion
+		
+		public Course()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseID", DbType="Float NOT NULL", IsPrimaryKey=true)]
+		public double CourseID
+		{
+			get
+			{
+				return this._CourseID;
+			}
+			set
+			{
+				if ((this._CourseID != value))
+				{
+					this.OnCourseIDChanging(value);
+					this.SendPropertyChanging();
+					this._CourseID = value;
+					this.SendPropertyChanged("CourseID");
+					this.OnCourseIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CourseName", DbType="NVarChar(255)")]
+		public string CourseName
+		{
+			get
+			{
+				return this._CourseName;
+			}
+			set
+			{
+				if ((this._CourseName != value))
+				{
+					this.OnCourseNameChanging(value);
+					this.SendPropertyChanging();
+					this._CourseName = value;
+					this.SendPropertyChanged("CourseName");
+					this.OnCourseNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TID", DbType="Float")]
+		public System.Nullable<double> TID
+		{
+			get
+			{
+				return this._TID;
+			}
+			set
+			{
+				if ((this._TID != value))
+				{
+					this.OnTIDChanging(value);
+					this.SendPropertyChanging();
+					this._TID = value;
+					this.SendPropertyChanged("TID");
+					this.OnTIDChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.TypeInfo")]
+	public partial class TypeInfo : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private double _TID;
+		
+		private string _TypeName;
+		
+    #region 可扩展性方法定义
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnTIDChanging(double value);
+    partial void OnTIDChanged();
+    partial void OnTypeNameChanging(string value);
+    partial void OnTypeNameChanged();
+    #endregion
+		
+		public TypeInfo()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TID", DbType="Float NOT NULL", IsPrimaryKey=true)]
+		public double TID
+		{
+			get
+			{
+				return this._TID;
+			}
+			set
+			{
+				if ((this._TID != value))
+				{
+					this.OnTIDChanging(value);
+					this.SendPropertyChanging();
+					this._TID = value;
+					this.SendPropertyChanged("TID");
+					this.OnTIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_TypeName", DbType="NVarChar(255)")]
+		public string TypeName
+		{
+			get
+			{
+				return this._TypeName;
+			}
+			set
+			{
+				if ((this._TypeName != value))
+				{
+					this.OnTypeNameChanging(value);
+					this.SendPropertyChanging();
+					this._TypeName = value;
+					this.SendPropertyChanged("TypeName");
+					this.OnTypeNameChanged();
 				}
 			}
 		}

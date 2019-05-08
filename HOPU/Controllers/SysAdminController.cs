@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using HOPU.Models;
+using Unity;
 
 namespace HOPU.Controllers
 {
@@ -19,14 +20,18 @@ namespace HOPU.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public SysAdminController()
-        {
-        }
+
 
         public SysAdminController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+        }
+
+        //Unity默认注入参数最多的构造函数，但是这个地方不需要，所以指定这个空构造函数
+        [InjectionConstructor]
+        public SysAdminController()
+        {
         }
 
         public ApplicationSignInManager SignInManager

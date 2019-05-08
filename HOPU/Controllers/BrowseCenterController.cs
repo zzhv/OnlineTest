@@ -15,7 +15,7 @@ namespace HOPU.Controllers
 
         public ActionResult AllBrowse()
         {
-            return View("AllBrowse");
+            return View();
         }
 
 

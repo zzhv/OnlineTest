@@ -35,16 +35,113 @@
 <div id="UtableHide" class="bg-white no-margin-top">
     <div id="toolbar" class="d-flex flex-row bg-secondary mb-3 no-margin-bottom">
         <div class="p-2 bg-white">
-            <button type="button" id="download" class="btn btn-primary"><i class="fa fa-download" aria-hidden="true"></i> 添加一级</button>
+            <button type="button" data-toggle="modal" data-target="#AddFirstCourseModal" id="AddFirstCourseBtn" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> 添加一级</button>
+            <div class="modal fade" id="AddFirstCourseModal">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <!-- 模态框头部 -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">添加一级分类</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- 模态框主体 -->
+                        @using (Ajax.BeginForm("AddTypeAndCourse", "SysManage",
+                                 new AjaxOptions()
+                                 {
+                                     OnSuccess = "formSuccessFirst",
+                                     OnFailure = "formFailureFirst"
+                                 }
+                               ))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="modal-body">
+                                <div class="form-inline">
+                                    <label for="TID"><span class='badge badge-pill badge-primary'>一级分类编号</span></label>
+                                    <input type="text" class="form-control" id="TID" name="TID" readonly="readonly">
+
+                                    <label for="TypeName"><span class='badge badge-pill badge-primary' style="margin-left:50px;">一级类名</span></label>
+                                    <input type="text" class="form-control" id="TypeName" name="TypeName">
+                                </div>
+                                <br />
+                                <div class="form-inline">
+                                    <label for="CourseID"><span class='badge badge-pill badge-primary'>二级分类编号</span></label>
+                                    <input type="text" class="form-control" id="CourseID" name="CourseID" readonly="readonly">
+
+                                    <label for="CourseName"><span class='badge badge-pill badge-primary' style="margin-left:50px;">二级类名</span></label>
+                                    <input type="text" class="form-control" id="CourseName" name="CourseName">
+                                </div>
+                                <br />
+
+
+                            </div>
+                            @*<script>
+                                    $("#AddFirstCourseBtn").click();
+                                </script>*@
+                            <!-- 模态框底部 -->
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success">提交</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="p-2 bg-white">
-            <button type="button" id="download" class="btn btn-primary"><i class="fa fa-download" aria-hidden="true"></i> 添加二级</button>
+            <button type="button" data-toggle="modal" data-target="#AddSecondCourseModal" id="AddSecondCourseBtn" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i> 添加二级</button>
+            <div class="modal fade" id="AddSecondCourseModal">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <!-- 模态框头部 -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">添加二级分类</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- 模态框主体 -->
+                        @using (Ajax.BeginForm("AddOneCourse", "SysManage",
+                                 new AjaxOptions()
+                                 {
+                                     OnSuccess = "formSuccessSecond",
+                                     OnFailure = "formFailureSecond"
+                                 }
+                               ))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="modal-body">
+                                <div class="form-inline">
+                                    <label for="TID"><span class='badge badge-pill badge-primary'>一级分类</span></label>
+                                    @Html.DropDownList("TID", Model as IEnumerable<SelectListItem>, new { @class = "form-control" })
+                                </div>
+                                <br />
+                                <div class="form-inline">
+                                    <label for="CourseIDTwo"><span class='badge badge-pill badge-primary'>二级分类编号</span></label>
+                                    <input type="text" class="form-control" id="CourseIDTwo" name="CourseID" readonly="readonly">
+
+                                    <label for="CourseNameTwo"><span class='badge badge-pill badge-primary' style="margin-left:50px;">二级类名</span></label>
+                                    <input type="text" class="form-control" id="CourseNameTwo" name="CourseName">
+                                </div>
+                                <br />
+
+
+                            </div>
+                            @*<script>
+                                    $("#AddFirstCourseBtn").click();
+                                </script>*@
+                            <!-- 模态框底部 -->
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success">提交</button>
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <table id="CourseTable"></table>
 </div>
-
-
 @section footer{
     <script>
         $(function () {
@@ -99,17 +196,6 @@
                         title: "一级分类编号",
                         sortable: true,
                         align: 'center',
-                        editable: {
-                            type: 'number',
-                            mode: "inline",
-                            title: 'TID',
-                            validate: function (v) {
-                                if (!v) return '不能为空';
-                            }
-                        },
-                        filter: {
-                            type: 'input'
-                        }
                     }, {
                         field: "TypeName",
                         title: "一级类名",
@@ -126,14 +212,6 @@
                         field: "CourseID",
                         title: "二级分类编号",
                         sortable: true,
-                        editable: {
-                            type: 'number',
-                            mode: "inline",
-                            title: 'CourseID',
-                            validate: function (v) {
-                                if (!v) return '不能为空';
-                            }
-                        }
                     },
                     {
                         field: "CourseName",
@@ -155,23 +233,17 @@
                     }
                 ],
                 onEditableSave: function (field, row, oldValue, $el) {
-                    //if (row.TopicID == null) {
-                    //    alert(1111);
-                    //}
-                    var newRow = row;
-                    var _answer = newRow.Answer;
-                    if (_answer.length >= 2) {
-                        newRow.Answer = row.Answer.join('');
-                    }
-                    //console.log(newRow);
                     $.ajax({
                         type: "post",
-                        url: "../SysManage/EditTopic",
-                        data: newRow,
+                        url: "../SysManage/EditCourse",
+                        data: row,
                         dataType: 'JSON',
                         success: function (state) {
-                            if (state == "success") {
+                            if (state) {
                                 //console.log(state);
+                            } else {
+
+                                alert('编辑失败');
                             }
                         },
                         error: function () {
@@ -188,9 +260,9 @@
                 exportTypes: ['excel', 'xlsx', 'json', 'xml', 'csv', 'txt', 'sql'], //导出类型
                 //exportButton: $('#btn_export'),     //为按钮btn_export  绑定导出事件  自定义导出按钮(可以不用)
                 exportOptions: {
-                    ignoreColumn: [8, 0], //忽略某一列的索引
+                    ignoreColumn: [4, 0], //忽略某一列的索引
                     fileName: '数据导出', //文件名称设置
-                    worksheetName: 'Topic', //表格工作区名称
+                    worksheetName: 'Course', //表格工作区名称
                     tableName: '题目数据表',
                     //excelstyles: ['background-color', 'color', 'font-size', 'font-weight'],
                     //onMsoNumberFormat: DoOnMsoNumberFormat
@@ -216,17 +288,17 @@
         var $table = $('#CourseTable');
         window.operateEvents = {
             "click #Delete": function (e, value, row, index) {
-                var statu = confirm("你确定要删除题号为\"" + row.TopicID + "\"的题目吗？");
+                var statu = confirm("你确定要删除二级编号为\"" + row.CourseID + "\"的二级分类吗？");
                 if (!statu) {
                     return false;
                 }
                 $.ajax({
                     type: 'POST',
-                    url: '../SysManage/DeleteTopic',
+                    url: '../SysManage/DeleteCourse',
                     data: row,
                     dataType: 'JSON',
-                    success: function (msg) {
-                        if (msg == 'success') {
+                    success: function (Result) {
+                        if (Result) {
                             //$("#TopicTable").bootstrapTable('refresh');
                         } else {
                             alert('删除失败!');
@@ -239,10 +311,98 @@
                 });
                 $table.bootstrapTable('remove',
                     {
-                        field: 'TopicID',
-                        values: [row.TopicID]
+                        field: 'CourseID',
+                        values: [row.CourseID]
                     })
             }
         }
+
+        //当打开一级模态框，添加这两个东西的编号
+        $('#AddFirstCourseModal').on('show.bs.modal',
+            function () {
+                GetMaxID();
+            }
+        )
+
+        function GetMaxID() {
+            $.post("../SysManage/GetMaxCourseId_TID",
+                function (data) {
+                    $('#CourseID').val(data.MaxCourseID);
+                    $('#TID').val(data.MaxTID);
+                })
+        }
+
+
+
+        //添加一级与二级
+        function formSuccessFirst(Result) {
+            if (Result.flag) {
+                GetMaxID();//更新题号
+                //添加成功后在表格中添加一行
+                var row = Result.row;
+                $table.bootstrapTable('insertRow',
+                    {
+                        index: 1,
+                        row: {
+                            TID: row.TopicID,
+                            TypeName: row.TypeName,
+                            CourseID: row.CourseID,
+                            CourseName: row.CourseName,
+                        }
+                    })
+            } else {
+                alert("添加失败！\“" + Result.msg + "”");
+            }
+        }
+
+        //一级添加失败
+        function formFailureFirst() {
+            alert("添加失败！");
+        }
+
+
+
+        //二级开始
+
+        //当打开二级模态框，添加编号
+        $('#AddSecondCourseModal').on('show.bs.modal',
+            function () {
+                GetMaxCourseId();
+            }
+        )
+
+        function GetMaxCourseId() {
+            $.post("../SysManage/GetMaxCourseId",
+                function (data) {
+                    $('#CourseIDTwo').val(data);
+                })
+        }
+
+        //添加二级
+        function formSuccessSecond(Result) {
+            if (Result.flag) {
+                GetMaxCourseId();//更新题号
+                //添加成功后在表格中添加一行
+                var row = Result.row;
+                $table.bootstrapTable('insertRow',
+                    {
+                        index: 1,
+                        row: {
+                            TID: row.TopicID,
+                            TypeName: row.TypeName,
+                            CourseID: row.CourseID,
+                            CourseName: row.CourseName,
+                        }
+                    })
+            } else {
+                alert("添加失败！\“" + Result.msg + "”");
+            }
+        }
+
+        //二级添加失败
+        function formFailureSecond() {
+            alert("添加失败！");
+        }
     </script>
 }
+
