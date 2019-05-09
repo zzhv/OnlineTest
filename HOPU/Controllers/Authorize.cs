@@ -1,5 +1,4 @@
 ﻿using HOPU.Models;
-using HOPU.Services;
 using Microsoft.AspNet.Identity;
 using System.Web.Mvc;
 
