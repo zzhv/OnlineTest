@@ -176,6 +176,7 @@ namespace HOPU.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult AddTest(string[] submitCheckbox, int topicCount, int timeLenth)
         {
+            //暂时这么来校验
             if (submitCheckbox.Count() == 0 || topicCount <= 0 || timeLenth <= 0)
             {
                 return Json("不得留空！");
