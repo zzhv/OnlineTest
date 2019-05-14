@@ -5,7 +5,7 @@ namespace HOPU.Services
     public interface IUniteTestScore
     {
         /// <summary>
-        /// 获取指定用户的指定统测号的统测成绩
+        /// 获取指定用户的指定统测号的统测成绩信息
         /// </summary>
         /// <param name="UtId">统测ID</param>
         /// <param name="UserName">用户名</param>
