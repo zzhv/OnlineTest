@@ -55,26 +55,26 @@
                                ))
                         {
                             @Html.AntiForgeryToken()
-                            <div class="modal-body">
-                                <div class="form-inline">
-                                    <label for="TID"><span class='badge badge-pill badge-primary'>一级分类编号</span></label>
-                                    <input type="text" class="form-control" id="TID" name="TID" readonly="readonly">
+                    <div class="modal-body">
+                        <div class="form-inline">
+                            <label for="TID"><span class='badge badge-pill badge-primary'>一级分类编号</span></label>
+                            <input type="text" class="form-control" id="TID" name="TID" readonly="readonly">
 
-                                    <label for="TypeName"><span class='badge badge-pill badge-primary' style="margin-left:50px;">一级类名</span></label>
-                                    <input type="text" class="form-control" id="TypeName" name="TypeName">
-                                </div>
-                                <br />
-                                <div class="form-inline">
-                                    <label for="CourseID"><span class='badge badge-pill badge-primary'>二级分类编号</span></label>
-                                    <input type="text" class="form-control" id="CourseID" name="CourseID" readonly="readonly">
+                            <label for="TypeName"><span class='badge badge-pill badge-primary' style="margin-left:50px;">一级类名</span></label>
+                            <input type="text" class="form-control" id="TypeName" name="TypeName">
+                        </div>
+                        <br />
+                        <div class="form-inline">
+                            <label for="CourseID"><span class='badge badge-pill badge-primary'>二级分类编号</span></label>
+                            <input type="text" class="form-control" id="CourseID" name="CourseID" readonly="readonly">
 
-                                    <label for="CourseName"><span class='badge badge-pill badge-primary' style="margin-left:50px;">二级类名</span></label>
-                                    <input type="text" class="form-control" id="CourseName" name="CourseName">
-                                </div>
-                                <br />
+                            <label for="CourseName"><span class='badge badge-pill badge-primary' style="margin-left:50px;">二级类名</span></label>
+                            <input type="text" class="form-control" id="CourseName" name="CourseName">
+                        </div>
+                        <br />
+                        <p class="bg-warning text-white">新添加一级目录时需要同时添加二级目录</p>
 
-
-                            </div>
+                    </div>
                             @*<script>
                                     $("#AddFirstCourseBtn").click();
                                 </script>*@

@@ -19,19 +19,29 @@ namespace HOPU.Controllers
         private readonly ICourse _course;
         private readonly ITopic _topic;
         private readonly ITypeinfo _typeinfo;
+        private readonly ISelfTest _selfTest;
 
-        public SysManageController(IBTTable bTTableInfo, ICourse course, ITopic topic, ITypeinfo typeinfo)
+        public SysManageController(IBTTable bTTableInfo, ICourse course, ITopic topic, ITypeinfo typeinfo, ISelfTest selfTest)
         {
             _bTTableInfo = bTTableInfo;
             _course = course;
             _topic = topic;
             _typeinfo = typeinfo;
+            _selfTest = selfTest;
         }
 
         public ActionResult SysManageIndex()
         {
             return View();
         }
+
+
+        [HttpPost]
+        public JsonResult GetTodaySelfTestCount()
+        {
+            return Json(_selfTest.GetTodaySelfTestCount());
+        }
+
 
         public ActionResult TopicManage()
         {

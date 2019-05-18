@@ -229,6 +229,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Implement\ImpBTTable.cs" />
+    <Compile Include="Implement\ImplSelfTest.cs" />
     <Compile Include="Implement\ImpTopic.cs" />
     <Compile Include="Implement\ImpCourse.cs" />
     <Compile Include="Implement\ImpTypeInfo.cs" />
@@ -237,6 +238,7 @@
     <Compile Include="Implement\ImpUniteTestScore.cs" />
     <Compile Include="Services\IBTTable.cs" />
     <Compile Include="Services\ICourse.cs" />
+    <Compile Include="Services\ISelfTest.cs" />
     <Compile Include="Services\ITopic.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ClassifiedBrowseModel.cs" />

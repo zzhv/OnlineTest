@@ -25,6 +25,7 @@ namespace HOPU
             container.RegisterType<IUniteTest, ImpUniteTest>();
             container.RegisterType<IUniteTestScore, ImpUniteTestScore>();
             container.RegisterType<IUniteTestInfo, ImpUniteTestInfo>();
+            container.RegisterType<ISelfTest, ImplSelfTest>();
         }
         /// <summary>
         /// 获取容器-注册依赖关系
