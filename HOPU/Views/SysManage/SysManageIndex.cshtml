@@ -29,7 +29,7 @@
                             <div role="progressbar" style="width: 70%; height: 4px;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
                         </div>
                     </div>
-                    <div class="number"><strong>7748</strong></div>
+                    <div class="number"><strong><span id="TodayUnifiedfTestCount"></span></strong></div>
                 </div>
             </div>
             <!-- Item -->
@@ -95,9 +95,10 @@
 </section>
 @section footer{
     <script>
-        $.post("../SysManage/GetTodaySelfTestCount",
+        $.post("../SysManage/GetTodayTestCount",
             function (data) {
-                $('#TodaySelfTestCount').text(data);
+                $('#TodaySelfTestCount').text(data.selfCount);
+                $('#TodayUnifiedfTestCount').text(data.UnifiedCount);
             })
     </script>
 }

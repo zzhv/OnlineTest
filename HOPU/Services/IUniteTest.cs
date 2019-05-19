@@ -16,5 +16,7 @@ namespace HOPU.Services
         /// <param name="UtId">统测ID</param>
         /// <returns></returns>
         IEnumerable<UniteTest> GetUniteTestInfo(int? UtId);
+
+        int GetTodayUnifiedTestCount();
     }
 }

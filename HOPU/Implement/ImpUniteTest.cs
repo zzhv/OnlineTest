@@ -10,6 +10,12 @@ namespace HOPU.Implement
     public class ImpUniteTest : IUniteTest
     {
         private HopuDBDataContext db = new HopuDBDataContext();
+
+        public int GetTodayUnifiedTestCount()
+        {
+            return db.UniteTest.Where(x => x.StartTime > DateTime.Now.Date).Count();
+        }
+
         public IEnumerable<UniteTest> GetUniteTestInfo()
         {
             return db.UniteTest.Select(a => a).OrderByDescending(a => a.UtId);

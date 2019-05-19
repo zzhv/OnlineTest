@@ -20,14 +20,16 @@ namespace HOPU.Controllers
         private readonly ITopic _topic;
         private readonly ITypeinfo _typeinfo;
         private readonly ISelfTest _selfTest;
+        private readonly IUniteTest _uniteTest;
 
-        public SysManageController(IBTTable bTTableInfo, ICourse course, ITopic topic, ITypeinfo typeinfo, ISelfTest selfTest)
+        public SysManageController(IBTTable bTTableInfo, ICourse course, ITopic topic, ITypeinfo typeinfo, ISelfTest selfTest, IUniteTest uniteTest)
         {
             _bTTableInfo = bTTableInfo;
             _course = course;
             _topic = topic;
             _typeinfo = typeinfo;
             _selfTest = selfTest;
+            _uniteTest = uniteTest;
         }
 
         public ActionResult SysManageIndex()
@@ -37,11 +39,11 @@ namespace HOPU.Controllers
 
 
         [HttpPost]
-        public JsonResult GetTodaySelfTestCount()
+        public JsonResult GetTodayTestCount()
         {
-            return Json(_selfTest.GetTodaySelfTestCount());
-        }
+            return Json(new { UnifiedCount = _uniteTest.GetTodayUnifiedTestCount(), selfCount = _selfTest.GetTodaySelfTestCount() });
 
+        }
 
         public ActionResult TopicManage()
         {

@@ -8,7 +8,10 @@ namespace HOPU.Services
 {
     public interface ISelfTest
     {
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         int GetTodaySelfTestCount();
 
     }
