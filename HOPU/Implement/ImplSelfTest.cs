@@ -11,6 +11,10 @@ namespace HOPU.Implement
     {
         private HopuDBDataContext db = new HopuDBDataContext();
 
+        /// <summary>
+        /// 获取今日独测总数
+        /// </summary>
+        /// <returns></returns>
         public int GetTodaySelfTestCount()
         {
             return db.SelfTest.Where(x => x.StartTime > DateTime.Now.Date).Count();

@@ -108,7 +108,7 @@
                                     <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>查看所有消息</strong></a></li>
                                 </ul>
                             </li>
-                            <!-- 语言选择-->
+                            @*语言选择*@
                             @*<li class="nav-item dropdown">
                                     <a id="languages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link language dropdown-toggle"><img src="~/Content/Mimg/flags/16/GB.png" alt="English"><span class="d-none d-sm-inline-block">English</span></a>
                                     <ul aria-labelledby="languages" class="dropdown-menu">
@@ -148,8 +148,8 @@
                     <li id="sysmanageindex">
                         <a href="~/SysManage/SysManageIndex"> <i class="icon-home"></i>主页 </a>
                     </li>
-                    <li>
-                        <a href="#"> <i class="icon-grid"></i>题库管理 </a>
+                    <li id="usermanage">
+                        <a href="~/SysManage/usermanage"> <i class="icon-grid"></i>学员管理 </a>
                     </li>
                     <li><a href="#"> <i class="fa fa-bar-chart"></i>数据中心 </a></li>
                     <li>
@@ -210,6 +210,7 @@
     <script src="~/vendor/jquery-validation/jquery.validate.min.js"></script>
     <script src="~/Scripts/js/charts-home.js"></script>
     <script src="~/Scripts/js/front.js"></script>
+    @RenderSection("footer", false)
     <script>
     $(function () {
         var fatherBro = $("#@actionName").parent("ul").prev("a")
@@ -219,6 +220,5 @@
         $("#@actionName").addClass("active");
     });
     </script>
-    @RenderSection("footer", false)
 </body>
 </html>

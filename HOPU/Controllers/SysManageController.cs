@@ -1,4 +1,6 @@
 ﻿using HOPU.Models;
+using HOPU.Services;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -6,8 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Newtonsoft.Json;
-using HOPU.Services;
+using Unity;
 
 namespace HOPU.Controllers
 {
@@ -20,17 +21,21 @@ namespace HOPU.Controllers
         private readonly ITopic _topic;
         private readonly ITypeinfo _typeinfo;
         private readonly ISelfTest _selfTest;
-        private readonly IUniteTest _uniteTest;
+        // private readonly IUniteTest _uniteTest;
 
-        public SysManageController(IBTTable bTTableInfo, ICourse course, ITopic topic, ITypeinfo typeinfo, ISelfTest selfTest, IUniteTest uniteTest)
+        public SysManageController(IBTTable bTTableInfo, ICourse course, ITopic topic, ITypeinfo typeinfo, ISelfTest selfTest)
         {
             _bTTableInfo = bTTableInfo;
             _course = course;
             _topic = topic;
             _typeinfo = typeinfo;
             _selfTest = selfTest;
-            _uniteTest = uniteTest;
+            // _uniteTest = uniteTest;
         }
+
+        [Dependency]
+        public IUniteTest _uniteTest { get; set; }
+
 
         public ActionResult SysManageIndex()
         {
@@ -310,6 +315,11 @@ namespace HOPU.Controllers
                 return Json(new { row = course, flag = true });
             }
             return Json(new { msg = "错误代码：没有", flag = false });
+        }
+
+        public ActionResult UserManage()
+        {
+            return View();
         }
     }
 }

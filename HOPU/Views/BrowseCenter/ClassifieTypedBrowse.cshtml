@@ -11,13 +11,15 @@
 <div class="container">
     <div id="accordion">
         @{
+            string[] StyleArr = { "badge-danger", "badge-primary", "badge-success", "badge-info", "badge-warning" };
             int j = 0;
+            Random random = new Random();
             foreach (var i in Model.TypeName)
             {
                 <div class="card">
                     <div class="card-header">
                         <a class="card-link" data-toggle="collapse" href="#collapse_@j">
-                            <span class="badge badge-pill badge-danger">@(j + 1)</span> @i.TypeName
+                            <span class="badge badge-pill @StyleArr.ElementAt(random.Next(0,5)) ">@(j + 1)</span> @i.TypeName
                         </a>
                     </div>
                     <div id="collapse_@j" class="collapse" data-parent="#accordion">
