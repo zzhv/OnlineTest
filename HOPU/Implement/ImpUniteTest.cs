@@ -20,6 +20,15 @@ namespace HOPU.Implement
         }
 
         /// <summary>
+        /// 获取统测总数
+        /// </summary>
+        /// <returns></returns>
+        public int GetunifiedTestCount()
+        {
+            return db.UniteTest.Count();
+        }
+
+        /// <summary>
         /// 获取所有统测信息
         /// </summary>
         /// <returns></returns>

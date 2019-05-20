@@ -11,12 +11,12 @@
                 <div class="item d-flex align-items-center">
                     <div class="icon bg-violet"><i class="icon-user"></i></div>
                     <div class="title">
-                        <span>今日<br>流量</span>
+                        <span>历史<br>统测</span>
                         <div class="progress">
                             <div role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-violet"></div>
                         </div>
                     </div>
-                    <div class="number"><strong id="counter"></strong></div>
+                    <div class="number"><strong><span id="UnifiedfTestCount"></span></strong></div>
 
                 </div>
             </div>
@@ -27,7 +27,7 @@
                     <div class="title">
                         <span>今日<br>统测</span>
                         <div class="progress">
-                            <div role="progressbar" style="width: 70%; height: 4px;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
+                            <div role="progressbar" style="width: 10%; height: 4px;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
                         </div>
                     </div>
                     <div class="number"><strong><span id="TodayUnifiedfTestCount"></span></strong></div>
@@ -40,7 +40,7 @@
                     <div class="title">
                         <span>今日<br>独测</span>
                         <div class="progress">
-                            <div role="progressbar" style="width: 40%; height: 4px;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-green"></div>
+                            <div role="progressbar" style="width: 10%; height: 4px;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-green"></div>
                         </div>
                     </div>
                     <div class="number"><strong><span id="TodaySelfTestCount"></span></strong></div>
@@ -52,12 +52,12 @@
                 <div class="item d-flex align-items-center">
                     <div class="icon bg-orange"><i class="icon-list"></i></div>
                     <div class="title">
-                        <span>暂时<br>乱写</span>
+                        <span>历史<br>独测</span>
                         <div class="progress">
                             <div role="progressbar" style="width: 50%; height: 4px;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-orange"></div>
                         </div>
                     </div>
-                    <div class="number"><strong>50</strong></div>
+                    <div class="number"><strong><span id="SelfTestCount"></span></strong></div>
                 </div>
             </div>
         </div>
@@ -70,15 +70,15 @@
             <div class="statistics col-lg-3 col-12">
                 <div class="statistic d-flex align-items-center bg-white has-shadow">
                     <div class="icon bg-red"><i class="fa fa-tasks"></i></div>
-                    <div class="text"><strong>234</strong><br><small>Applications</small></div>
+                    <div class="text"><strong id="UsersCount"></strong><br><small>用户总数</small></div>
                 </div>
                 <div class="statistic d-flex align-items-center bg-white has-shadow">
                     <div class="icon bg-green"><i class="fa fa-calendar-o"></i></div>
-                    <div class="text"><strong>152</strong><br><small>Interviews</small></div>
+                    <div class="text"><strong>152</strong><br><small>暂时</small></div>
                 </div>
                 <div class="statistic d-flex align-items-center bg-white has-shadow">
                     <div class="icon bg-orange"><i class="fa fa-paper-plane-o"></i></div>
-                    <div class="text"><strong>147</strong><br><small>Forwards</small></div>
+                    <div class="text"><strong>147</strong><br><small>乱写</small></div>
                 </div>
             </div>
             <div class="chart col-lg-3 col-12">
@@ -96,10 +96,13 @@
 </section>
 @section footer{
     <script>
-        $.post("../SysManage/GetTodayTestCount",
+        $.post("../SysManage/GetTestCountInfo",
             function (data) {
-                $('#TodaySelfTestCount').text(data.selfCount);
-                $('#TodayUnifiedfTestCount').text(data.UnifiedCount);
+                $('#TodaySelfTestCount').text(data.TodaySelfCount);
+                $('#SelfTestCount').text(data.selfCount);
+                $('#TodayUnifiedfTestCount').text(data.TodayUnifiedCount);
+                $('#UnifiedfTestCount').text(data.UnifiedCount);
+                $('#UsersCount').text(data.UsersCount);
             })
     </script>
 }

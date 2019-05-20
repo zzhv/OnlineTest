@@ -237,6 +237,7 @@
     </Compile>
     <Compile Include="Implement\ImpBTTable.cs" />
     <Compile Include="Implement\ImplSelfTest.cs" />
+    <Compile Include="Implement\ImplUsers.cs" />
     <Compile Include="Implement\ImpTopic.cs" />
     <Compile Include="Implement\ImpCourse.cs" />
     <Compile Include="Implement\ImpTypeInfo.cs" />
@@ -280,6 +281,7 @@
     <Compile Include="Services\IUniteTestInfo.cs" />
     <Compile Include="Services\IUniteTestScore.cs" />
     <Compile Include="Services\IUniteTest.cs" />
+    <Compile Include="Services\IUsers.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Tools\DataSetToList.cs" />
     <Compile Include="Tools\ExcelToDS.cs" />

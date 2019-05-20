@@ -17,6 +17,16 @@ namespace HOPU.Services
         /// <returns></returns>
         IEnumerable<UniteTest> GetUniteTestInfo(int? UtId);
 
+        /// <summary>
+        /// 获取今日统测总数
+        /// </summary>
+        /// <returns></returns>
         int GetTodayUnifiedTestCount();
+
+        /// <summary>
+        /// 获取所有统测总数
+        /// </summary>
+        /// <returns></returns>
+        int GetunifiedTestCount();
     }
 }

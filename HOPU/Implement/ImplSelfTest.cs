@@ -12,6 +12,15 @@ namespace HOPU.Implement
         private HopuDBDataContext db = new HopuDBDataContext();
 
         /// <summary>
+        /// 获取所有独测总数
+        /// </summary>
+        /// <returns></returns>
+        public int GetSelfTestCount()
+        {
+            return db.SelfTest.Count();
+        }
+
+        /// <summary>
         /// 获取今日独测总数
         /// </summary>
         /// <returns></returns>

@@ -13,6 +13,13 @@ namespace HOPU.Services
         /// </summary>
         /// <returns></returns>
         int GetTodaySelfTestCount();
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        int GetSelfTestCount();
+
+
 
     }
 }

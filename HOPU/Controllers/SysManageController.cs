@@ -35,6 +35,8 @@ namespace HOPU.Controllers
 
         [Dependency]
         public IUniteTest _uniteTest { get; set; }
+        [Dependency]
+        public IUsers _users { get; set; }
 
 
         public ActionResult SysManageIndex()
@@ -44,9 +46,16 @@ namespace HOPU.Controllers
 
 
         [HttpPost]
-        public JsonResult GetTodayTestCount()
+        public JsonResult GetTestCountInfo()
         {
-            return Json(new { UnifiedCount = _uniteTest.GetTodayUnifiedTestCount(), selfCount = _selfTest.GetTodaySelfTestCount() });
+            return Json(new
+            {
+                TodayUnifiedCount = _uniteTest.GetTodayUnifiedTestCount(),
+                TodaySelfCount = _selfTest.GetTodaySelfTestCount(),
+                UnifiedCount = _uniteTest.GetunifiedTestCount(),
+                selfCount = _selfTest.GetSelfTestCount(),
+                UsersCount = _users.GetUsersCount()
+            });
 
         }
 
