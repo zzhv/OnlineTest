@@ -191,6 +191,7 @@ namespace HOPU.Controllers
 
         #region AdminGetSelfScore
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public JsonResult AdminGetSelfScore(int limit, int offset, string keyword, string sortOrder, string sortName)
         {
