@@ -71,10 +71,8 @@ namespace HOPU.Implement
             catch (Exception)
             {
                 flag = false;
-                throw;
             }
             return flag;
-
         }
 
         /// <summary>
@@ -119,17 +117,13 @@ namespace HOPU.Implement
 
         public bool InsertOneTopic(Topic topic, string[] Answer)
         {
-            bool flag = false;
+            bool flag = true;
             string AnswerStr = string.Join("", Answer);
             topic.Answer = AnswerStr;
             try
             {
                 db.Topic.InsertOnSubmit(topic);
                 db.SubmitChanges();
-                if (topic.TopicID > 0)
-                {
-                    flag = true;
-                }
             }
             catch (Exception e)
             {

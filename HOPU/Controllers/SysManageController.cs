@@ -171,7 +171,7 @@ namespace HOPU.Controllers
             if (files == null || files.Count() == 0 || files.ToList()[0] == null)
             {
                 ViewBag.ErrorMessage = "请选择文件！";
-                ViewBag.MtClick = "$('#mtBtn').click()";//让模态框弹出来
+                ViewBag.MtClick = "$('#mtBtn').click()";//让模态框弹出来（暂时这么写，不知道别的办法）
                 return View();
             }
             string filePath = string.Empty;
@@ -182,7 +182,7 @@ namespace HOPU.Controllers
                 filePath = AppDomain.CurrentDomain.BaseDirectory + "Uploads\\" + gid.ToString() + Path.GetExtension(file.FileName);
                 file.SaveAs(filePath);
             }
-            var topics = Tools.DataSetToList.DataSetToIList<Topic>(Tools.ExcelToDS.excelToDS(filePath), "Topics");
+            var topics = Tools.DataSetToList.DataSetToIList<Topic>(Tools.ExcelToDS.excelToDS(filePath), "Topics");//读取所上传的文件
             //System.IO.File.Delete(filePath);
             try
             {

@@ -35,9 +35,7 @@ namespace HOPU
         public static IUnityContainer Initialise()
         {
             var container = BuildUnityContainer();
-
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
-
             return container;
         }
 
@@ -48,9 +46,7 @@ namespace HOPU
         private static IUnityContainer BuildUnityContainer()
         {
             var container = new UnityContainer();
-
             RegisterTypes(container);
-
             return container;
         }
 
