@@ -55,7 +55,7 @@ namespace HOPU.Controllers
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "已更改你的密码。"
+                message == ManageMessageId.ChangePasswordSuccess ? "已更改密码。"
                 : message == ManageMessageId.SetPasswordSuccess ? "已设置你的密码。"
                 : message == ManageMessageId.SetTwoFactorSuccess ? "已设置你的双重身份验证提供程序。"
                 : message == ManageMessageId.Error ? "出现错误。"
